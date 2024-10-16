@@ -364,7 +364,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     final listenable = widget.documentRef.resolveListenable();
     if (listenable.error != null) {
-      print('----> here1');
       return Container(
         color: widget.params.backgroundColor,
         child: (widget.params.errorBannerBuilder ?? _defaultErrorBannerBuilder)(
@@ -372,7 +371,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       );
     }
     if (_document == null) {
-      print('----> here2');
       return Container(
         color: widget.params.backgroundColor,
         child: widget.params.loadingBannerBuilder?.call(
@@ -383,7 +381,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       );
     }
     return LayoutBuilder(builder: (context, constraints) {
-      print('----> here3');
       if (_updateViewSizeAndCoverScale(Size(constraints.maxWidth, constraints.maxHeight))) {
         if (_initialized) {
           Future.microtask(
@@ -397,7 +394,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       }
 
       if (!_initialized && _layout != null) {
-        print('----> here4');
         _initialized = true;
         Future.microtask(() async {
           if (mounted) {
@@ -414,8 +410,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
 
       final Widget Function(Widget) selectionAreaInjector =
           widget.params.enableTextSelection ? (child) => SelectionArea(child: child) : (child) => child;
-
-      print('----> here5');
 
       return Container(
         color: widget.params.backgroundColor,
@@ -882,8 +876,8 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
   }
 
   /// [_CustomPainter] calls the function to paint PDF pages.
+  /// [_CustomPainter] calls the function to paint PDF pages.
   void _customPaint(ui.Canvas canvas, ui.Size size) {
-    print('----> hello');
     final targetRect = _getCacheExtentRect();
     final scale = MediaQuery.of(context).devicePixelRatio * _currentZoom;
 
@@ -892,7 +886,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
 
     for (int i = 0; i < _document!.pages.length; i++) {
       final rect = _layout!.pageLayouts[i];
-      final pageTransform = _layout!.pageTransforms[i]; // Fetch the transformation matrix for the page
       final intersection = rect.intersect(targetRect);
       if (intersection.isEmpty) {
         final page = _document!.pages[i];
@@ -908,7 +901,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       final partial = _pageImagesPartial[page.pageNumber];
 
       final scaleLimit = widget.params.getPageRenderingScale
-              ?.call(context, page, _controller!, widget.params.onePassRenderingScaleThreshold) ??
+          ?.call(context, page, _controller!, widget.params.onePassRenderingScaleThreshold) ??
           widget.params.onePassRenderingScaleThreshold;
 
       if (dropShadowPaint != null) {
@@ -918,9 +911,11 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
         canvas.drawRect(shadowRect, dropShadowPaint);
       }
 
-      // Apply the page transformation matrix (curl effect)
-      canvas.save(); // Save the canvas state
-      canvas.transform(pageTransform.storage); // Apply the transformation matrix
+      if (widget.params.pageBackgroundPaintCallbacks != null) {
+        for (final callback in widget.params.pageBackgroundPaintCallbacks!) {
+          callback(canvas, rect, page);
+        }
+      }
 
       if (realSize != null) {
         canvas.drawImageRect(
@@ -941,9 +936,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
               ..color = Colors.white
               ..style = PaintingStyle.fill);
       }
-
-      // Restore the canvas state after applying the transformation
-      canvas.restore();
 
       final scaleLimited = min(scale, scaleLimit);
 
