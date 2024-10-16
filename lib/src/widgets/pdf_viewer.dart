@@ -411,6 +411,8 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       final Widget Function(Widget) selectionAreaInjector =
           widget.params.enableTextSelection ? (child) => SelectionArea(child: child) : (child) => child;
 
+      print('----> here');
+
       return Container(
         color: widget.params.backgroundColor,
         child: Focus(
