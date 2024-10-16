@@ -877,6 +877,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
 
   /// [_CustomPainter] calls the function to paint PDF pages.
   void _customPaint(ui.Canvas canvas, ui.Size size) {
+    print('----> hello');
     final targetRect = _getCacheExtentRect();
     final scale = MediaQuery.of(context).devicePixelRatio * _currentZoom;
 
