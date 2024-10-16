@@ -1036,22 +1036,48 @@ class _PdfViewerState extends State<PdfViewer>
   }
 
   PdfPageLayout _layoutPages(List<PdfPage> pages, PdfViewerParams params) {
-    final width =
-        pages.fold(0.0, (w, p) => max(w, p.width)) + params.margin * 2;
+    final height = pages.fold(0.0, (prev, page) => max(prev, page.height)) + params.margin * 2;
+    final pageLayouts = <Rect>[];
+    final pageTransforms = <Matrix4>[]; // To hold transformation matrices
+    double x = params.margin;
 
-    final pageLayout = <Rect>[];
-    var y = params.margin;
-    for (int i = 0; i < pages.length; i++) {
-      final page = pages[i];
-      final rect =
-          Rect.fromLTWH((width - page.width) / 2, y, page.width, page.height);
-      pageLayout.add(rect);
-      y += page.height + params.margin;
+    const double amplitude = 20.0; // Amplitude for the curl effect
+    const double wavelength = 200.0; // Wavelength (in pixels)
+
+    for (var i = 0; i < pages.length; i++) {
+      var page = pages[i];
+
+      // Calculate base position for the current page
+      double baseX = x;
+
+      // Create a transformation matrix for the curl effect
+      Matrix4 curlMatrix = Matrix4.identity();
+
+      // Apply sinusoidal wave curl along the x-axis
+      double curlValue = amplitude * sin(2 * pi / wavelength * baseX);
+      curlMatrix.setEntry(3, 1, curlValue / page.width); // Apply the curl to the matrix (affects perspective)
+
+      pageLayouts.add(
+        Rect.fromLTWH(
+          baseX,
+          (height - page.height) / 2, // Center vertically
+          page.width,
+          page.height,
+        ),
+      );
+
+      // Add the transformation matrix for the current page
+      pageTransforms.add(curlMatrix);
+
+      // Update x position for the next page
+      x += page.width + params.margin;
     }
 
+    // Adjust document size to account for the last page's position
     return PdfPageLayout(
-      pageLayouts: pageLayout,
-      documentSize: Size(width, y),
+      pageLayouts: pageLayouts,
+      pageTransforms: pageTransforms, // Send the transformation matrices for rendering
+      documentSize: Size(x, height),
     );
   }
 
@@ -1678,9 +1704,10 @@ class _PdfViewerTransformationController extends TransformationController {
 
 /// Defines page layout.
 class PdfPageLayout {
-  PdfPageLayout({required this.pageLayouts, required this.documentSize});
+  PdfPageLayout({required this.pageLayouts, required this.documentSize, required this.pageTransforms});
   final List<Rect> pageLayouts;
   final Size documentSize;
+  final List<Matrix4> pageTransforms;
 }
 
 /// Represents the result of the hit test on the page.
