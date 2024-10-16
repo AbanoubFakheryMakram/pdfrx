@@ -876,8 +876,8 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
   }
 
   /// [_CustomPainter] calls the function to paint PDF pages.
+  /// [_CustomPainter] calls the function to paint PDF pages.
   void _customPaint(ui.Canvas canvas, ui.Size size) {
-    print('new');
     final targetRect = _getCacheExtentRect();
     final scale = MediaQuery.of(context).devicePixelRatio * _currentZoom;
 
@@ -886,9 +886,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
 
     for (int i = 0; i < _document!.pages.length; i++) {
       final rect = _layout!.pageLayouts[i];
-      final transformation = _layout!.pageTransforms[i]; // Get the transformation matrix
       final intersection = rect.intersect(targetRect);
-
       if (intersection.isEmpty) {
         final page = _document!.pages[i];
         _cancelPendingRenderings(page.pageNumber);
@@ -919,9 +917,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
         }
       }
 
-      canvas.save();  // Save the current canvas state
-      canvas.transform(transformation.storage);  // Apply the transformation matrix for curl effect
-
       if (realSize != null) {
         canvas.drawImageRect(
           realSize.image,
@@ -936,14 +931,11 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
         );
       } else {
         canvas.drawRect(
-          rect,
-          Paint()
-            ..color = Colors.white
-            ..style = PaintingStyle.fill,
-        );
+            rect,
+            Paint()
+              ..color = Colors.white
+              ..style = PaintingStyle.fill);
       }
-
-      canvas.restore();  // Restore the canvas to the previous state
 
       final scaleLimited = min(scale, scaleLimit);
 
@@ -991,7 +983,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       }
     }
   }
-
 
   void _relayoutPages() {
     if (_document == null) return;
