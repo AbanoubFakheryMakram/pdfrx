@@ -62,8 +62,7 @@ abstract class PdfDocumentRef {
   static final _listenables = <PdfDocumentRef, PdfDocumentListenable>{};
 
   /// Resolve the [PdfDocumentListenable] for this reference.
-  PdfDocumentListenable resolveListenable() =>
-      _listenables.putIfAbsent(this, () => PdfDocumentListenable._(this));
+  PdfDocumentListenable resolveListenable() => _listenables.putIfAbsent(this, () => PdfDocumentListenable._(this));
 
   /// Use [resolveListenable]/[PdfDocumentListenable.document] instead to load the shared [PdfDocument].
   ///
@@ -73,8 +72,7 @@ abstract class PdfDocumentRef {
   ///
   /// [progressCallback] should be called when the document is loaded from remote source to notify the progress.
   Future<PdfDocument> loadDocument(
-      PdfDocumentLoaderProgressCallback progressCallback,
-      PdfDocumentLoaderReportCallback reportCallback);
+      PdfDocumentLoaderProgressCallback progressCallback, PdfDocumentLoaderReportCallback reportCallback);
 
   /// Classes that extends [PdfDocumentRef] should override this function to compare the equality by [sourceName]
   /// or such.
@@ -96,8 +94,7 @@ mixin PdfDocumentRefPasswordMixin on PdfDocumentRef {
 }
 
 /// A [PdfDocumentRef] that loads the document from asset.
-class PdfDocumentRefAsset extends PdfDocumentRef
-    with PdfDocumentRefPasswordMixin {
+class PdfDocumentRefAsset extends PdfDocumentRef with PdfDocumentRefPasswordMixin {
   const PdfDocumentRefAsset(
     this.name, {
     this.passwordProvider,
@@ -125,16 +122,14 @@ class PdfDocumentRefAsset extends PdfDocumentRef
       );
 
   @override
-  bool operator ==(Object other) =>
-      other is PdfDocumentRefAsset && name == other.name;
+  bool operator ==(Object other) => other is PdfDocumentRefAsset && name == other.name;
 
   @override
   int get hashCode => name.hashCode;
 }
 
 /// A [PdfDocumentRef] that loads the document from network.
-class PdfDocumentRefUri extends PdfDocumentRef
-    with PdfDocumentRefPasswordMixin {
+class PdfDocumentRefUri extends PdfDocumentRef with PdfDocumentRefPasswordMixin {
   const PdfDocumentRefUri(
     this.uri, {
     this.passwordProvider,
@@ -181,16 +176,14 @@ class PdfDocumentRefUri extends PdfDocumentRef
       );
 
   @override
-  bool operator ==(Object other) =>
-      other is PdfDocumentRefUri && uri == other.uri;
+  bool operator ==(Object other) => other is PdfDocumentRefUri && uri == other.uri;
 
   @override
   int get hashCode => uri.hashCode;
 }
 
 /// A [PdfDocumentRef] that loads the document from file.
-class PdfDocumentRefFile extends PdfDocumentRef
-    with PdfDocumentRefPasswordMixin {
+class PdfDocumentRefFile extends PdfDocumentRef with PdfDocumentRefPasswordMixin {
   const PdfDocumentRefFile(
     this.file, {
     this.passwordProvider,
@@ -218,16 +211,14 @@ class PdfDocumentRefFile extends PdfDocumentRef
       );
 
   @override
-  bool operator ==(Object other) =>
-      other is PdfDocumentRefFile && file == other.file;
+  bool operator ==(Object other) => other is PdfDocumentRefFile && file == other.file;
 
   @override
   int get hashCode => file.hashCode;
 }
 
 /// A [PdfDocumentRef] that loads the document from data.
-class PdfDocumentRefData extends PdfDocumentRef
-    with PdfDocumentRefPasswordMixin {
+class PdfDocumentRefData extends PdfDocumentRef with PdfDocumentRefPasswordMixin {
   const PdfDocumentRefData(
     this.data, {
     required this.sourceName,
@@ -261,16 +252,14 @@ class PdfDocumentRefData extends PdfDocumentRef
       );
 
   @override
-  bool operator ==(Object other) =>
-      other is PdfDocumentRefData && sourceName == other.sourceName;
+  bool operator ==(Object other) => other is PdfDocumentRefData && sourceName == other.sourceName;
 
   @override
   int get hashCode => sourceName.hashCode;
 }
 
 /// A [PdfDocumentRef] that loads the document from custom source.
-class PdfDocumentRefCustom extends PdfDocumentRef
-    with PdfDocumentRefPasswordMixin {
+class PdfDocumentRefCustom extends PdfDocumentRef with PdfDocumentRefPasswordMixin {
   const PdfDocumentRefCustom({
     required this.fileSize,
     required this.read,
@@ -310,8 +299,7 @@ class PdfDocumentRefCustom extends PdfDocumentRef
       );
 
   @override
-  bool operator ==(Object other) =>
-      other is PdfDocumentRefCustom && sourceName == other.sourceName;
+  bool operator ==(Object other) => other is PdfDocumentRefCustom && sourceName == other.sourceName;
 
   @override
   int get hashCode => sourceName.hashCode;
@@ -337,8 +325,7 @@ class PdfDocumentRefDirect extends PdfDocumentRef {
       Future.value(document);
 
   @override
-  bool operator ==(Object other) =>
-      other is PdfDocumentRefDirect && sourceName == other.sourceName;
+  bool operator ==(Object other) => other is PdfDocumentRefDirect && sourceName == other.sourceName;
 
   @override
   int get hashCode => sourceName.hashCode;

@@ -364,6 +364,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     final listenable = widget.documentRef.resolveListenable();
     if (listenable.error != null) {
+      print('----> here1');
       return Container(
         color: widget.params.backgroundColor,
         child: (widget.params.errorBannerBuilder ?? _defaultErrorBannerBuilder)(
@@ -371,6 +372,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       );
     }
     if (_document == null) {
+      print('----> here2');
       return Container(
         color: widget.params.backgroundColor,
         child: widget.params.loadingBannerBuilder?.call(
@@ -381,6 +383,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       );
     }
     return LayoutBuilder(builder: (context, constraints) {
+      print('----> here3');
       if (_updateViewSizeAndCoverScale(Size(constraints.maxWidth, constraints.maxHeight))) {
         if (_initialized) {
           Future.microtask(
@@ -394,6 +397,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       }
 
       if (!_initialized && _layout != null) {
+        print('----> here4');
         _initialized = true;
         Future.microtask(() async {
           if (mounted) {
@@ -411,7 +415,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       final Widget Function(Widget) selectionAreaInjector =
           widget.params.enableTextSelection ? (child) => SelectionArea(child: child) : (child) => child;
 
-      print('----> here');
+      print('----> here5');
 
       return Container(
         color: widget.params.backgroundColor,
@@ -904,7 +908,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       final partial = _pageImagesPartial[page.pageNumber];
 
       final scaleLimit = widget.params.getPageRenderingScale
-          ?.call(context, page, _controller!, widget.params.onePassRenderingScaleThreshold) ??
+              ?.call(context, page, _controller!, widget.params.onePassRenderingScaleThreshold) ??
           widget.params.onePassRenderingScaleThreshold;
 
       if (dropShadowPaint != null) {
@@ -987,7 +991,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       }
     }
   }
-
 
   void _relayoutPages() {
     if (_document == null) return;
@@ -1114,7 +1117,8 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
     );
   }
 
-  Future<_PdfImageWithScaleAndRect?> _createPartialImage(PdfPage page, double scale, PdfPageRenderCancellationToken cancellationToken) async {
+  Future<_PdfImageWithScaleAndRect?> _createPartialImage(
+      PdfPage page, double scale, PdfPageRenderCancellationToken cancellationToken) async {
     final pageRect = _layout!.pageLayouts[page.pageNumber - 1];
     final rect = pageRect.intersect(_visibleRect);
     final prev = _pageImagesPartial[page.pageNumber];
@@ -1151,7 +1155,8 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
     PdfPage currentPage,
   ) {
     double dist(int pageNumber) {
-      return (_layout!.pageLayouts[pageNumber - 1].center - _layout!.pageLayouts[currentPage.pageNumber - 1].center).distanceSquared;
+      return (_layout!.pageLayouts[pageNumber - 1].center - _layout!.pageLayouts[currentPage.pageNumber - 1].center)
+          .distanceSquared;
     }
 
     pageNumbers.sort((a, b) => dist(b).compareTo(dist(a)));
