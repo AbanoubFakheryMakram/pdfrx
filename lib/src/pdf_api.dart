@@ -38,8 +38,7 @@ abstract class PdfDocumentFactory {
 
   /// See [PdfDocument.openCustom].
   Future<PdfDocument> openCustom({
-    required FutureOr<int> Function(Uint8List buffer, int position, int size)
-        read,
+    required FutureOr<int> Function(Uint8List buffer, int position, int size) read,
     required int fileSize,
     required String sourceName,
     PdfPasswordProvider? passwordProvider,
@@ -192,8 +191,7 @@ abstract class PdfDocument {
   /// [sourceName] can be any arbitrary string to identify the source of the PDF; Neither of [read]/[fileSize]
   /// identify the source if such name is explicitly specified.
   static Future<PdfDocument> openCustom({
-    required FutureOr<int> Function(Uint8List buffer, int position, int size)
-        read,
+    required FutureOr<int> Function(Uint8List buffer, int position, int size) read,
     required int fileSize,
     required String sourceName,
     PdfPasswordProvider? passwordProvider,
@@ -315,8 +313,7 @@ abstract class PdfPage {
     double? fullWidth,
     double? fullHeight,
     Color? backgroundColor,
-    PdfAnnotationRenderingMode annotationRenderingMode =
-        PdfAnnotationRenderingMode.annotationAndForms,
+    PdfAnnotationRenderingMode annotationRenderingMode = PdfAnnotationRenderingMode.annotationAndForms,
     PdfPageRenderCancellationToken? cancellationToken,
   });
 
@@ -405,8 +402,7 @@ abstract class PdfImage {
   /// Create [ui.Image] from the rendered image.
   Future<ui.Image> createImage() {
     final comp = Completer<ui.Image>();
-    ui.decodeImageFromPixels(
-        pixels, width, height, format, (image) => comp.complete(image));
+    ui.decodeImageFromPixels(pixels, width, height, format, (image) => comp.complete(image));
     return comp.future;
   }
 }
@@ -431,8 +427,7 @@ abstract class PdfPageText {
   ///
   /// If the specified text index is out of range, it returns -1.
   int getFragmentIndexForTextIndex(int textIndex) {
-    final index = fragments.lowerBound(
-        _PdfPageTextFragmentForSearch(textIndex), (a, b) => a.index - b.index);
+    final index = fragments.lowerBound(_PdfPageTextFragmentForSearch(textIndex), (a, b) => a.index - b.index);
     if (index > fragments.length) {
       return -1; // range error
     }
@@ -472,8 +467,7 @@ abstract class PdfPageText {
     final matches = pattern.allMatches(text);
     for (final match in matches) {
       if (match.start == match.end) continue;
-      final m =
-          PdfTextRangeWithFragments.fromTextRange(this, match.start, match.end);
+      final m = PdfTextRangeWithFragments.fromTextRange(this, match.start, match.end);
       if (m != null) {
         yield m;
       }
@@ -631,13 +625,10 @@ class PdfTextRanges {
   int get pageNumber => pageText.pageNumber;
 
   /// Bounds of the text ranges.
-  PdfRect get bounds => ranges
-      .map((r) => r.toTextRangeWithFragments(pageText)!.bounds)
-      .boundingRect();
+  PdfRect get bounds => ranges.map((r) => r.toTextRangeWithFragments(pageText)!.bounds).boundingRect();
 
   /// The composed text of the text ranges.
-  String get text =>
-      ranges.map((r) => pageText.fullText.substring(r.start, r.end)).join();
+  String get text => ranges.map((r) => pageText.fullText.substring(r.start, r.end)).join();
 }
 
 /// For backward compatibility; [PdfTextRangeWithFragments] is previously named [PdfTextMatch].
@@ -684,8 +675,7 @@ class PdfTextRangeWithFragments {
   /// ```
   ///
   /// To paint text highlights on PDF pages, see [PdfViewerParams.pagePaintCallbacks] and [PdfViewerPagePaintCallback].
-  static PdfTextRangeWithFragments? fromTextRange(
-      PdfPageText pageText, int start, int end) {
+  static PdfTextRangeWithFragments? fromTextRange(PdfPageText pageText, int start, int end) {
     if (start >= end) {
       return null;
     }
@@ -722,16 +712,12 @@ class PdfTextRangeWithFragments {
       }
     }
 
-    var bounds = sf.charRects != null
-        ? sf.charRects!.skip(start - sf.index).boundingRect()
-        : sf.bounds;
+    var bounds = sf.charRects != null ? sf.charRects!.skip(start - sf.index).boundingRect() : sf.bounds;
     for (int i = s + 1; i < l; i++) {
       bounds = bounds.merge(pageText.fragments[i].bounds);
     }
     final lf = pageText.fragments[l];
-    bounds = bounds.merge(lf.charRects != null
-        ? lf.charRects!.take(end - lf.index).boundingRect()
-        : lf.bounds);
+    bounds = bounds.merge(lf.charRects != null ? lf.charRects!.take(end - lf.index).boundingRect() : lf.bounds);
 
     return PdfTextRangeWithFragments(
       pageText.pageNumber,
@@ -801,8 +787,7 @@ class PdfRect {
   }
 
   /// Determine whether the rectangle contains the specified point (in the PDF page coordinates).
-  bool contains(double x, double y) =>
-      x >= left && x <= right && y >= bottom && y <= top;
+  bool contains(double x, double y) => x >= left && x <= right && y >= bottom && y <= top;
 
   /// Determine whether the rectangle contains the specified point (in the PDF page coordinates).
   bool containsOffset(Offset offset) => contains(offset.dx, offset.dy);
@@ -820,8 +805,7 @@ class PdfRect {
     int? rotation,
   }) {
     final rotated = rotate(rotation ?? page.rotation.index, page);
-    final scale =
-        scaledPageSize == null ? 1.0 : scaledPageSize.height / page.height;
+    final scale = scaledPageSize == null ? 1.0 : scaledPageSize.height / page.height;
     return Rect.fromLTRB(
       rotated.left * scale,
       (page.height - rotated.top) * scale,
@@ -835,8 +819,7 @@ class PdfRect {
     required PdfPage page,
     required Rect pageRect,
   }) =>
-      toRect(page: page, scaledPageSize: pageRect.size)
-          .translate(pageRect.left, pageRect.top);
+      toRect(page: page, scaledPageSize: pageRect.size).translate(pageRect.left, pageRect.top);
 
   PdfRect rotate(int rotation, PdfPage page) {
     final swap = (page.rotation.index & 1) == 1;
@@ -877,16 +860,11 @@ class PdfRect {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is PdfRect &&
-        other.left == left &&
-        other.top == top &&
-        other.right == right &&
-        other.bottom == bottom;
+    return other is PdfRect && other.left == left && other.top == top && other.right == right && other.bottom == bottom;
   }
 
   @override
-  int get hashCode =>
-      left.hashCode ^ top.hashCode ^ right.hashCode ^ bottom.hashCode;
+  int get hashCode => left.hashCode ^ top.hashCode ^ right.hashCode ^ bottom.hashCode;
 
   @override
   String toString() {
@@ -916,7 +894,8 @@ extension PdfRectsExt on Iterable<PdfRect> {
         bottom = r.bottom;
       }
     }
-    if (left == double.infinity) { // no rects
+    if (left == double.infinity) {
+      // no rects
       throw StateError('No rects');
     }
     return PdfRect(left, top, right, bottom);
@@ -938,17 +917,14 @@ class PdfDest {
   final List<double?>? params;
 
   @override
-  String toString() =>
-      'PdfDest{pageNumber: $pageNumber, command: $command, params: $params}';
+  String toString() => 'PdfDest{pageNumber: $pageNumber, command: $command, params: $params}';
 
   /// Compact the destination.
   ///
   /// The method is used to compact the destination to reduce memory usage.
   /// [params] is typically growable and also modifiable. The method ensures that [params] is unmodifiable.
   PdfDest compact() {
-    return params == null
-        ? this
-        : PdfDest(pageNumber, command, List.unmodifiable(params!));
+    return params == null ? this : PdfDest(pageNumber, command, List.unmodifiable(params!));
   }
 }
 

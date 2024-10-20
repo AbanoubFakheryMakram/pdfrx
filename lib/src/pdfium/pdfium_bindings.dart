@@ -8,17 +8,13 @@ import 'dart:ffi' as ffi;
 
 class pdfium {
   /// Holds the symbol lookup function.
-  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-      _lookup;
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
   pdfium(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
-  pdfium.fromLookup(
-      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-          lookup)
-      : _lookup = lookup;
+  pdfium.fromLookup(ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName) lookup) : _lookup = lookup;
 
   void FPDF_InitLibraryWithConfig(
     ffi.Pointer<FPDF_LIBRARY_CONFIG> config,
@@ -28,30 +24,24 @@ class pdfium {
     );
   }
 
-  late final _FPDF_InitLibraryWithConfigPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<FPDF_LIBRARY_CONFIG>)>>(
-      'FPDF_InitLibraryWithConfig');
-  late final _FPDF_InitLibraryWithConfig = _FPDF_InitLibraryWithConfigPtr
-      .asFunction<void Function(ffi.Pointer<FPDF_LIBRARY_CONFIG>)>();
+  late final _FPDF_InitLibraryWithConfigPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<FPDF_LIBRARY_CONFIG>)>>('FPDF_InitLibraryWithConfig');
+  late final _FPDF_InitLibraryWithConfig =
+      _FPDF_InitLibraryWithConfigPtr.asFunction<void Function(ffi.Pointer<FPDF_LIBRARY_CONFIG>)>();
 
   void FPDF_InitLibrary() {
     return _FPDF_InitLibrary();
   }
 
-  late final _FPDF_InitLibraryPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('FPDF_InitLibrary');
-  late final _FPDF_InitLibrary =
-      _FPDF_InitLibraryPtr.asFunction<void Function()>();
+  late final _FPDF_InitLibraryPtr = _lookup<ffi.NativeFunction<ffi.Void Function()>>('FPDF_InitLibrary');
+  late final _FPDF_InitLibrary = _FPDF_InitLibraryPtr.asFunction<void Function()>();
 
   void FPDF_DestroyLibrary() {
     return _FPDF_DestroyLibrary();
   }
 
-  late final _FPDF_DestroyLibraryPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('FPDF_DestroyLibrary');
-  late final _FPDF_DestroyLibrary =
-      _FPDF_DestroyLibraryPtr.asFunction<void Function()>();
+  late final _FPDF_DestroyLibraryPtr = _lookup<ffi.NativeFunction<ffi.Void Function()>>('FPDF_DestroyLibrary');
+  late final _FPDF_DestroyLibrary = _FPDF_DestroyLibraryPtr.asFunction<void Function()>();
 
   void FPDF_SetSandBoxPolicy(
     int policy,
@@ -64,10 +54,8 @@ class pdfium {
   }
 
   late final _FPDF_SetSandBoxPolicyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_DWORD, FPDF_BOOL)>>(
-          'FPDF_SetSandBoxPolicy');
-  late final _FPDF_SetSandBoxPolicy =
-      _FPDF_SetSandBoxPolicyPtr.asFunction<void Function(int, int)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_DWORD, FPDF_BOOL)>>('FPDF_SetSandBoxPolicy');
+  late final _FPDF_SetSandBoxPolicy = _FPDF_SetSandBoxPolicyPtr.asFunction<void Function(int, int)>();
 
   int FPDF_SetPrintMode(
     int mode,
@@ -77,11 +65,8 @@ class pdfium {
     );
   }
 
-  late final _FPDF_SetPrintModePtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(ffi.Int)>>(
-          'FPDF_SetPrintMode');
-  late final _FPDF_SetPrintMode =
-      _FPDF_SetPrintModePtr.asFunction<int Function(int)>();
+  late final _FPDF_SetPrintModePtr = _lookup<ffi.NativeFunction<FPDF_BOOL Function(ffi.Int)>>('FPDF_SetPrintMode');
+  late final _FPDF_SetPrintMode = _FPDF_SetPrintModePtr.asFunction<int Function(int)>();
 
   FPDF_DOCUMENT FPDF_LoadDocument(
     FPDF_STRING file_path,
@@ -93,12 +78,10 @@ class pdfium {
     );
   }
 
-  late final _FPDF_LoadDocumentPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_DOCUMENT Function(
-              FPDF_STRING, FPDF_BYTESTRING)>>('FPDF_LoadDocument');
-  late final _FPDF_LoadDocument = _FPDF_LoadDocumentPtr.asFunction<
-      FPDF_DOCUMENT Function(FPDF_STRING, FPDF_BYTESTRING)>();
+  late final _FPDF_LoadDocumentPtr =
+      _lookup<ffi.NativeFunction<FPDF_DOCUMENT Function(FPDF_STRING, FPDF_BYTESTRING)>>('FPDF_LoadDocument');
+  late final _FPDF_LoadDocument =
+      _FPDF_LoadDocumentPtr.asFunction<FPDF_DOCUMENT Function(FPDF_STRING, FPDF_BYTESTRING)>();
 
   FPDF_DOCUMENT FPDF_LoadMemDocument(
     ffi.Pointer<ffi.Void> data_buf,
@@ -112,12 +95,11 @@ class pdfium {
     );
   }
 
-  late final _FPDF_LoadMemDocumentPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_DOCUMENT Function(ffi.Pointer<ffi.Void>, ffi.Int,
-              FPDF_BYTESTRING)>>('FPDF_LoadMemDocument');
-  late final _FPDF_LoadMemDocument = _FPDF_LoadMemDocumentPtr.asFunction<
-      FPDF_DOCUMENT Function(ffi.Pointer<ffi.Void>, int, FPDF_BYTESTRING)>();
+  late final _FPDF_LoadMemDocumentPtr =
+      _lookup<ffi.NativeFunction<FPDF_DOCUMENT Function(ffi.Pointer<ffi.Void>, ffi.Int, FPDF_BYTESTRING)>>(
+          'FPDF_LoadMemDocument');
+  late final _FPDF_LoadMemDocument =
+      _FPDF_LoadMemDocumentPtr.asFunction<FPDF_DOCUMENT Function(ffi.Pointer<ffi.Void>, int, FPDF_BYTESTRING)>();
 
   FPDF_DOCUMENT FPDF_LoadMemDocument64(
     ffi.Pointer<ffi.Void> data_buf,
@@ -131,12 +113,11 @@ class pdfium {
     );
   }
 
-  late final _FPDF_LoadMemDocument64Ptr = _lookup<
-      ffi.NativeFunction<
-          FPDF_DOCUMENT Function(ffi.Pointer<ffi.Void>, ffi.Size,
-              FPDF_BYTESTRING)>>('FPDF_LoadMemDocument64');
-  late final _FPDF_LoadMemDocument64 = _FPDF_LoadMemDocument64Ptr.asFunction<
-      FPDF_DOCUMENT Function(ffi.Pointer<ffi.Void>, int, FPDF_BYTESTRING)>();
+  late final _FPDF_LoadMemDocument64Ptr =
+      _lookup<ffi.NativeFunction<FPDF_DOCUMENT Function(ffi.Pointer<ffi.Void>, ffi.Size, FPDF_BYTESTRING)>>(
+          'FPDF_LoadMemDocument64');
+  late final _FPDF_LoadMemDocument64 =
+      _FPDF_LoadMemDocument64Ptr.asFunction<FPDF_DOCUMENT Function(ffi.Pointer<ffi.Void>, int, FPDF_BYTESTRING)>();
 
   FPDF_DOCUMENT FPDF_LoadCustomDocument(
     ffi.Pointer<FPDF_FILEACCESS> pFileAccess,
@@ -148,12 +129,11 @@ class pdfium {
     );
   }
 
-  late final _FPDF_LoadCustomDocumentPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_DOCUMENT Function(ffi.Pointer<FPDF_FILEACCESS>,
-              FPDF_BYTESTRING)>>('FPDF_LoadCustomDocument');
-  late final _FPDF_LoadCustomDocument = _FPDF_LoadCustomDocumentPtr.asFunction<
-      FPDF_DOCUMENT Function(ffi.Pointer<FPDF_FILEACCESS>, FPDF_BYTESTRING)>();
+  late final _FPDF_LoadCustomDocumentPtr =
+      _lookup<ffi.NativeFunction<FPDF_DOCUMENT Function(ffi.Pointer<FPDF_FILEACCESS>, FPDF_BYTESTRING)>>(
+          'FPDF_LoadCustomDocument');
+  late final _FPDF_LoadCustomDocument =
+      _FPDF_LoadCustomDocumentPtr.asFunction<FPDF_DOCUMENT Function(ffi.Pointer<FPDF_FILEACCESS>, FPDF_BYTESTRING)>();
 
   int FPDF_GetFileVersion(
     FPDF_DOCUMENT doc,
@@ -165,22 +145,17 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetFileVersionPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_DOCUMENT, ffi.Pointer<ffi.Int>)>>('FPDF_GetFileVersion');
-  late final _FPDF_GetFileVersion = _FPDF_GetFileVersionPtr.asFunction<
-      int Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Int>)>();
+  late final _FPDF_GetFileVersionPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Int>)>>('FPDF_GetFileVersion');
+  late final _FPDF_GetFileVersion =
+      _FPDF_GetFileVersionPtr.asFunction<int Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Int>)>();
 
   int FPDF_GetLastError() {
     return _FPDF_GetLastError();
   }
 
-  late final _FPDF_GetLastErrorPtr =
-      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function()>>(
-          'FPDF_GetLastError');
-  late final _FPDF_GetLastError =
-      _FPDF_GetLastErrorPtr.asFunction<int Function()>();
+  late final _FPDF_GetLastErrorPtr = _lookup<ffi.NativeFunction<ffi.UnsignedLong Function()>>('FPDF_GetLastError');
+  late final _FPDF_GetLastError = _FPDF_GetLastErrorPtr.asFunction<int Function()>();
 
   int FPDF_DocumentHasValidCrossReferenceTable(
     FPDF_DOCUMENT document,
@@ -191,11 +166,9 @@ class pdfium {
   }
 
   late final _FPDF_DocumentHasValidCrossReferenceTablePtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT)>>(
-          'FPDF_DocumentHasValidCrossReferenceTable');
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT)>>('FPDF_DocumentHasValidCrossReferenceTable');
   late final _FPDF_DocumentHasValidCrossReferenceTable =
-      _FPDF_DocumentHasValidCrossReferenceTablePtr.asFunction<
-          int Function(FPDF_DOCUMENT)>();
+      _FPDF_DocumentHasValidCrossReferenceTablePtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FPDF_GetTrailerEnds(
     FPDF_DOCUMENT document,
@@ -210,11 +183,10 @@ class pdfium {
   }
 
   late final _FPDF_GetTrailerEndsPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_DOCUMENT, ffi.Pointer<ffi.UnsignedInt>,
-              ffi.UnsignedLong)>>('FPDF_GetTrailerEnds');
-  late final _FPDF_GetTrailerEnds = _FPDF_GetTrailerEndsPtr.asFunction<
-      int Function(FPDF_DOCUMENT, ffi.Pointer<ffi.UnsignedInt>, int)>();
+          ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_DOCUMENT, ffi.Pointer<ffi.UnsignedInt>, ffi.UnsignedLong)>>(
+      'FPDF_GetTrailerEnds');
+  late final _FPDF_GetTrailerEnds =
+      _FPDF_GetTrailerEndsPtr.asFunction<int Function(FPDF_DOCUMENT, ffi.Pointer<ffi.UnsignedInt>, int)>();
 
   int FPDF_GetDocPermissions(
     FPDF_DOCUMENT document,
@@ -225,10 +197,8 @@ class pdfium {
   }
 
   late final _FPDF_GetDocPermissionsPtr =
-      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_DOCUMENT)>>(
-          'FPDF_GetDocPermissions');
-  late final _FPDF_GetDocPermissions =
-      _FPDF_GetDocPermissionsPtr.asFunction<int Function(FPDF_DOCUMENT)>();
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_DOCUMENT)>>('FPDF_GetDocPermissions');
+  late final _FPDF_GetDocPermissions = _FPDF_GetDocPermissionsPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FPDF_GetDocUserPermissions(
     FPDF_DOCUMENT document,
@@ -239,10 +209,8 @@ class pdfium {
   }
 
   late final _FPDF_GetDocUserPermissionsPtr =
-      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_DOCUMENT)>>(
-          'FPDF_GetDocUserPermissions');
-  late final _FPDF_GetDocUserPermissions =
-      _FPDF_GetDocUserPermissionsPtr.asFunction<int Function(FPDF_DOCUMENT)>();
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_DOCUMENT)>>('FPDF_GetDocUserPermissions');
+  late final _FPDF_GetDocUserPermissions = _FPDF_GetDocUserPermissionsPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FPDF_GetSecurityHandlerRevision(
     FPDF_DOCUMENT document,
@@ -253,11 +221,9 @@ class pdfium {
   }
 
   late final _FPDF_GetSecurityHandlerRevisionPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>(
-          'FPDF_GetSecurityHandlerRevision');
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>('FPDF_GetSecurityHandlerRevision');
   late final _FPDF_GetSecurityHandlerRevision =
-      _FPDF_GetSecurityHandlerRevisionPtr.asFunction<
-          int Function(FPDF_DOCUMENT)>();
+      _FPDF_GetSecurityHandlerRevisionPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FPDF_GetPageCount(
     FPDF_DOCUMENT document,
@@ -267,11 +233,8 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetPageCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>(
-          'FPDF_GetPageCount');
-  late final _FPDF_GetPageCount =
-      _FPDF_GetPageCountPtr.asFunction<int Function(FPDF_DOCUMENT)>();
+  late final _FPDF_GetPageCountPtr = _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>('FPDF_GetPageCount');
+  late final _FPDF_GetPageCount = _FPDF_GetPageCountPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   FPDF_PAGE FPDF_LoadPage(
     FPDF_DOCUMENT document,
@@ -284,10 +247,8 @@ class pdfium {
   }
 
   late final _FPDF_LoadPagePtr =
-      _lookup<ffi.NativeFunction<FPDF_PAGE Function(FPDF_DOCUMENT, ffi.Int)>>(
-          'FPDF_LoadPage');
-  late final _FPDF_LoadPage =
-      _FPDF_LoadPagePtr.asFunction<FPDF_PAGE Function(FPDF_DOCUMENT, int)>();
+      _lookup<ffi.NativeFunction<FPDF_PAGE Function(FPDF_DOCUMENT, ffi.Int)>>('FPDF_LoadPage');
+  late final _FPDF_LoadPage = _FPDF_LoadPagePtr.asFunction<FPDF_PAGE Function(FPDF_DOCUMENT, int)>();
 
   double FPDF_GetPageWidthF(
     FPDF_PAGE page,
@@ -297,11 +258,8 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetPageWidthFPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(FPDF_PAGE)>>(
-          'FPDF_GetPageWidthF');
-  late final _FPDF_GetPageWidthF =
-      _FPDF_GetPageWidthFPtr.asFunction<double Function(FPDF_PAGE)>();
+  late final _FPDF_GetPageWidthFPtr = _lookup<ffi.NativeFunction<ffi.Float Function(FPDF_PAGE)>>('FPDF_GetPageWidthF');
+  late final _FPDF_GetPageWidthF = _FPDF_GetPageWidthFPtr.asFunction<double Function(FPDF_PAGE)>();
 
   double FPDF_GetPageWidth(
     FPDF_PAGE page,
@@ -311,11 +269,8 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetPageWidthPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(FPDF_PAGE)>>(
-          'FPDF_GetPageWidth');
-  late final _FPDF_GetPageWidth =
-      _FPDF_GetPageWidthPtr.asFunction<double Function(FPDF_PAGE)>();
+  late final _FPDF_GetPageWidthPtr = _lookup<ffi.NativeFunction<ffi.Double Function(FPDF_PAGE)>>('FPDF_GetPageWidth');
+  late final _FPDF_GetPageWidth = _FPDF_GetPageWidthPtr.asFunction<double Function(FPDF_PAGE)>();
 
   double FPDF_GetPageHeightF(
     FPDF_PAGE page,
@@ -326,10 +281,8 @@ class pdfium {
   }
 
   late final _FPDF_GetPageHeightFPtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(FPDF_PAGE)>>(
-          'FPDF_GetPageHeightF');
-  late final _FPDF_GetPageHeightF =
-      _FPDF_GetPageHeightFPtr.asFunction<double Function(FPDF_PAGE)>();
+      _lookup<ffi.NativeFunction<ffi.Float Function(FPDF_PAGE)>>('FPDF_GetPageHeightF');
+  late final _FPDF_GetPageHeightF = _FPDF_GetPageHeightFPtr.asFunction<double Function(FPDF_PAGE)>();
 
   double FPDF_GetPageHeight(
     FPDF_PAGE page,
@@ -339,11 +292,8 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetPageHeightPtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(FPDF_PAGE)>>(
-          'FPDF_GetPageHeight');
-  late final _FPDF_GetPageHeight =
-      _FPDF_GetPageHeightPtr.asFunction<double Function(FPDF_PAGE)>();
+  late final _FPDF_GetPageHeightPtr = _lookup<ffi.NativeFunction<ffi.Double Function(FPDF_PAGE)>>('FPDF_GetPageHeight');
+  late final _FPDF_GetPageHeight = _FPDF_GetPageHeightPtr.asFunction<double Function(FPDF_PAGE)>();
 
   int FPDF_GetPageBoundingBox(
     FPDF_PAGE page,
@@ -355,12 +305,10 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetPageBoundingBoxPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGE, ffi.Pointer<FS_RECTF>)>>('FPDF_GetPageBoundingBox');
-  late final _FPDF_GetPageBoundingBox = _FPDF_GetPageBoundingBoxPtr.asFunction<
-      int Function(FPDF_PAGE, ffi.Pointer<FS_RECTF>)>();
+  late final _FPDF_GetPageBoundingBoxPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE, ffi.Pointer<FS_RECTF>)>>('FPDF_GetPageBoundingBox');
+  late final _FPDF_GetPageBoundingBox =
+      _FPDF_GetPageBoundingBoxPtr.asFunction<int Function(FPDF_PAGE, ffi.Pointer<FS_RECTF>)>();
 
   int FPDF_GetPageSizeByIndexF(
     FPDF_DOCUMENT document,
@@ -374,12 +322,11 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetPageSizeByIndexFPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_DOCUMENT, ffi.Int,
-              ffi.Pointer<FS_SIZEF>)>>('FPDF_GetPageSizeByIndexF');
-  late final _FPDF_GetPageSizeByIndexF = _FPDF_GetPageSizeByIndexFPtr
-      .asFunction<int Function(FPDF_DOCUMENT, int, ffi.Pointer<FS_SIZEF>)>();
+  late final _FPDF_GetPageSizeByIndexFPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT, ffi.Int, ffi.Pointer<FS_SIZEF>)>>(
+          'FPDF_GetPageSizeByIndexF');
+  late final _FPDF_GetPageSizeByIndexF =
+      _FPDF_GetPageSizeByIndexFPtr.asFunction<int Function(FPDF_DOCUMENT, int, ffi.Pointer<FS_SIZEF>)>();
 
   int FPDF_GetPageSizeByIndex(
     FPDF_DOCUMENT document,
@@ -396,12 +343,11 @@ class pdfium {
   }
 
   late final _FPDF_GetPageSizeByIndexPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(FPDF_DOCUMENT, ffi.Int, ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>)>>('FPDF_GetPageSizeByIndex');
+          ffi
+          .NativeFunction<ffi.Int Function(FPDF_DOCUMENT, ffi.Int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>>(
+      'FPDF_GetPageSizeByIndex');
   late final _FPDF_GetPageSizeByIndex = _FPDF_GetPageSizeByIndexPtr.asFunction<
-      int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>)>();
+      int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>();
 
   void FPDF_RenderPage(
     HDC dc,
@@ -426,11 +372,10 @@ class pdfium {
   }
 
   late final _FPDF_RenderPagePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(HDC, FPDF_PAGE, ffi.Int, ffi.Int, ffi.Int, ffi.Int,
-              ffi.Int, ffi.Int)>>('FPDF_RenderPage');
-  late final _FPDF_RenderPage = _FPDF_RenderPagePtr.asFunction<
-      void Function(HDC, FPDF_PAGE, int, int, int, int, int, int)>();
+          ffi.NativeFunction<ffi.Void Function(HDC, FPDF_PAGE, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int)>>(
+      'FPDF_RenderPage');
+  late final _FPDF_RenderPage =
+      _FPDF_RenderPagePtr.asFunction<void Function(HDC, FPDF_PAGE, int, int, int, int, int, int)>();
 
   void FPDF_RenderPageBitmap(
     FPDF_BITMAP bitmap,
@@ -456,10 +401,10 @@ class pdfium {
 
   late final _FPDF_RenderPageBitmapPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(FPDF_BITMAP, FPDF_PAGE, ffi.Int, ffi.Int, ffi.Int,
-              ffi.Int, ffi.Int, ffi.Int)>>('FPDF_RenderPageBitmap');
-  late final _FPDF_RenderPageBitmap = _FPDF_RenderPageBitmapPtr.asFunction<
-      void Function(FPDF_BITMAP, FPDF_PAGE, int, int, int, int, int, int)>();
+          ffi.Void Function(
+              FPDF_BITMAP, FPDF_PAGE, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int)>>('FPDF_RenderPageBitmap');
+  late final _FPDF_RenderPageBitmap =
+      _FPDF_RenderPageBitmapPtr.asFunction<void Function(FPDF_BITMAP, FPDF_PAGE, int, int, int, int, int, int)>();
 
   void FPDF_RenderPageBitmapWithMatrix(
     FPDF_BITMAP bitmap,
@@ -479,16 +424,10 @@ class pdfium {
 
   late final _FPDF_RenderPageBitmapWithMatrixPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(
-              FPDF_BITMAP,
-              FPDF_PAGE,
-              ffi.Pointer<FS_MATRIX>,
-              ffi.Pointer<FS_RECTF>,
+          ffi.Void Function(FPDF_BITMAP, FPDF_PAGE, ffi.Pointer<FS_MATRIX>, ffi.Pointer<FS_RECTF>,
               ffi.Int)>>('FPDF_RenderPageBitmapWithMatrix');
-  late final _FPDF_RenderPageBitmapWithMatrix =
-      _FPDF_RenderPageBitmapWithMatrixPtr.asFunction<
-          void Function(FPDF_BITMAP, FPDF_PAGE, ffi.Pointer<FS_MATRIX>,
-              ffi.Pointer<FS_RECTF>, int)>();
+  late final _FPDF_RenderPageBitmapWithMatrix = _FPDF_RenderPageBitmapWithMatrixPtr.asFunction<
+      void Function(FPDF_BITMAP, FPDF_PAGE, ffi.Pointer<FS_MATRIX>, ffi.Pointer<FS_RECTF>, int)>();
 
   void FPDF_ClosePage(
     FPDF_PAGE page,
@@ -498,11 +437,8 @@ class pdfium {
     );
   }
 
-  late final _FPDF_ClosePagePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGE)>>(
-          'FPDF_ClosePage');
-  late final _FPDF_ClosePage =
-      _FPDF_ClosePagePtr.asFunction<void Function(FPDF_PAGE)>();
+  late final _FPDF_ClosePagePtr = _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGE)>>('FPDF_ClosePage');
+  late final _FPDF_ClosePage = _FPDF_ClosePagePtr.asFunction<void Function(FPDF_PAGE)>();
 
   void FPDF_CloseDocument(
     FPDF_DOCUMENT document,
@@ -513,10 +449,8 @@ class pdfium {
   }
 
   late final _FPDF_CloseDocumentPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_DOCUMENT)>>(
-          'FPDF_CloseDocument');
-  late final _FPDF_CloseDocument =
-      _FPDF_CloseDocumentPtr.asFunction<void Function(FPDF_DOCUMENT)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_DOCUMENT)>>('FPDF_CloseDocument');
+  late final _FPDF_CloseDocument = _FPDF_CloseDocumentPtr.asFunction<void Function(FPDF_DOCUMENT)>();
 
   int FPDF_DeviceToPage(
     FPDF_PAGE page,
@@ -546,20 +480,10 @@ class pdfium {
 
   late final _FPDF_DeviceToPagePtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGE,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>)>>('FPDF_DeviceToPage');
+          FPDF_BOOL Function(FPDF_PAGE, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>>('FPDF_DeviceToPage');
   late final _FPDF_DeviceToPage = _FPDF_DeviceToPagePtr.asFunction<
-      int Function(FPDF_PAGE, int, int, int, int, int, int, int,
-          ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>();
+      int Function(FPDF_PAGE, int, int, int, int, int, int, int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>();
 
   int FPDF_PageToDevice(
     FPDF_PAGE page,
@@ -589,20 +513,10 @@ class pdfium {
 
   late final _FPDF_PageToDevicePtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGE,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Int,
-              ffi.Double,
-              ffi.Double,
-              ffi.Pointer<ffi.Int>,
-              ffi.Pointer<ffi.Int>)>>('FPDF_PageToDevice');
+          FPDF_BOOL Function(FPDF_PAGE, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Double, ffi.Double,
+              ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>>('FPDF_PageToDevice');
   late final _FPDF_PageToDevice = _FPDF_PageToDevicePtr.asFunction<
-      int Function(FPDF_PAGE, int, int, int, int, int, double, double,
-          ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>();
+      int Function(FPDF_PAGE, int, int, int, int, int, double, double, ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>();
 
   FPDF_BITMAP FPDFBitmap_Create(
     int width,
@@ -616,11 +530,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFBitmap_CreatePtr = _lookup<
-          ffi.NativeFunction<FPDF_BITMAP Function(ffi.Int, ffi.Int, ffi.Int)>>(
-      'FPDFBitmap_Create');
-  late final _FPDFBitmap_Create =
-      _FPDFBitmap_CreatePtr.asFunction<FPDF_BITMAP Function(int, int, int)>();
+  late final _FPDFBitmap_CreatePtr =
+      _lookup<ffi.NativeFunction<FPDF_BITMAP Function(ffi.Int, ffi.Int, ffi.Int)>>('FPDFBitmap_Create');
+  late final _FPDFBitmap_Create = _FPDFBitmap_CreatePtr.asFunction<FPDF_BITMAP Function(int, int, int)>();
 
   FPDF_BITMAP FPDFBitmap_CreateEx(
     int width,
@@ -638,12 +550,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFBitmap_CreateExPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BITMAP Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Void>,
-              ffi.Int)>>('FPDFBitmap_CreateEx');
-  late final _FPDFBitmap_CreateEx = _FPDFBitmap_CreateExPtr.asFunction<
-      FPDF_BITMAP Function(int, int, int, ffi.Pointer<ffi.Void>, int)>();
+  late final _FPDFBitmap_CreateExPtr =
+      _lookup<ffi.NativeFunction<FPDF_BITMAP Function(ffi.Int, ffi.Int, ffi.Int, ffi.Pointer<ffi.Void>, ffi.Int)>>(
+          'FPDFBitmap_CreateEx');
+  late final _FPDFBitmap_CreateEx =
+      _FPDFBitmap_CreateExPtr.asFunction<FPDF_BITMAP Function(int, int, int, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDFBitmap_GetFormat(
     FPDF_BITMAP bitmap,
@@ -654,10 +565,8 @@ class pdfium {
   }
 
   late final _FPDFBitmap_GetFormatPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BITMAP)>>(
-          'FPDFBitmap_GetFormat');
-  late final _FPDFBitmap_GetFormat =
-      _FPDFBitmap_GetFormatPtr.asFunction<int Function(FPDF_BITMAP)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BITMAP)>>('FPDFBitmap_GetFormat');
+  late final _FPDFBitmap_GetFormat = _FPDFBitmap_GetFormatPtr.asFunction<int Function(FPDF_BITMAP)>();
 
   void FPDFBitmap_FillRect(
     FPDF_BITMAP bitmap,
@@ -677,12 +586,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFBitmap_FillRectPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(FPDF_BITMAP, ffi.Int, ffi.Int, ffi.Int, ffi.Int,
-              FPDF_DWORD)>>('FPDFBitmap_FillRect');
-  late final _FPDFBitmap_FillRect = _FPDFBitmap_FillRectPtr.asFunction<
-      void Function(FPDF_BITMAP, int, int, int, int, int)>();
+  late final _FPDFBitmap_FillRectPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_BITMAP, ffi.Int, ffi.Int, ffi.Int, ffi.Int, FPDF_DWORD)>>(
+          'FPDFBitmap_FillRect');
+  late final _FPDFBitmap_FillRect =
+      _FPDFBitmap_FillRectPtr.asFunction<void Function(FPDF_BITMAP, int, int, int, int, int)>();
 
   ffi.Pointer<ffi.Void> FPDFBitmap_GetBuffer(
     FPDF_BITMAP bitmap,
@@ -693,10 +601,8 @@ class pdfium {
   }
 
   late final _FPDFBitmap_GetBufferPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(FPDF_BITMAP)>>(
-          'FPDFBitmap_GetBuffer');
-  late final _FPDFBitmap_GetBuffer = _FPDFBitmap_GetBufferPtr.asFunction<
-      ffi.Pointer<ffi.Void> Function(FPDF_BITMAP)>();
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(FPDF_BITMAP)>>('FPDFBitmap_GetBuffer');
+  late final _FPDFBitmap_GetBuffer = _FPDFBitmap_GetBufferPtr.asFunction<ffi.Pointer<ffi.Void> Function(FPDF_BITMAP)>();
 
   int FPDFBitmap_GetWidth(
     FPDF_BITMAP bitmap,
@@ -707,10 +613,8 @@ class pdfium {
   }
 
   late final _FPDFBitmap_GetWidthPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BITMAP)>>(
-          'FPDFBitmap_GetWidth');
-  late final _FPDFBitmap_GetWidth =
-      _FPDFBitmap_GetWidthPtr.asFunction<int Function(FPDF_BITMAP)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BITMAP)>>('FPDFBitmap_GetWidth');
+  late final _FPDFBitmap_GetWidth = _FPDFBitmap_GetWidthPtr.asFunction<int Function(FPDF_BITMAP)>();
 
   int FPDFBitmap_GetHeight(
     FPDF_BITMAP bitmap,
@@ -721,10 +625,8 @@ class pdfium {
   }
 
   late final _FPDFBitmap_GetHeightPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BITMAP)>>(
-          'FPDFBitmap_GetHeight');
-  late final _FPDFBitmap_GetHeight =
-      _FPDFBitmap_GetHeightPtr.asFunction<int Function(FPDF_BITMAP)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BITMAP)>>('FPDFBitmap_GetHeight');
+  late final _FPDFBitmap_GetHeight = _FPDFBitmap_GetHeightPtr.asFunction<int Function(FPDF_BITMAP)>();
 
   int FPDFBitmap_GetStride(
     FPDF_BITMAP bitmap,
@@ -735,10 +637,8 @@ class pdfium {
   }
 
   late final _FPDFBitmap_GetStridePtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BITMAP)>>(
-          'FPDFBitmap_GetStride');
-  late final _FPDFBitmap_GetStride =
-      _FPDFBitmap_GetStridePtr.asFunction<int Function(FPDF_BITMAP)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BITMAP)>>('FPDFBitmap_GetStride');
+  late final _FPDFBitmap_GetStride = _FPDFBitmap_GetStridePtr.asFunction<int Function(FPDF_BITMAP)>();
 
   void FPDFBitmap_Destroy(
     FPDF_BITMAP bitmap,
@@ -748,11 +648,8 @@ class pdfium {
     );
   }
 
-  late final _FPDFBitmap_DestroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_BITMAP)>>(
-          'FPDFBitmap_Destroy');
-  late final _FPDFBitmap_Destroy =
-      _FPDFBitmap_DestroyPtr.asFunction<void Function(FPDF_BITMAP)>();
+  late final _FPDFBitmap_DestroyPtr = _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_BITMAP)>>('FPDFBitmap_Destroy');
+  late final _FPDFBitmap_Destroy = _FPDFBitmap_DestroyPtr.asFunction<void Function(FPDF_BITMAP)>();
 
   int FPDF_VIEWERREF_GetPrintScaling(
     FPDF_DOCUMENT document,
@@ -763,11 +660,9 @@ class pdfium {
   }
 
   late final _FPDF_VIEWERREF_GetPrintScalingPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT)>>(
-          'FPDF_VIEWERREF_GetPrintScaling');
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT)>>('FPDF_VIEWERREF_GetPrintScaling');
   late final _FPDF_VIEWERREF_GetPrintScaling =
-      _FPDF_VIEWERREF_GetPrintScalingPtr.asFunction<
-          int Function(FPDF_DOCUMENT)>();
+      _FPDF_VIEWERREF_GetPrintScalingPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FPDF_VIEWERREF_GetNumCopies(
     FPDF_DOCUMENT document,
@@ -778,10 +673,8 @@ class pdfium {
   }
 
   late final _FPDF_VIEWERREF_GetNumCopiesPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>(
-          'FPDF_VIEWERREF_GetNumCopies');
-  late final _FPDF_VIEWERREF_GetNumCopies =
-      _FPDF_VIEWERREF_GetNumCopiesPtr.asFunction<int Function(FPDF_DOCUMENT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>('FPDF_VIEWERREF_GetNumCopies');
+  late final _FPDF_VIEWERREF_GetNumCopies = _FPDF_VIEWERREF_GetNumCopiesPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   FPDF_PAGERANGE FPDF_VIEWERREF_GetPrintPageRange(
     FPDF_DOCUMENT document,
@@ -792,11 +685,9 @@ class pdfium {
   }
 
   late final _FPDF_VIEWERREF_GetPrintPageRangePtr =
-      _lookup<ffi.NativeFunction<FPDF_PAGERANGE Function(FPDF_DOCUMENT)>>(
-          'FPDF_VIEWERREF_GetPrintPageRange');
+      _lookup<ffi.NativeFunction<FPDF_PAGERANGE Function(FPDF_DOCUMENT)>>('FPDF_VIEWERREF_GetPrintPageRange');
   late final _FPDF_VIEWERREF_GetPrintPageRange =
-      _FPDF_VIEWERREF_GetPrintPageRangePtr.asFunction<
-          FPDF_PAGERANGE Function(FPDF_DOCUMENT)>();
+      _FPDF_VIEWERREF_GetPrintPageRangePtr.asFunction<FPDF_PAGERANGE Function(FPDF_DOCUMENT)>();
 
   int FPDF_VIEWERREF_GetPrintPageRangeCount(
     FPDF_PAGERANGE pagerange,
@@ -807,11 +698,9 @@ class pdfium {
   }
 
   late final _FPDF_VIEWERREF_GetPrintPageRangeCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Size Function(FPDF_PAGERANGE)>>(
-          'FPDF_VIEWERREF_GetPrintPageRangeCount');
+      _lookup<ffi.NativeFunction<ffi.Size Function(FPDF_PAGERANGE)>>('FPDF_VIEWERREF_GetPrintPageRangeCount');
   late final _FPDF_VIEWERREF_GetPrintPageRangeCount =
-      _FPDF_VIEWERREF_GetPrintPageRangeCountPtr.asFunction<
-          int Function(FPDF_PAGERANGE)>();
+      _FPDF_VIEWERREF_GetPrintPageRangeCountPtr.asFunction<int Function(FPDF_PAGERANGE)>();
 
   int FPDF_VIEWERREF_GetPrintPageRangeElement(
     FPDF_PAGERANGE pagerange,
@@ -827,8 +716,7 @@ class pdfium {
       _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGERANGE, ffi.Size)>>(
           'FPDF_VIEWERREF_GetPrintPageRangeElement');
   late final _FPDF_VIEWERREF_GetPrintPageRangeElement =
-      _FPDF_VIEWERREF_GetPrintPageRangeElementPtr.asFunction<
-          int Function(FPDF_PAGERANGE, int)>();
+      _FPDF_VIEWERREF_GetPrintPageRangeElementPtr.asFunction<int Function(FPDF_PAGERANGE, int)>();
 
   int FPDF_VIEWERREF_GetDuplex(
     FPDF_DOCUMENT document,
@@ -839,10 +727,8 @@ class pdfium {
   }
 
   late final _FPDF_VIEWERREF_GetDuplexPtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(FPDF_DOCUMENT)>>(
-          'FPDF_VIEWERREF_GetDuplex');
-  late final _FPDF_VIEWERREF_GetDuplex =
-      _FPDF_VIEWERREF_GetDuplexPtr.asFunction<int Function(FPDF_DOCUMENT)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(FPDF_DOCUMENT)>>('FPDF_VIEWERREF_GetDuplex');
+  late final _FPDF_VIEWERREF_GetDuplex = _FPDF_VIEWERREF_GetDuplexPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FPDF_VIEWERREF_GetName(
     FPDF_DOCUMENT document,
@@ -861,13 +747,9 @@ class pdfium {
   late final _FPDF_VIEWERREF_GetNamePtr = _lookup<
       ffi.NativeFunction<
           ffi.UnsignedLong Function(
-              FPDF_DOCUMENT,
-              FPDF_BYTESTRING,
-              ffi.Pointer<ffi.Char>,
-              ffi.UnsignedLong)>>('FPDF_VIEWERREF_GetName');
-  late final _FPDF_VIEWERREF_GetName = _FPDF_VIEWERREF_GetNamePtr.asFunction<
-      int Function(
-          FPDF_DOCUMENT, FPDF_BYTESTRING, ffi.Pointer<ffi.Char>, int)>();
+              FPDF_DOCUMENT, FPDF_BYTESTRING, ffi.Pointer<ffi.Char>, ffi.UnsignedLong)>>('FPDF_VIEWERREF_GetName');
+  late final _FPDF_VIEWERREF_GetName =
+      _FPDF_VIEWERREF_GetNamePtr.asFunction<int Function(FPDF_DOCUMENT, FPDF_BYTESTRING, ffi.Pointer<ffi.Char>, int)>();
 
   int FPDF_CountNamedDests(
     FPDF_DOCUMENT document,
@@ -878,10 +760,8 @@ class pdfium {
   }
 
   late final _FPDF_CountNamedDestsPtr =
-      _lookup<ffi.NativeFunction<FPDF_DWORD Function(FPDF_DOCUMENT)>>(
-          'FPDF_CountNamedDests');
-  late final _FPDF_CountNamedDests =
-      _FPDF_CountNamedDestsPtr.asFunction<int Function(FPDF_DOCUMENT)>();
+      _lookup<ffi.NativeFunction<FPDF_DWORD Function(FPDF_DOCUMENT)>>('FPDF_CountNamedDests');
+  late final _FPDF_CountNamedDests = _FPDF_CountNamedDestsPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   FPDF_DEST FPDF_GetNamedDestByName(
     FPDF_DOCUMENT document,
@@ -893,12 +773,10 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetNamedDestByNamePtr = _lookup<
-          ffi
-          .NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_BYTESTRING)>>(
-      'FPDF_GetNamedDestByName');
-  late final _FPDF_GetNamedDestByName = _FPDF_GetNamedDestByNamePtr.asFunction<
-      FPDF_DEST Function(FPDF_DOCUMENT, FPDF_BYTESTRING)>();
+  late final _FPDF_GetNamedDestByNamePtr =
+      _lookup<ffi.NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_BYTESTRING)>>('FPDF_GetNamedDestByName');
+  late final _FPDF_GetNamedDestByName =
+      _FPDF_GetNamedDestByNamePtr.asFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_BYTESTRING)>();
 
   FPDF_DEST FPDF_GetNamedDest(
     FPDF_DOCUMENT document,
@@ -915,12 +793,10 @@ class pdfium {
   }
 
   late final _FPDF_GetNamedDestPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_DEST Function(FPDF_DOCUMENT, ffi.Int, ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Long>)>>('FPDF_GetNamedDest');
+          ffi.NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, ffi.Int, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Long>)>>(
+      'FPDF_GetNamedDest');
   late final _FPDF_GetNamedDest = _FPDF_GetNamedDestPtr.asFunction<
-      FPDF_DEST Function(
-          FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Long>)>();
+      FPDF_DEST Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Long>)>();
 
   int FPDF_GetXFAPacketCount(
     FPDF_DOCUMENT document,
@@ -931,10 +807,8 @@ class pdfium {
   }
 
   late final _FPDF_GetXFAPacketCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>(
-          'FPDF_GetXFAPacketCount');
-  late final _FPDF_GetXFAPacketCount =
-      _FPDF_GetXFAPacketCountPtr.asFunction<int Function(FPDF_DOCUMENT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>('FPDF_GetXFAPacketCount');
+  late final _FPDF_GetXFAPacketCount = _FPDF_GetXFAPacketCountPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FPDF_GetXFAPacketName(
     FPDF_DOCUMENT document,
@@ -951,14 +825,11 @@ class pdfium {
   }
 
   late final _FPDF_GetXFAPacketNamePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_DOCUMENT,
-              ffi.Int,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDF_GetXFAPacketName');
-  late final _FPDF_GetXFAPacketName = _FPDF_GetXFAPacketNamePtr.asFunction<
-      int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, int)>();
+          ffi
+          .NativeFunction<ffi.UnsignedLong Function(FPDF_DOCUMENT, ffi.Int, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>(
+      'FPDF_GetXFAPacketName');
+  late final _FPDF_GetXFAPacketName =
+      _FPDF_GetXFAPacketNamePtr.asFunction<int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDF_GetXFAPacketContent(
     FPDF_DOCUMENT document,
@@ -978,16 +849,10 @@ class pdfium {
 
   late final _FPDF_GetXFAPacketContentPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_DOCUMENT,
-              ffi.Int,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong,
+          FPDF_BOOL Function(FPDF_DOCUMENT, ffi.Int, ffi.Pointer<ffi.Void>, ffi.UnsignedLong,
               ffi.Pointer<ffi.UnsignedLong>)>>('FPDF_GetXFAPacketContent');
-  late final _FPDF_GetXFAPacketContent =
-      _FPDF_GetXFAPacketContentPtr.asFunction<
-          int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, int,
-              ffi.Pointer<ffi.UnsignedLong>)>();
+  late final _FPDF_GetXFAPacketContent = _FPDF_GetXFAPacketContentPtr.asFunction<
+      int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, int, ffi.Pointer<ffi.UnsignedLong>)>();
 
   FPDF_FORMHANDLE FPDFDOC_InitFormFillEnvironment(
     FPDF_DOCUMENT document,
@@ -999,15 +864,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFDOC_InitFormFillEnvironmentPtr = _lookup<
-          ffi.NativeFunction<
-              FPDF_FORMHANDLE Function(
-                  FPDF_DOCUMENT, ffi.Pointer<FPDF_FORMFILLINFO>)>>(
-      'FPDFDOC_InitFormFillEnvironment');
-  late final _FPDFDOC_InitFormFillEnvironment =
-      _FPDFDOC_InitFormFillEnvironmentPtr.asFunction<
-          FPDF_FORMHANDLE Function(
-              FPDF_DOCUMENT, ffi.Pointer<FPDF_FORMFILLINFO>)>();
+  late final _FPDFDOC_InitFormFillEnvironmentPtr =
+      _lookup<ffi.NativeFunction<FPDF_FORMHANDLE Function(FPDF_DOCUMENT, ffi.Pointer<FPDF_FORMFILLINFO>)>>(
+          'FPDFDOC_InitFormFillEnvironment');
+  late final _FPDFDOC_InitFormFillEnvironment = _FPDFDOC_InitFormFillEnvironmentPtr.asFunction<
+      FPDF_FORMHANDLE Function(FPDF_DOCUMENT, ffi.Pointer<FPDF_FORMFILLINFO>)>();
 
   void FPDFDOC_ExitFormFillEnvironment(
     FPDF_FORMHANDLE hHandle,
@@ -1018,11 +879,9 @@ class pdfium {
   }
 
   late final _FPDFDOC_ExitFormFillEnvironmentPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE)>>(
-          'FPDFDOC_ExitFormFillEnvironment');
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE)>>('FPDFDOC_ExitFormFillEnvironment');
   late final _FPDFDOC_ExitFormFillEnvironment =
-      _FPDFDOC_ExitFormFillEnvironmentPtr.asFunction<
-          void Function(FPDF_FORMHANDLE)>();
+      _FPDFDOC_ExitFormFillEnvironmentPtr.asFunction<void Function(FPDF_FORMHANDLE)>();
 
   void FORM_OnAfterLoadPage(
     FPDF_PAGE page,
@@ -1034,11 +893,9 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnAfterLoadPagePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, FPDF_FORMHANDLE)>>(
-      'FORM_OnAfterLoadPage');
-  late final _FORM_OnAfterLoadPage = _FORM_OnAfterLoadPagePtr.asFunction<
-      void Function(FPDF_PAGE, FPDF_FORMHANDLE)>();
+  late final _FORM_OnAfterLoadPagePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, FPDF_FORMHANDLE)>>('FORM_OnAfterLoadPage');
+  late final _FORM_OnAfterLoadPage = _FORM_OnAfterLoadPagePtr.asFunction<void Function(FPDF_PAGE, FPDF_FORMHANDLE)>();
 
   void FORM_OnBeforeClosePage(
     FPDF_PAGE page,
@@ -1050,11 +907,10 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnBeforeClosePagePtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, FPDF_FORMHANDLE)>>(
-      'FORM_OnBeforeClosePage');
-  late final _FORM_OnBeforeClosePage = _FORM_OnBeforeClosePagePtr.asFunction<
-      void Function(FPDF_PAGE, FPDF_FORMHANDLE)>();
+  late final _FORM_OnBeforeClosePagePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, FPDF_FORMHANDLE)>>('FORM_OnBeforeClosePage');
+  late final _FORM_OnBeforeClosePage =
+      _FORM_OnBeforeClosePagePtr.asFunction<void Function(FPDF_PAGE, FPDF_FORMHANDLE)>();
 
   void FORM_DoDocumentJSAction(
     FPDF_FORMHANDLE hHandle,
@@ -1065,10 +921,8 @@ class pdfium {
   }
 
   late final _FORM_DoDocumentJSActionPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE)>>(
-          'FORM_DoDocumentJSAction');
-  late final _FORM_DoDocumentJSAction =
-      _FORM_DoDocumentJSActionPtr.asFunction<void Function(FPDF_FORMHANDLE)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE)>>('FORM_DoDocumentJSAction');
+  late final _FORM_DoDocumentJSAction = _FORM_DoDocumentJSActionPtr.asFunction<void Function(FPDF_FORMHANDLE)>();
 
   void FORM_DoDocumentOpenAction(
     FPDF_FORMHANDLE hHandle,
@@ -1079,10 +933,8 @@ class pdfium {
   }
 
   late final _FORM_DoDocumentOpenActionPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE)>>(
-          'FORM_DoDocumentOpenAction');
-  late final _FORM_DoDocumentOpenAction = _FORM_DoDocumentOpenActionPtr
-      .asFunction<void Function(FPDF_FORMHANDLE)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE)>>('FORM_DoDocumentOpenAction');
+  late final _FORM_DoDocumentOpenAction = _FORM_DoDocumentOpenActionPtr.asFunction<void Function(FPDF_FORMHANDLE)>();
 
   void FORM_DoDocumentAAction(
     FPDF_FORMHANDLE hHandle,
@@ -1095,10 +947,8 @@ class pdfium {
   }
 
   late final _FORM_DoDocumentAActionPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE, ffi.Int)>>(
-          'FORM_DoDocumentAAction');
-  late final _FORM_DoDocumentAAction = _FORM_DoDocumentAActionPtr.asFunction<
-      void Function(FPDF_FORMHANDLE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE, ffi.Int)>>('FORM_DoDocumentAAction');
+  late final _FORM_DoDocumentAAction = _FORM_DoDocumentAActionPtr.asFunction<void Function(FPDF_FORMHANDLE, int)>();
 
   void FORM_DoPageAAction(
     FPDF_PAGE page,
@@ -1112,12 +962,9 @@ class pdfium {
     );
   }
 
-  late final _FORM_DoPageAActionPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              FPDF_PAGE, FPDF_FORMHANDLE, ffi.Int)>>('FORM_DoPageAAction');
-  late final _FORM_DoPageAAction = _FORM_DoPageAActionPtr.asFunction<
-      void Function(FPDF_PAGE, FPDF_FORMHANDLE, int)>();
+  late final _FORM_DoPageAActionPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, FPDF_FORMHANDLE, ffi.Int)>>('FORM_DoPageAAction');
+  late final _FORM_DoPageAAction = _FORM_DoPageAActionPtr.asFunction<void Function(FPDF_PAGE, FPDF_FORMHANDLE, int)>();
 
   int FORM_OnMouseMove(
     FPDF_FORMHANDLE hHandle,
@@ -1135,12 +982,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnMouseMovePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double,
-              ffi.Double)>>('FORM_OnMouseMove');
-  late final _FORM_OnMouseMove = _FORM_OnMouseMovePtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
+  late final _FORM_OnMouseMovePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double, ffi.Double)>>(
+          'FORM_OnMouseMove');
+  late final _FORM_OnMouseMove =
+      _FORM_OnMouseMovePtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
 
   int FORM_OnMouseWheel(
     FPDF_FORMHANDLE hHandle,
@@ -1162,11 +1008,10 @@ class pdfium {
 
   late final _FORM_OnMouseWheelPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int,
-              ffi.Pointer<FS_POINTF>, ffi.Int, ffi.Int)>>('FORM_OnMouseWheel');
+          FPDF_BOOL Function(
+              FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Pointer<FS_POINTF>, ffi.Int, ffi.Int)>>('FORM_OnMouseWheel');
   late final _FORM_OnMouseWheel = _FORM_OnMouseWheelPtr.asFunction<
-      int Function(
-          FPDF_FORMHANDLE, FPDF_PAGE, int, ffi.Pointer<FS_POINTF>, int, int)>();
+      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, ffi.Pointer<FS_POINTF>, int, int)>();
 
   int FORM_OnFocus(
     FPDF_FORMHANDLE hHandle,
@@ -1184,12 +1029,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnFocusPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double,
-              ffi.Double)>>('FORM_OnFocus');
-  late final _FORM_OnFocus = _FORM_OnFocusPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
+  late final _FORM_OnFocusPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double, ffi.Double)>>(
+          'FORM_OnFocus');
+  late final _FORM_OnFocus =
+      _FORM_OnFocusPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
 
   int FORM_OnLButtonDown(
     FPDF_FORMHANDLE hHandle,
@@ -1207,12 +1051,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnLButtonDownPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double,
-              ffi.Double)>>('FORM_OnLButtonDown');
-  late final _FORM_OnLButtonDown = _FORM_OnLButtonDownPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
+  late final _FORM_OnLButtonDownPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double, ffi.Double)>>(
+          'FORM_OnLButtonDown');
+  late final _FORM_OnLButtonDown =
+      _FORM_OnLButtonDownPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
 
   int FORM_OnRButtonDown(
     FPDF_FORMHANDLE hHandle,
@@ -1230,12 +1073,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnRButtonDownPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double,
-              ffi.Double)>>('FORM_OnRButtonDown');
-  late final _FORM_OnRButtonDown = _FORM_OnRButtonDownPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
+  late final _FORM_OnRButtonDownPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double, ffi.Double)>>(
+          'FORM_OnRButtonDown');
+  late final _FORM_OnRButtonDown =
+      _FORM_OnRButtonDownPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
 
   int FORM_OnLButtonUp(
     FPDF_FORMHANDLE hHandle,
@@ -1253,12 +1095,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnLButtonUpPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double,
-              ffi.Double)>>('FORM_OnLButtonUp');
-  late final _FORM_OnLButtonUp = _FORM_OnLButtonUpPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
+  late final _FORM_OnLButtonUpPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double, ffi.Double)>>(
+          'FORM_OnLButtonUp');
+  late final _FORM_OnLButtonUp =
+      _FORM_OnLButtonUpPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
 
   int FORM_OnRButtonUp(
     FPDF_FORMHANDLE hHandle,
@@ -1276,12 +1117,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnRButtonUpPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double,
-              ffi.Double)>>('FORM_OnRButtonUp');
-  late final _FORM_OnRButtonUp = _FORM_OnRButtonUpPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
+  late final _FORM_OnRButtonUpPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double, ffi.Double)>>(
+          'FORM_OnRButtonUp');
+  late final _FORM_OnRButtonUp =
+      _FORM_OnRButtonUpPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
 
   int FORM_OnLButtonDoubleClick(
     FPDF_FORMHANDLE hHandle,
@@ -1299,13 +1139,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnLButtonDoubleClickPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double,
-              ffi.Double)>>('FORM_OnLButtonDoubleClick');
+  late final _FORM_OnLButtonDoubleClickPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Double, ffi.Double)>>(
+          'FORM_OnLButtonDoubleClick');
   late final _FORM_OnLButtonDoubleClick =
-      _FORM_OnLButtonDoubleClickPtr.asFunction<
-          int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
+      _FORM_OnLButtonDoubleClickPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, double, double)>();
 
   int FORM_OnKeyDown(
     FPDF_FORMHANDLE hHandle,
@@ -1321,12 +1159,9 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnKeyDownPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Int)>>('FORM_OnKeyDown');
-  late final _FORM_OnKeyDown = _FORM_OnKeyDownPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, int)>();
+  late final _FORM_OnKeyDownPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Int)>>('FORM_OnKeyDown');
+  late final _FORM_OnKeyDown = _FORM_OnKeyDownPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, int)>();
 
   int FORM_OnKeyUp(
     FPDF_FORMHANDLE hHandle,
@@ -1342,12 +1177,9 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnKeyUpPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Int)>>('FORM_OnKeyUp');
-  late final _FORM_OnKeyUp = _FORM_OnKeyUpPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, int)>();
+  late final _FORM_OnKeyUpPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Int)>>('FORM_OnKeyUp');
+  late final _FORM_OnKeyUp = _FORM_OnKeyUpPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, int)>();
 
   int FORM_OnChar(
     FPDF_FORMHANDLE hHandle,
@@ -1363,12 +1195,9 @@ class pdfium {
     );
   }
 
-  late final _FORM_OnCharPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Int)>>('FORM_OnChar');
-  late final _FORM_OnChar = _FORM_OnCharPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, int)>();
+  late final _FORM_OnCharPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, ffi.Int)>>('FORM_OnChar');
+  late final _FORM_OnChar = _FORM_OnCharPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, int)>();
 
   int FORM_GetFocusedText(
     FPDF_FORMHANDLE hHandle,
@@ -1386,10 +1215,10 @@ class pdfium {
 
   late final _FORM_GetFocusedTextPtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_FORMHANDLE, FPDF_PAGE,
-              ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FORM_GetFocusedText');
-  late final _FORM_GetFocusedText = _FORM_GetFocusedTextPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<ffi.Void>, int)>();
+          ffi.UnsignedLong Function(
+              FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FORM_GetFocusedText');
+  late final _FORM_GetFocusedText =
+      _FORM_GetFocusedTextPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<ffi.Void>, int)>();
 
   int FORM_GetSelectedText(
     FPDF_FORMHANDLE hHandle,
@@ -1408,12 +1237,9 @@ class pdfium {
   late final _FORM_GetSelectedTextPtr = _lookup<
       ffi.NativeFunction<
           ffi.UnsignedLong Function(
-              FPDF_FORMHANDLE,
-              FPDF_PAGE,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FORM_GetSelectedText');
-  late final _FORM_GetSelectedText = _FORM_GetSelectedTextPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<ffi.Void>, int)>();
+              FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FORM_GetSelectedText');
+  late final _FORM_GetSelectedText =
+      _FORM_GetSelectedTextPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<ffi.Void>, int)>();
 
   void FORM_ReplaceAndKeepSelection(
     FPDF_FORMHANDLE hHandle,
@@ -1427,12 +1253,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_ReplaceAndKeepSelectionPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(FPDF_FORMHANDLE, FPDF_PAGE,
-              FPDF_WIDESTRING)>>('FORM_ReplaceAndKeepSelection');
-  late final _FORM_ReplaceAndKeepSelection = _FORM_ReplaceAndKeepSelectionPtr
-      .asFunction<void Function(FPDF_FORMHANDLE, FPDF_PAGE, FPDF_WIDESTRING)>();
+  late final _FORM_ReplaceAndKeepSelectionPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE, FPDF_PAGE, FPDF_WIDESTRING)>>(
+          'FORM_ReplaceAndKeepSelection');
+  late final _FORM_ReplaceAndKeepSelection =
+      _FORM_ReplaceAndKeepSelectionPtr.asFunction<void Function(FPDF_FORMHANDLE, FPDF_PAGE, FPDF_WIDESTRING)>();
 
   void FORM_ReplaceSelection(
     FPDF_FORMHANDLE hHandle,
@@ -1446,12 +1271,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_ReplaceSelectionPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(FPDF_FORMHANDLE, FPDF_PAGE,
-              FPDF_WIDESTRING)>>('FORM_ReplaceSelection');
-  late final _FORM_ReplaceSelection = _FORM_ReplaceSelectionPtr.asFunction<
-      void Function(FPDF_FORMHANDLE, FPDF_PAGE, FPDF_WIDESTRING)>();
+  late final _FORM_ReplaceSelectionPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE, FPDF_PAGE, FPDF_WIDESTRING)>>(
+          'FORM_ReplaceSelection');
+  late final _FORM_ReplaceSelection =
+      _FORM_ReplaceSelectionPtr.asFunction<void Function(FPDF_FORMHANDLE, FPDF_PAGE, FPDF_WIDESTRING)>();
 
   int FORM_SelectAllText(
     FPDF_FORMHANDLE hHandle,
@@ -1463,11 +1287,9 @@ class pdfium {
     );
   }
 
-  late final _FORM_SelectAllTextPtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>(
-      'FORM_SelectAllText');
-  late final _FORM_SelectAllText = _FORM_SelectAllTextPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
+  late final _FORM_SelectAllTextPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>('FORM_SelectAllText');
+  late final _FORM_SelectAllText = _FORM_SelectAllTextPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
 
   int FORM_CanUndo(
     FPDF_FORMHANDLE hHandle,
@@ -1479,11 +1301,9 @@ class pdfium {
     );
   }
 
-  late final _FORM_CanUndoPtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>(
-      'FORM_CanUndo');
-  late final _FORM_CanUndo =
-      _FORM_CanUndoPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
+  late final _FORM_CanUndoPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>('FORM_CanUndo');
+  late final _FORM_CanUndo = _FORM_CanUndoPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
 
   int FORM_CanRedo(
     FPDF_FORMHANDLE hHandle,
@@ -1495,11 +1315,9 @@ class pdfium {
     );
   }
 
-  late final _FORM_CanRedoPtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>(
-      'FORM_CanRedo');
-  late final _FORM_CanRedo =
-      _FORM_CanRedoPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
+  late final _FORM_CanRedoPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>('FORM_CanRedo');
+  late final _FORM_CanRedo = _FORM_CanRedoPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
 
   int FORM_Undo(
     FPDF_FORMHANDLE hHandle,
@@ -1511,11 +1329,8 @@ class pdfium {
     );
   }
 
-  late final _FORM_UndoPtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>(
-      'FORM_Undo');
-  late final _FORM_Undo =
-      _FORM_UndoPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
+  late final _FORM_UndoPtr = _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>('FORM_Undo');
+  late final _FORM_Undo = _FORM_UndoPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
 
   int FORM_Redo(
     FPDF_FORMHANDLE hHandle,
@@ -1527,11 +1342,8 @@ class pdfium {
     );
   }
 
-  late final _FORM_RedoPtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>(
-      'FORM_Redo');
-  late final _FORM_Redo =
-      _FORM_RedoPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
+  late final _FORM_RedoPtr = _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE)>>('FORM_Redo');
+  late final _FORM_Redo = _FORM_RedoPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE)>();
 
   int FORM_ForceToKillFocus(
     FPDF_FORMHANDLE hHandle,
@@ -1542,10 +1354,8 @@ class pdfium {
   }
 
   late final _FORM_ForceToKillFocusPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE)>>(
-          'FORM_ForceToKillFocus');
-  late final _FORM_ForceToKillFocus =
-      _FORM_ForceToKillFocusPtr.asFunction<int Function(FPDF_FORMHANDLE)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE)>>('FORM_ForceToKillFocus');
+  late final _FORM_ForceToKillFocus = _FORM_ForceToKillFocusPtr.asFunction<int Function(FPDF_FORMHANDLE)>();
 
   int FORM_GetFocusedAnnot(
     FPDF_FORMHANDLE handle,
@@ -1560,12 +1370,10 @@ class pdfium {
   }
 
   late final _FORM_GetFocusedAnnotPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, ffi.Pointer<ffi.Int>,
-              ffi.Pointer<FPDF_ANNOTATION>)>>('FORM_GetFocusedAnnot');
+          ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, ffi.Pointer<ffi.Int>, ffi.Pointer<FPDF_ANNOTATION>)>>(
+      'FORM_GetFocusedAnnot');
   late final _FORM_GetFocusedAnnot = _FORM_GetFocusedAnnotPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, ffi.Pointer<ffi.Int>,
-          ffi.Pointer<FPDF_ANNOTATION>)>();
+      int Function(FPDF_FORMHANDLE, ffi.Pointer<ffi.Int>, ffi.Pointer<FPDF_ANNOTATION>)>();
 
   int FORM_SetFocusedAnnot(
     FPDF_FORMHANDLE handle,
@@ -1577,12 +1385,10 @@ class pdfium {
     );
   }
 
-  late final _FORM_SetFocusedAnnotPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FORM_SetFocusedAnnot');
-  late final _FORM_SetFocusedAnnot = _FORM_SetFocusedAnnotPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
+  late final _FORM_SetFocusedAnnotPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FORM_SetFocusedAnnot');
+  late final _FORM_SetFocusedAnnot =
+      _FORM_SetFocusedAnnotPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
 
   int FPDFPage_HasFormFieldAtPoint(
     FPDF_FORMHANDLE hHandle,
@@ -1598,12 +1404,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPage_HasFormFieldAtPointPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Double,
-              ffi.Double)>>('FPDFPage_HasFormFieldAtPoint');
-  late final _FPDFPage_HasFormFieldAtPoint = _FPDFPage_HasFormFieldAtPointPtr
-      .asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, double, double)>();
+  late final _FPDFPage_HasFormFieldAtPointPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Double, ffi.Double)>>(
+          'FPDFPage_HasFormFieldAtPoint');
+  late final _FPDFPage_HasFormFieldAtPoint =
+      _FPDFPage_HasFormFieldAtPointPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, double, double)>();
 
   int FPDFPage_FormFieldZOrderAtPoint(
     FPDF_FORMHANDLE hHandle,
@@ -1619,13 +1424,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPage_FormFieldZOrderAtPointPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Double,
-              ffi.Double)>>('FPDFPage_FormFieldZOrderAtPoint');
+  late final _FPDFPage_FormFieldZOrderAtPointPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Double, ffi.Double)>>(
+          'FPDFPage_FormFieldZOrderAtPoint');
   late final _FPDFPage_FormFieldZOrderAtPoint =
-      _FPDFPage_FormFieldZOrderAtPointPtr.asFunction<
-          int Function(FPDF_FORMHANDLE, FPDF_PAGE, double, double)>();
+      _FPDFPage_FormFieldZOrderAtPointPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, double, double)>();
 
   void FPDF_SetFormFieldHighlightColor(
     FPDF_FORMHANDLE hHandle,
@@ -1639,13 +1442,11 @@ class pdfium {
     );
   }
 
-  late final _FPDF_SetFormFieldHighlightColorPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(FPDF_FORMHANDLE, ffi.Int,
-              ffi.UnsignedLong)>>('FPDF_SetFormFieldHighlightColor');
+  late final _FPDF_SetFormFieldHighlightColorPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE, ffi.Int, ffi.UnsignedLong)>>(
+          'FPDF_SetFormFieldHighlightColor');
   late final _FPDF_SetFormFieldHighlightColor =
-      _FPDF_SetFormFieldHighlightColorPtr.asFunction<
-          void Function(FPDF_FORMHANDLE, int, int)>();
+      _FPDF_SetFormFieldHighlightColorPtr.asFunction<void Function(FPDF_FORMHANDLE, int, int)>();
 
   void FPDF_SetFormFieldHighlightAlpha(
     FPDF_FORMHANDLE hHandle,
@@ -1657,13 +1458,11 @@ class pdfium {
     );
   }
 
-  late final _FPDF_SetFormFieldHighlightAlphaPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Void Function(FPDF_FORMHANDLE,
-              ffi.UnsignedChar)>>('FPDF_SetFormFieldHighlightAlpha');
+  late final _FPDF_SetFormFieldHighlightAlphaPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE, ffi.UnsignedChar)>>(
+          'FPDF_SetFormFieldHighlightAlpha');
   late final _FPDF_SetFormFieldHighlightAlpha =
-      _FPDF_SetFormFieldHighlightAlphaPtr.asFunction<
-          void Function(FPDF_FORMHANDLE, int)>();
+      _FPDF_SetFormFieldHighlightAlphaPtr.asFunction<void Function(FPDF_FORMHANDLE, int)>();
 
   void FPDF_RemoveFormFieldHighlight(
     FPDF_FORMHANDLE hHandle,
@@ -1674,10 +1473,9 @@ class pdfium {
   }
 
   late final _FPDF_RemoveFormFieldHighlightPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE)>>(
-          'FPDF_RemoveFormFieldHighlight');
-  late final _FPDF_RemoveFormFieldHighlight = _FPDF_RemoveFormFieldHighlightPtr
-      .asFunction<void Function(FPDF_FORMHANDLE)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FORMHANDLE)>>('FPDF_RemoveFormFieldHighlight');
+  late final _FPDF_RemoveFormFieldHighlight =
+      _FPDF_RemoveFormFieldHighlightPtr.asFunction<void Function(FPDF_FORMHANDLE)>();
 
   void FPDF_FFLDraw(
     FPDF_FORMHANDLE hHandle,
@@ -1705,11 +1503,10 @@ class pdfium {
 
   late final _FPDF_FFLDrawPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(FPDF_FORMHANDLE, FPDF_BITMAP, FPDF_PAGE, ffi.Int,
-              ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int)>>('FPDF_FFLDraw');
+          ffi.Void Function(FPDF_FORMHANDLE, FPDF_BITMAP, FPDF_PAGE, ffi.Int, ffi.Int, ffi.Int, ffi.Int, ffi.Int,
+              ffi.Int)>>('FPDF_FFLDraw');
   late final _FPDF_FFLDraw = _FPDF_FFLDrawPtr.asFunction<
-      void Function(FPDF_FORMHANDLE, FPDF_BITMAP, FPDF_PAGE, int, int, int, int,
-          int, int)>();
+      void Function(FPDF_FORMHANDLE, FPDF_BITMAP, FPDF_PAGE, int, int, int, int, int, int)>();
 
   int FPDF_GetFormType(
     FPDF_DOCUMENT document,
@@ -1719,11 +1516,8 @@ class pdfium {
     );
   }
 
-  late final _FPDF_GetFormTypePtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>(
-          'FPDF_GetFormType');
-  late final _FPDF_GetFormType =
-      _FPDF_GetFormTypePtr.asFunction<int Function(FPDF_DOCUMENT)>();
+  late final _FPDF_GetFormTypePtr = _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT)>>('FPDF_GetFormType');
+  late final _FPDF_GetFormType = _FPDF_GetFormTypePtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FORM_SetIndexSelected(
     FPDF_FORMHANDLE hHandle,
@@ -1739,12 +1533,11 @@ class pdfium {
     );
   }
 
-  late final _FORM_SetIndexSelectedPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int,
-              FPDF_BOOL)>>('FORM_SetIndexSelected');
-  late final _FORM_SetIndexSelected = _FORM_SetIndexSelectedPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, int)>();
+  late final _FORM_SetIndexSelectedPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int, FPDF_BOOL)>>(
+          'FORM_SetIndexSelected');
+  late final _FORM_SetIndexSelected =
+      _FORM_SetIndexSelectedPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int, int)>();
 
   int FORM_IsIndexSelected(
     FPDF_FORMHANDLE hHandle,
@@ -1758,12 +1551,10 @@ class pdfium {
     );
   }
 
-  late final _FORM_IsIndexSelectedPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int)>>('FORM_IsIndexSelected');
-  late final _FORM_IsIndexSelected = _FORM_IsIndexSelectedPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_PAGE, int)>();
+  late final _FORM_IsIndexSelectedPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Int)>>('FORM_IsIndexSelected');
+  late final _FORM_IsIndexSelected =
+      _FORM_IsIndexSelectedPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_PAGE, int)>();
 
   int FPDF_LoadXFA(
     FPDF_DOCUMENT document,
@@ -1773,11 +1564,8 @@ class pdfium {
     );
   }
 
-  late final _FPDF_LoadXFAPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT)>>(
-          'FPDF_LoadXFA');
-  late final _FPDF_LoadXFA =
-      _FPDF_LoadXFAPtr.asFunction<int Function(FPDF_DOCUMENT)>();
+  late final _FPDF_LoadXFAPtr = _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT)>>('FPDF_LoadXFA');
+  late final _FPDF_LoadXFA = _FPDF_LoadXFAPtr.asFunction<int Function(FPDF_DOCUMENT)>();
 
   int FPDFAnnot_IsSupportedSubtype(
     int subtype,
@@ -1788,10 +1576,8 @@ class pdfium {
   }
 
   late final _FPDFAnnot_IsSupportedSubtypePtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION_SUBTYPE)>>(
-          'FPDFAnnot_IsSupportedSubtype');
-  late final _FPDFAnnot_IsSupportedSubtype =
-      _FPDFAnnot_IsSupportedSubtypePtr.asFunction<int Function(int)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION_SUBTYPE)>>('FPDFAnnot_IsSupportedSubtype');
+  late final _FPDFAnnot_IsSupportedSubtype = _FPDFAnnot_IsSupportedSubtypePtr.asFunction<int Function(int)>();
 
   FPDF_ANNOTATION FPDFPage_CreateAnnot(
     FPDF_PAGE page,
@@ -1803,12 +1589,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFPage_CreateAnnotPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_ANNOTATION Function(
-              FPDF_PAGE, FPDF_ANNOTATION_SUBTYPE)>>('FPDFPage_CreateAnnot');
-  late final _FPDFPage_CreateAnnot = _FPDFPage_CreateAnnotPtr.asFunction<
-      FPDF_ANNOTATION Function(FPDF_PAGE, int)>();
+  late final _FPDFPage_CreateAnnotPtr =
+      _lookup<ffi.NativeFunction<FPDF_ANNOTATION Function(FPDF_PAGE, FPDF_ANNOTATION_SUBTYPE)>>('FPDFPage_CreateAnnot');
+  late final _FPDFPage_CreateAnnot = _FPDFPage_CreateAnnotPtr.asFunction<FPDF_ANNOTATION Function(FPDF_PAGE, int)>();
 
   int FPDFPage_GetAnnotCount(
     FPDF_PAGE page,
@@ -1819,10 +1602,8 @@ class pdfium {
   }
 
   late final _FPDFPage_GetAnnotCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE)>>(
-          'FPDFPage_GetAnnotCount');
-  late final _FPDFPage_GetAnnotCount =
-      _FPDFPage_GetAnnotCountPtr.asFunction<int Function(FPDF_PAGE)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE)>>('FPDFPage_GetAnnotCount');
+  late final _FPDFPage_GetAnnotCount = _FPDFPage_GetAnnotCountPtr.asFunction<int Function(FPDF_PAGE)>();
 
   FPDF_ANNOTATION FPDFPage_GetAnnot(
     FPDF_PAGE page,
@@ -1835,10 +1616,8 @@ class pdfium {
   }
 
   late final _FPDFPage_GetAnnotPtr =
-      _lookup<ffi.NativeFunction<FPDF_ANNOTATION Function(FPDF_PAGE, ffi.Int)>>(
-          'FPDFPage_GetAnnot');
-  late final _FPDFPage_GetAnnot = _FPDFPage_GetAnnotPtr.asFunction<
-      FPDF_ANNOTATION Function(FPDF_PAGE, int)>();
+      _lookup<ffi.NativeFunction<FPDF_ANNOTATION Function(FPDF_PAGE, ffi.Int)>>('FPDFPage_GetAnnot');
+  late final _FPDFPage_GetAnnot = _FPDFPage_GetAnnotPtr.asFunction<FPDF_ANNOTATION Function(FPDF_PAGE, int)>();
 
   int FPDFPage_GetAnnotIndex(
     FPDF_PAGE page,
@@ -1851,10 +1630,9 @@ class pdfium {
   }
 
   late final _FPDFPage_GetAnnotIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE, FPDF_ANNOTATION)>>(
-          'FPDFPage_GetAnnotIndex');
-  late final _FPDFPage_GetAnnotIndex = _FPDFPage_GetAnnotIndexPtr.asFunction<
-      int Function(FPDF_PAGE, FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE, FPDF_ANNOTATION)>>('FPDFPage_GetAnnotIndex');
+  late final _FPDFPage_GetAnnotIndex =
+      _FPDFPage_GetAnnotIndexPtr.asFunction<int Function(FPDF_PAGE, FPDF_ANNOTATION)>();
 
   void FPDFPage_CloseAnnot(
     FPDF_ANNOTATION annot,
@@ -1865,10 +1643,8 @@ class pdfium {
   }
 
   late final _FPDFPage_CloseAnnotPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_ANNOTATION)>>(
-          'FPDFPage_CloseAnnot');
-  late final _FPDFPage_CloseAnnot =
-      _FPDFPage_CloseAnnotPtr.asFunction<void Function(FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_ANNOTATION)>>('FPDFPage_CloseAnnot');
+  late final _FPDFPage_CloseAnnot = _FPDFPage_CloseAnnotPtr.asFunction<void Function(FPDF_ANNOTATION)>();
 
   int FPDFPage_RemoveAnnot(
     FPDF_PAGE page,
@@ -1881,10 +1657,8 @@ class pdfium {
   }
 
   late final _FPDFPage_RemoveAnnotPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE, ffi.Int)>>(
-          'FPDFPage_RemoveAnnot');
-  late final _FPDFPage_RemoveAnnot =
-      _FPDFPage_RemoveAnnotPtr.asFunction<int Function(FPDF_PAGE, int)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE, ffi.Int)>>('FPDFPage_RemoveAnnot');
+  late final _FPDFPage_RemoveAnnot = _FPDFPage_RemoveAnnotPtr.asFunction<int Function(FPDF_PAGE, int)>();
 
   int FPDFAnnot_GetSubtype(
     FPDF_ANNOTATION annot,
@@ -1894,12 +1668,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetSubtypePtr = _lookup<
-          ffi
-          .NativeFunction<FPDF_ANNOTATION_SUBTYPE Function(FPDF_ANNOTATION)>>(
-      'FPDFAnnot_GetSubtype');
-  late final _FPDFAnnot_GetSubtype =
-      _FPDFAnnot_GetSubtypePtr.asFunction<int Function(FPDF_ANNOTATION)>();
+  late final _FPDFAnnot_GetSubtypePtr =
+      _lookup<ffi.NativeFunction<FPDF_ANNOTATION_SUBTYPE Function(FPDF_ANNOTATION)>>('FPDFAnnot_GetSubtype');
+  late final _FPDFAnnot_GetSubtype = _FPDFAnnot_GetSubtypePtr.asFunction<int Function(FPDF_ANNOTATION)>();
 
   int FPDFAnnot_IsObjectSupportedSubtype(
     int subtype,
@@ -1910,8 +1681,7 @@ class pdfium {
   }
 
   late final _FPDFAnnot_IsObjectSupportedSubtypePtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION_SUBTYPE)>>(
-          'FPDFAnnot_IsObjectSupportedSubtype');
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION_SUBTYPE)>>('FPDFAnnot_IsObjectSupportedSubtype');
   late final _FPDFAnnot_IsObjectSupportedSubtype =
       _FPDFAnnot_IsObjectSupportedSubtypePtr.asFunction<int Function(int)>();
 
@@ -1925,12 +1695,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_UpdateObjectPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION, FPDF_PAGEOBJECT)>>('FPDFAnnot_UpdateObject');
-  late final _FPDFAnnot_UpdateObject = _FPDFAnnot_UpdateObjectPtr.asFunction<
-      int Function(FPDF_ANNOTATION, FPDF_PAGEOBJECT)>();
+  late final _FPDFAnnot_UpdateObjectPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_PAGEOBJECT)>>('FPDFAnnot_UpdateObject');
+  late final _FPDFAnnot_UpdateObject =
+      _FPDFAnnot_UpdateObjectPtr.asFunction<int Function(FPDF_ANNOTATION, FPDF_PAGEOBJECT)>();
 
   int FPDFAnnot_AddInkStroke(
     FPDF_ANNOTATION annot,
@@ -1944,12 +1712,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_AddInkStrokePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>,
-              ffi.Size)>>('FPDFAnnot_AddInkStroke');
-  late final _FPDFAnnot_AddInkStroke = _FPDFAnnot_AddInkStrokePtr.asFunction<
-      int Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, int)>();
+  late final _FPDFAnnot_AddInkStrokePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, ffi.Size)>>(
+          'FPDFAnnot_AddInkStroke');
+  late final _FPDFAnnot_AddInkStroke =
+      _FPDFAnnot_AddInkStrokePtr.asFunction<int Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, int)>();
 
   int FPDFAnnot_RemoveInkList(
     FPDF_ANNOTATION annot,
@@ -1960,10 +1727,8 @@ class pdfium {
   }
 
   late final _FPDFAnnot_RemoveInkListPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION)>>(
-          'FPDFAnnot_RemoveInkList');
-  late final _FPDFAnnot_RemoveInkList =
-      _FPDFAnnot_RemoveInkListPtr.asFunction<int Function(FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION)>>('FPDFAnnot_RemoveInkList');
+  late final _FPDFAnnot_RemoveInkList = _FPDFAnnot_RemoveInkListPtr.asFunction<int Function(FPDF_ANNOTATION)>();
 
   int FPDFAnnot_AppendObject(
     FPDF_ANNOTATION annot,
@@ -1975,12 +1740,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_AppendObjectPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION, FPDF_PAGEOBJECT)>>('FPDFAnnot_AppendObject');
-  late final _FPDFAnnot_AppendObject = _FPDFAnnot_AppendObjectPtr.asFunction<
-      int Function(FPDF_ANNOTATION, FPDF_PAGEOBJECT)>();
+  late final _FPDFAnnot_AppendObjectPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_PAGEOBJECT)>>('FPDFAnnot_AppendObject');
+  late final _FPDFAnnot_AppendObject =
+      _FPDFAnnot_AppendObjectPtr.asFunction<int Function(FPDF_ANNOTATION, FPDF_PAGEOBJECT)>();
 
   int FPDFAnnot_GetObjectCount(
     FPDF_ANNOTATION annot,
@@ -1991,10 +1754,8 @@ class pdfium {
   }
 
   late final _FPDFAnnot_GetObjectCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_ANNOTATION)>>(
-          'FPDFAnnot_GetObjectCount');
-  late final _FPDFAnnot_GetObjectCount =
-      _FPDFAnnot_GetObjectCountPtr.asFunction<int Function(FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_ANNOTATION)>>('FPDFAnnot_GetObjectCount');
+  late final _FPDFAnnot_GetObjectCount = _FPDFAnnot_GetObjectCountPtr.asFunction<int Function(FPDF_ANNOTATION)>();
 
   FPDF_PAGEOBJECT FPDFAnnot_GetObject(
     FPDF_ANNOTATION annot,
@@ -2006,12 +1767,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetObjectPtr = _lookup<
-          ffi
-          .NativeFunction<FPDF_PAGEOBJECT Function(FPDF_ANNOTATION, ffi.Int)>>(
-      'FPDFAnnot_GetObject');
-  late final _FPDFAnnot_GetObject = _FPDFAnnot_GetObjectPtr.asFunction<
-      FPDF_PAGEOBJECT Function(FPDF_ANNOTATION, int)>();
+  late final _FPDFAnnot_GetObjectPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(FPDF_ANNOTATION, ffi.Int)>>('FPDFAnnot_GetObject');
+  late final _FPDFAnnot_GetObject =
+      _FPDFAnnot_GetObjectPtr.asFunction<FPDF_PAGEOBJECT Function(FPDF_ANNOTATION, int)>();
 
   int FPDFAnnot_RemoveObject(
     FPDF_ANNOTATION annot,
@@ -2024,10 +1783,8 @@ class pdfium {
   }
 
   late final _FPDFAnnot_RemoveObjectPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Int)>>(
-          'FPDFAnnot_RemoveObject');
-  late final _FPDFAnnot_RemoveObject = _FPDFAnnot_RemoveObjectPtr.asFunction<
-      int Function(FPDF_ANNOTATION, int)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Int)>>('FPDFAnnot_RemoveObject');
+  late final _FPDFAnnot_RemoveObject = _FPDFAnnot_RemoveObjectPtr.asFunction<int Function(FPDF_ANNOTATION, int)>();
 
   int FPDFAnnot_SetColor(
     FPDF_ANNOTATION annot,
@@ -2049,15 +1806,10 @@ class pdfium {
 
   late final _FPDFAnnot_SetColorPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION,
-              ffi.Int32,
-              ffi.UnsignedInt,
-              ffi.UnsignedInt,
-              ffi.UnsignedInt,
+          FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Int32, ffi.UnsignedInt, ffi.UnsignedInt, ffi.UnsignedInt,
               ffi.UnsignedInt)>>('FPDFAnnot_SetColor');
-  late final _FPDFAnnot_SetColor = _FPDFAnnot_SetColorPtr.asFunction<
-      int Function(FPDF_ANNOTATION, int, int, int, int, int)>();
+  late final _FPDFAnnot_SetColor =
+      _FPDFAnnot_SetColorPtr.asFunction<int Function(FPDF_ANNOTATION, int, int, int, int, int)>();
 
   int FPDFAnnot_GetColor(
     FPDF_ANNOTATION annot,
@@ -2079,21 +1831,11 @@ class pdfium {
 
   late final _FPDFAnnot_GetColorPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION,
-              ffi.Int32,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>)>>('FPDFAnnot_GetColor');
+          FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Int32, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+              ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>>('FPDFAnnot_GetColor');
   late final _FPDFAnnot_GetColor = _FPDFAnnot_GetColorPtr.asFunction<
-      int Function(
-          FPDF_ANNOTATION,
-          int,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>)>();
+      int Function(FPDF_ANNOTATION, int, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+          ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>();
 
   int FPDFAnnot_HasAttachmentPoints(
     FPDF_ANNOTATION annot,
@@ -2104,10 +1846,9 @@ class pdfium {
   }
 
   late final _FPDFAnnot_HasAttachmentPointsPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION)>>(
-          'FPDFAnnot_HasAttachmentPoints');
-  late final _FPDFAnnot_HasAttachmentPoints = _FPDFAnnot_HasAttachmentPointsPtr
-      .asFunction<int Function(FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION)>>('FPDFAnnot_HasAttachmentPoints');
+  late final _FPDFAnnot_HasAttachmentPoints =
+      _FPDFAnnot_HasAttachmentPointsPtr.asFunction<int Function(FPDF_ANNOTATION)>();
 
   int FPDFAnnot_SetAttachmentPoints(
     FPDF_ANNOTATION annot,
@@ -2121,13 +1862,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_SetAttachmentPointsPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Size,
-              ffi.Pointer<FS_QUADPOINTSF>)>>('FPDFAnnot_SetAttachmentPoints');
+  late final _FPDFAnnot_SetAttachmentPointsPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Size, ffi.Pointer<FS_QUADPOINTSF>)>>(
+          'FPDFAnnot_SetAttachmentPoints');
   late final _FPDFAnnot_SetAttachmentPoints =
-      _FPDFAnnot_SetAttachmentPointsPtr.asFunction<
-          int Function(FPDF_ANNOTATION, int, ffi.Pointer<FS_QUADPOINTSF>)>();
+      _FPDFAnnot_SetAttachmentPointsPtr.asFunction<int Function(FPDF_ANNOTATION, int, ffi.Pointer<FS_QUADPOINTSF>)>();
 
   int FPDFAnnot_AppendAttachmentPoints(
     FPDF_ANNOTATION annot,
@@ -2139,14 +1878,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_AppendAttachmentPointsPtr = _lookup<
-          ffi.NativeFunction<
-              FPDF_BOOL Function(
-                  FPDF_ANNOTATION, ffi.Pointer<FS_QUADPOINTSF>)>>(
-      'FPDFAnnot_AppendAttachmentPoints');
+  late final _FPDFAnnot_AppendAttachmentPointsPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Pointer<FS_QUADPOINTSF>)>>(
+          'FPDFAnnot_AppendAttachmentPoints');
   late final _FPDFAnnot_AppendAttachmentPoints =
-      _FPDFAnnot_AppendAttachmentPointsPtr.asFunction<
-          int Function(FPDF_ANNOTATION, ffi.Pointer<FS_QUADPOINTSF>)>();
+      _FPDFAnnot_AppendAttachmentPointsPtr.asFunction<int Function(FPDF_ANNOTATION, ffi.Pointer<FS_QUADPOINTSF>)>();
 
   int FPDFAnnot_CountAttachmentPoints(
     FPDF_ANNOTATION annot,
@@ -2157,11 +1893,9 @@ class pdfium {
   }
 
   late final _FPDFAnnot_CountAttachmentPointsPtr =
-      _lookup<ffi.NativeFunction<ffi.Size Function(FPDF_ANNOTATION)>>(
-          'FPDFAnnot_CountAttachmentPoints');
+      _lookup<ffi.NativeFunction<ffi.Size Function(FPDF_ANNOTATION)>>('FPDFAnnot_CountAttachmentPoints');
   late final _FPDFAnnot_CountAttachmentPoints =
-      _FPDFAnnot_CountAttachmentPointsPtr.asFunction<
-          int Function(FPDF_ANNOTATION)>();
+      _FPDFAnnot_CountAttachmentPointsPtr.asFunction<int Function(FPDF_ANNOTATION)>();
 
   int FPDFAnnot_GetAttachmentPoints(
     FPDF_ANNOTATION annot,
@@ -2175,13 +1909,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetAttachmentPointsPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Size,
-              ffi.Pointer<FS_QUADPOINTSF>)>>('FPDFAnnot_GetAttachmentPoints');
+  late final _FPDFAnnot_GetAttachmentPointsPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Size, ffi.Pointer<FS_QUADPOINTSF>)>>(
+          'FPDFAnnot_GetAttachmentPoints');
   late final _FPDFAnnot_GetAttachmentPoints =
-      _FPDFAnnot_GetAttachmentPointsPtr.asFunction<
-          int Function(FPDF_ANNOTATION, int, ffi.Pointer<FS_QUADPOINTSF>)>();
+      _FPDFAnnot_GetAttachmentPointsPtr.asFunction<int Function(FPDF_ANNOTATION, int, ffi.Pointer<FS_QUADPOINTSF>)>();
 
   int FPDFAnnot_SetRect(
     FPDF_ANNOTATION annot,
@@ -2193,12 +1925,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_SetRectPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION, ffi.Pointer<FS_RECTF>)>>('FPDFAnnot_SetRect');
-  late final _FPDFAnnot_SetRect = _FPDFAnnot_SetRectPtr.asFunction<
-      int Function(FPDF_ANNOTATION, ffi.Pointer<FS_RECTF>)>();
+  late final _FPDFAnnot_SetRectPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Pointer<FS_RECTF>)>>('FPDFAnnot_SetRect');
+  late final _FPDFAnnot_SetRect =
+      _FPDFAnnot_SetRectPtr.asFunction<int Function(FPDF_ANNOTATION, ffi.Pointer<FS_RECTF>)>();
 
   int FPDFAnnot_GetRect(
     FPDF_ANNOTATION annot,
@@ -2210,12 +1940,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetRectPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION, ffi.Pointer<FS_RECTF>)>>('FPDFAnnot_GetRect');
-  late final _FPDFAnnot_GetRect = _FPDFAnnot_GetRectPtr.asFunction<
-      int Function(FPDF_ANNOTATION, ffi.Pointer<FS_RECTF>)>();
+  late final _FPDFAnnot_GetRectPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Pointer<FS_RECTF>)>>('FPDFAnnot_GetRect');
+  late final _FPDFAnnot_GetRect =
+      _FPDFAnnot_GetRectPtr.asFunction<int Function(FPDF_ANNOTATION, ffi.Pointer<FS_RECTF>)>();
 
   int FPDFAnnot_GetVertices(
     FPDF_ANNOTATION annot,
@@ -2229,12 +1957,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetVerticesPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>,
-              ffi.UnsignedLong)>>('FPDFAnnot_GetVertices');
-  late final _FPDFAnnot_GetVertices = _FPDFAnnot_GetVerticesPtr.asFunction<
-      int Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, int)>();
+  late final _FPDFAnnot_GetVerticesPtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, ffi.UnsignedLong)>>(
+          'FPDFAnnot_GetVertices');
+  late final _FPDFAnnot_GetVertices =
+      _FPDFAnnot_GetVerticesPtr.asFunction<int Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, int)>();
 
   int FPDFAnnot_GetInkListCount(
     FPDF_ANNOTATION annot,
@@ -2245,10 +1972,8 @@ class pdfium {
   }
 
   late final _FPDFAnnot_GetInkListCountPtr =
-      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_ANNOTATION)>>(
-          'FPDFAnnot_GetInkListCount');
-  late final _FPDFAnnot_GetInkListCount =
-      _FPDFAnnot_GetInkListCountPtr.asFunction<int Function(FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_ANNOTATION)>>('FPDFAnnot_GetInkListCount');
+  late final _FPDFAnnot_GetInkListCount = _FPDFAnnot_GetInkListCountPtr.asFunction<int Function(FPDF_ANNOTATION)>();
 
   int FPDFAnnot_GetInkListPath(
     FPDF_ANNOTATION annot,
@@ -2266,14 +1991,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetInkListPathPtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_ANNOTATION,
-              ffi.UnsignedLong,
-              ffi.Pointer<FS_POINTF>,
+          ffi.UnsignedLong Function(FPDF_ANNOTATION, ffi.UnsignedLong, ffi.Pointer<FS_POINTF>,
               ffi.UnsignedLong)>>('FPDFAnnot_GetInkListPath');
   late final _FPDFAnnot_GetInkListPath =
-      _FPDFAnnot_GetInkListPathPtr.asFunction<
-          int Function(FPDF_ANNOTATION, int, ffi.Pointer<FS_POINTF>, int)>();
+      _FPDFAnnot_GetInkListPathPtr.asFunction<int Function(FPDF_ANNOTATION, int, ffi.Pointer<FS_POINTF>, int)>();
 
   int FPDFAnnot_GetLine(
     FPDF_ANNOTATION annot,
@@ -2287,13 +2008,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetLinePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>,
-              ffi.Pointer<FS_POINTF>)>>('FPDFAnnot_GetLine');
-  late final _FPDFAnnot_GetLine = _FPDFAnnot_GetLinePtr.asFunction<
-      int Function(
-          FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, ffi.Pointer<FS_POINTF>)>();
+  late final _FPDFAnnot_GetLinePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, ffi.Pointer<FS_POINTF>)>>(
+          'FPDFAnnot_GetLine');
+  late final _FPDFAnnot_GetLine =
+      _FPDFAnnot_GetLinePtr.asFunction<int Function(FPDF_ANNOTATION, ffi.Pointer<FS_POINTF>, ffi.Pointer<FS_POINTF>)>();
 
   int FPDFAnnot_SetBorder(
     FPDF_ANNOTATION annot,
@@ -2309,12 +2028,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_SetBorderPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Float, ffi.Float,
-              ffi.Float)>>('FPDFAnnot_SetBorder');
-  late final _FPDFAnnot_SetBorder = _FPDFAnnot_SetBorderPtr.asFunction<
-      int Function(FPDF_ANNOTATION, double, double, double)>();
+  late final _FPDFAnnot_SetBorderPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Float, ffi.Float, ffi.Float)>>(
+          'FPDFAnnot_SetBorder');
+  late final _FPDFAnnot_SetBorder =
+      _FPDFAnnot_SetBorderPtr.asFunction<int Function(FPDF_ANNOTATION, double, double, double)>();
 
   int FPDFAnnot_GetBorder(
     FPDF_ANNOTATION annot,
@@ -2332,14 +2050,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetBorderPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION,
-              ffi.Pointer<ffi.Float>,
-              ffi.Pointer<ffi.Float>,
+          FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>,
               ffi.Pointer<ffi.Float>)>>('FPDFAnnot_GetBorder');
   late final _FPDFAnnot_GetBorder = _FPDFAnnot_GetBorderPtr.asFunction<
-      int Function(FPDF_ANNOTATION, ffi.Pointer<ffi.Float>,
-          ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>)>();
+      int Function(FPDF_ANNOTATION, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>)>();
 
   int FPDFAnnot_GetFormAdditionalActionJavaScript(
     FPDF_FORMHANDLE hHandle,
@@ -2358,14 +2072,11 @@ class pdfium {
   }
 
   late final _FPDFAnnot_GetFormAdditionalActionJavaScriptPtr = _lookup<
-          ffi.NativeFunction<
-              ffi.UnsignedLong Function(FPDF_FORMHANDLE, FPDF_ANNOTATION,
-                  ffi.Int, ffi.Pointer<FPDF_WCHAR>, ffi.UnsignedLong)>>(
-      'FPDFAnnot_GetFormAdditionalActionJavaScript');
-  late final _FPDFAnnot_GetFormAdditionalActionJavaScript =
-      _FPDFAnnot_GetFormAdditionalActionJavaScriptPtr.asFunction<
-          int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, int,
-              ffi.Pointer<FPDF_WCHAR>, int)>();
+      ffi.NativeFunction<
+          ffi.UnsignedLong Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Int, ffi.Pointer<FPDF_WCHAR>,
+              ffi.UnsignedLong)>>('FPDFAnnot_GetFormAdditionalActionJavaScript');
+  late final _FPDFAnnot_GetFormAdditionalActionJavaScript = _FPDFAnnot_GetFormAdditionalActionJavaScriptPtr.asFunction<
+      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, int, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   int FPDFAnnot_HasKey(
     FPDF_ANNOTATION annot,
@@ -2377,12 +2088,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_HasKeyPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION, FPDF_BYTESTRING)>>('FPDFAnnot_HasKey');
-  late final _FPDFAnnot_HasKey = _FPDFAnnot_HasKeyPtr.asFunction<
-      int Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>();
+  late final _FPDFAnnot_HasKeyPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>>('FPDFAnnot_HasKey');
+  late final _FPDFAnnot_HasKey = _FPDFAnnot_HasKeyPtr.asFunction<int Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>();
 
   int FPDFAnnot_GetValueType(
     FPDF_ANNOTATION annot,
@@ -2394,12 +2102,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetValueTypePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_OBJECT_TYPE Function(
-              FPDF_ANNOTATION, FPDF_BYTESTRING)>>('FPDFAnnot_GetValueType');
-  late final _FPDFAnnot_GetValueType = _FPDFAnnot_GetValueTypePtr.asFunction<
-      int Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>();
+  late final _FPDFAnnot_GetValueTypePtr =
+      _lookup<ffi.NativeFunction<FPDF_OBJECT_TYPE Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>>(
+          'FPDFAnnot_GetValueType');
+  late final _FPDFAnnot_GetValueType =
+      _FPDFAnnot_GetValueTypePtr.asFunction<int Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>();
 
   int FPDFAnnot_SetStringValue(
     FPDF_ANNOTATION annot,
@@ -2413,13 +2120,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_SetStringValuePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_BYTESTRING,
-              FPDF_WIDESTRING)>>('FPDFAnnot_SetStringValue');
+  late final _FPDFAnnot_SetStringValuePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_BYTESTRING, FPDF_WIDESTRING)>>(
+          'FPDFAnnot_SetStringValue');
   late final _FPDFAnnot_SetStringValue =
-      _FPDFAnnot_SetStringValuePtr.asFunction<
-          int Function(FPDF_ANNOTATION, FPDF_BYTESTRING, FPDF_WIDESTRING)>();
+      _FPDFAnnot_SetStringValuePtr.asFunction<int Function(FPDF_ANNOTATION, FPDF_BYTESTRING, FPDF_WIDESTRING)>();
 
   int FPDFAnnot_GetStringValue(
     FPDF_ANNOTATION annot,
@@ -2437,15 +2142,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetStringValuePtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_ANNOTATION,
-              FPDF_BYTESTRING,
-              ffi.Pointer<FPDF_WCHAR>,
+          ffi.UnsignedLong Function(FPDF_ANNOTATION, FPDF_BYTESTRING, ffi.Pointer<FPDF_WCHAR>,
               ffi.UnsignedLong)>>('FPDFAnnot_GetStringValue');
-  late final _FPDFAnnot_GetStringValue =
-      _FPDFAnnot_GetStringValuePtr.asFunction<
-          int Function(FPDF_ANNOTATION, FPDF_BYTESTRING,
-              ffi.Pointer<FPDF_WCHAR>, int)>();
+  late final _FPDFAnnot_GetStringValue = _FPDFAnnot_GetStringValuePtr.asFunction<
+      int Function(FPDF_ANNOTATION, FPDF_BYTESTRING, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   int FPDFAnnot_GetNumberValue(
     FPDF_ANNOTATION annot,
@@ -2459,14 +2159,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetNumberValuePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_BYTESTRING,
-              ffi.Pointer<ffi.Float>)>>('FPDFAnnot_GetNumberValue');
+  late final _FPDFAnnot_GetNumberValuePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_BYTESTRING, ffi.Pointer<ffi.Float>)>>(
+          'FPDFAnnot_GetNumberValue');
   late final _FPDFAnnot_GetNumberValue =
-      _FPDFAnnot_GetNumberValuePtr.asFunction<
-          int Function(
-              FPDF_ANNOTATION, FPDF_BYTESTRING, ffi.Pointer<ffi.Float>)>();
+      _FPDFAnnot_GetNumberValuePtr.asFunction<int Function(FPDF_ANNOTATION, FPDF_BYTESTRING, ffi.Pointer<ffi.Float>)>();
 
   int FPDFAnnot_SetAP(
     FPDF_ANNOTATION annot,
@@ -2480,12 +2177,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_SetAPPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_ANNOT_APPEARANCEMODE,
-              FPDF_WIDESTRING)>>('FPDFAnnot_SetAP');
-  late final _FPDFAnnot_SetAP = _FPDFAnnot_SetAPPtr.asFunction<
-      int Function(FPDF_ANNOTATION, int, FPDF_WIDESTRING)>();
+  late final _FPDFAnnot_SetAPPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, FPDF_ANNOT_APPEARANCEMODE, FPDF_WIDESTRING)>>(
+          'FPDFAnnot_SetAP');
+  late final _FPDFAnnot_SetAP = _FPDFAnnot_SetAPPtr.asFunction<int Function(FPDF_ANNOTATION, int, FPDF_WIDESTRING)>();
 
   int FPDFAnnot_GetAP(
     FPDF_ANNOTATION annot,
@@ -2503,10 +2198,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetAPPtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_ANNOTATION, FPDF_ANNOT_APPEARANCEMODE,
-              ffi.Pointer<FPDF_WCHAR>, ffi.UnsignedLong)>>('FPDFAnnot_GetAP');
-  late final _FPDFAnnot_GetAP = _FPDFAnnot_GetAPPtr.asFunction<
-      int Function(FPDF_ANNOTATION, int, ffi.Pointer<FPDF_WCHAR>, int)>();
+          ffi.UnsignedLong Function(FPDF_ANNOTATION, FPDF_ANNOT_APPEARANCEMODE, ffi.Pointer<FPDF_WCHAR>,
+              ffi.UnsignedLong)>>('FPDFAnnot_GetAP');
+  late final _FPDFAnnot_GetAP =
+      _FPDFAnnot_GetAPPtr.asFunction<int Function(FPDF_ANNOTATION, int, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   FPDF_ANNOTATION FPDFAnnot_GetLinkedAnnot(
     FPDF_ANNOTATION annot,
@@ -2518,12 +2213,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetLinkedAnnotPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_ANNOTATION Function(
-              FPDF_ANNOTATION, FPDF_BYTESTRING)>>('FPDFAnnot_GetLinkedAnnot');
-  late final _FPDFAnnot_GetLinkedAnnot = _FPDFAnnot_GetLinkedAnnotPtr
-      .asFunction<FPDF_ANNOTATION Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>();
+  late final _FPDFAnnot_GetLinkedAnnotPtr =
+      _lookup<ffi.NativeFunction<FPDF_ANNOTATION Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>>(
+          'FPDFAnnot_GetLinkedAnnot');
+  late final _FPDFAnnot_GetLinkedAnnot =
+      _FPDFAnnot_GetLinkedAnnotPtr.asFunction<FPDF_ANNOTATION Function(FPDF_ANNOTATION, FPDF_BYTESTRING)>();
 
   int FPDFAnnot_GetFlags(
     FPDF_ANNOTATION annot,
@@ -2534,10 +2228,8 @@ class pdfium {
   }
 
   late final _FPDFAnnot_GetFlagsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_ANNOTATION)>>(
-          'FPDFAnnot_GetFlags');
-  late final _FPDFAnnot_GetFlags =
-      _FPDFAnnot_GetFlagsPtr.asFunction<int Function(FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_ANNOTATION)>>('FPDFAnnot_GetFlags');
+  late final _FPDFAnnot_GetFlags = _FPDFAnnot_GetFlagsPtr.asFunction<int Function(FPDF_ANNOTATION)>();
 
   int FPDFAnnot_SetFlags(
     FPDF_ANNOTATION annot,
@@ -2550,10 +2242,8 @@ class pdfium {
   }
 
   late final _FPDFAnnot_SetFlagsPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Int)>>(
-          'FPDFAnnot_SetFlags');
-  late final _FPDFAnnot_SetFlags =
-      _FPDFAnnot_SetFlagsPtr.asFunction<int Function(FPDF_ANNOTATION, int)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Int)>>('FPDFAnnot_SetFlags');
+  late final _FPDFAnnot_SetFlags = _FPDFAnnot_SetFlagsPtr.asFunction<int Function(FPDF_ANNOTATION, int)>();
 
   int FPDFAnnot_GetFormFieldFlags(
     FPDF_FORMHANDLE handle,
@@ -2565,12 +2255,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetFormFieldFlagsPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>(
-      'FPDFAnnot_GetFormFieldFlags');
-  late final _FPDFAnnot_GetFormFieldFlags = _FPDFAnnot_GetFormFieldFlagsPtr
-      .asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
+  late final _FPDFAnnot_GetFormFieldFlagsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FPDFAnnot_GetFormFieldFlags');
+  late final _FPDFAnnot_GetFormFieldFlags =
+      _FPDFAnnot_GetFormFieldFlagsPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
 
   FPDF_ANNOTATION FPDFAnnot_GetFormFieldAtPoint(
     FPDF_FORMHANDLE hHandle,
@@ -2584,14 +2272,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetFormFieldAtPointPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_ANNOTATION Function(FPDF_FORMHANDLE, FPDF_PAGE,
-              ffi.Pointer<FS_POINTF>)>>('FPDFAnnot_GetFormFieldAtPoint');
-  late final _FPDFAnnot_GetFormFieldAtPoint =
-      _FPDFAnnot_GetFormFieldAtPointPtr.asFunction<
-          FPDF_ANNOTATION Function(
-              FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<FS_POINTF>)>();
+  late final _FPDFAnnot_GetFormFieldAtPointPtr =
+      _lookup<ffi.NativeFunction<FPDF_ANNOTATION Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<FS_POINTF>)>>(
+          'FPDFAnnot_GetFormFieldAtPoint');
+  late final _FPDFAnnot_GetFormFieldAtPoint = _FPDFAnnot_GetFormFieldAtPointPtr.asFunction<
+      FPDF_ANNOTATION Function(FPDF_FORMHANDLE, FPDF_PAGE, ffi.Pointer<FS_POINTF>)>();
 
   int FPDFAnnot_GetFormFieldName(
     FPDF_FORMHANDLE hHandle,
@@ -2609,15 +2294,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetFormFieldNamePtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_FORMHANDLE,
-              FPDF_ANNOTATION,
-              ffi.Pointer<FPDF_WCHAR>,
+          ffi.UnsignedLong Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<FPDF_WCHAR>,
               ffi.UnsignedLong)>>('FPDFAnnot_GetFormFieldName');
-  late final _FPDFAnnot_GetFormFieldName =
-      _FPDFAnnot_GetFormFieldNamePtr.asFunction<
-          int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION,
-              ffi.Pointer<FPDF_WCHAR>, int)>();
+  late final _FPDFAnnot_GetFormFieldName = _FPDFAnnot_GetFormFieldNamePtr.asFunction<
+      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   int FPDFAnnot_GetFormFieldAlternateName(
     FPDF_FORMHANDLE hHandle,
@@ -2635,15 +2315,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetFormFieldAlternateNamePtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_FORMHANDLE,
-              FPDF_ANNOTATION,
-              ffi.Pointer<FPDF_WCHAR>,
+          ffi.UnsignedLong Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<FPDF_WCHAR>,
               ffi.UnsignedLong)>>('FPDFAnnot_GetFormFieldAlternateName');
-  late final _FPDFAnnot_GetFormFieldAlternateName =
-      _FPDFAnnot_GetFormFieldAlternateNamePtr.asFunction<
-          int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION,
-              ffi.Pointer<FPDF_WCHAR>, int)>();
+  late final _FPDFAnnot_GetFormFieldAlternateName = _FPDFAnnot_GetFormFieldAlternateNamePtr.asFunction<
+      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   int FPDFAnnot_GetFormFieldType(
     FPDF_FORMHANDLE hHandle,
@@ -2655,12 +2330,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetFormFieldTypePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>(
-      'FPDFAnnot_GetFormFieldType');
-  late final _FPDFAnnot_GetFormFieldType = _FPDFAnnot_GetFormFieldTypePtr
-      .asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
+  late final _FPDFAnnot_GetFormFieldTypePtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FPDFAnnot_GetFormFieldType');
+  late final _FPDFAnnot_GetFormFieldType =
+      _FPDFAnnot_GetFormFieldTypePtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
 
   int FPDFAnnot_GetFormFieldValue(
     FPDF_FORMHANDLE hHandle,
@@ -2678,15 +2351,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetFormFieldValuePtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_FORMHANDLE,
-              FPDF_ANNOTATION,
-              ffi.Pointer<FPDF_WCHAR>,
+          ffi.UnsignedLong Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<FPDF_WCHAR>,
               ffi.UnsignedLong)>>('FPDFAnnot_GetFormFieldValue');
-  late final _FPDFAnnot_GetFormFieldValue =
-      _FPDFAnnot_GetFormFieldValuePtr.asFunction<
-          int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION,
-              ffi.Pointer<FPDF_WCHAR>, int)>();
+  late final _FPDFAnnot_GetFormFieldValue = _FPDFAnnot_GetFormFieldValuePtr.asFunction<
+      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   int FPDFAnnot_GetOptionCount(
     FPDF_FORMHANDLE hHandle,
@@ -2698,12 +2366,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetOptionCountPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>(
-      'FPDFAnnot_GetOptionCount');
-  late final _FPDFAnnot_GetOptionCount = _FPDFAnnot_GetOptionCountPtr
-      .asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
+  late final _FPDFAnnot_GetOptionCountPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FPDFAnnot_GetOptionCount');
+  late final _FPDFAnnot_GetOptionCount =
+      _FPDFAnnot_GetOptionCountPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
 
   int FPDFAnnot_GetOptionLabel(
     FPDF_FORMHANDLE hHandle,
@@ -2723,16 +2389,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetOptionLabelPtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_FORMHANDLE,
-              FPDF_ANNOTATION,
-              ffi.Int,
-              ffi.Pointer<FPDF_WCHAR>,
+          ffi.UnsignedLong Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Int, ffi.Pointer<FPDF_WCHAR>,
               ffi.UnsignedLong)>>('FPDFAnnot_GetOptionLabel');
-  late final _FPDFAnnot_GetOptionLabel =
-      _FPDFAnnot_GetOptionLabelPtr.asFunction<
-          int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, int,
-              ffi.Pointer<FPDF_WCHAR>, int)>();
+  late final _FPDFAnnot_GetOptionLabel = _FPDFAnnot_GetOptionLabelPtr.asFunction<
+      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, int, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   int FPDFAnnot_IsOptionSelected(
     FPDF_FORMHANDLE handle,
@@ -2746,12 +2406,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_IsOptionSelectedPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_ANNOTATION,
-              ffi.Int)>>('FPDFAnnot_IsOptionSelected');
-  late final _FPDFAnnot_IsOptionSelected = _FPDFAnnot_IsOptionSelectedPtr
-      .asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, int)>();
+  late final _FPDFAnnot_IsOptionSelectedPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Int)>>(
+          'FPDFAnnot_IsOptionSelected');
+  late final _FPDFAnnot_IsOptionSelected =
+      _FPDFAnnot_IsOptionSelectedPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, int)>();
 
   int FPDFAnnot_GetFontSize(
     FPDF_FORMHANDLE hHandle,
@@ -2765,12 +2424,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetFontSizePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_ANNOTATION,
-              ffi.Pointer<ffi.Float>)>>('FPDFAnnot_GetFontSize');
-  late final _FPDFAnnot_GetFontSize = _FPDFAnnot_GetFontSizePtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<ffi.Float>)>();
+  late final _FPDFAnnot_GetFontSizePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<ffi.Float>)>>(
+          'FPDFAnnot_GetFontSize');
+  late final _FPDFAnnot_GetFontSize =
+      _FPDFAnnot_GetFontSizePtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<ffi.Float>)>();
 
   int FPDFAnnot_IsChecked(
     FPDF_FORMHANDLE hHandle,
@@ -2782,12 +2440,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_IsCheckedPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FPDFAnnot_IsChecked');
-  late final _FPDFAnnot_IsChecked = _FPDFAnnot_IsCheckedPtr.asFunction<
-      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
+  late final _FPDFAnnot_IsCheckedPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FPDFAnnot_IsChecked');
+  late final _FPDFAnnot_IsChecked =
+      _FPDFAnnot_IsCheckedPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
 
   int FPDFAnnot_SetFocusableSubtypes(
     FPDF_FORMHANDLE hHandle,
@@ -2801,16 +2457,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_SetFocusableSubtypesPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_FORMHANDLE,
-              ffi.Pointer<FPDF_ANNOTATION_SUBTYPE>,
-              ffi.Size)>>('FPDFAnnot_SetFocusableSubtypes');
-  late final _FPDFAnnot_SetFocusableSubtypes =
-      _FPDFAnnot_SetFocusableSubtypesPtr.asFunction<
-          int Function(
-              FPDF_FORMHANDLE, ffi.Pointer<FPDF_ANNOTATION_SUBTYPE>, int)>();
+  late final _FPDFAnnot_SetFocusableSubtypesPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, ffi.Pointer<FPDF_ANNOTATION_SUBTYPE>, ffi.Size)>>(
+          'FPDFAnnot_SetFocusableSubtypes');
+  late final _FPDFAnnot_SetFocusableSubtypes = _FPDFAnnot_SetFocusableSubtypesPtr.asFunction<
+      int Function(FPDF_FORMHANDLE, ffi.Pointer<FPDF_ANNOTATION_SUBTYPE>, int)>();
 
   int FPDFAnnot_GetFocusableSubtypesCount(
     FPDF_FORMHANDLE hHandle,
@@ -2821,11 +2472,9 @@ class pdfium {
   }
 
   late final _FPDFAnnot_GetFocusableSubtypesCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE)>>(
-          'FPDFAnnot_GetFocusableSubtypesCount');
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE)>>('FPDFAnnot_GetFocusableSubtypesCount');
   late final _FPDFAnnot_GetFocusableSubtypesCount =
-      _FPDFAnnot_GetFocusableSubtypesCountPtr.asFunction<
-          int Function(FPDF_FORMHANDLE)>();
+      _FPDFAnnot_GetFocusableSubtypesCountPtr.asFunction<int Function(FPDF_FORMHANDLE)>();
 
   int FPDFAnnot_GetFocusableSubtypes(
     FPDF_FORMHANDLE hHandle,
@@ -2839,16 +2488,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetFocusableSubtypesPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_FORMHANDLE,
-              ffi.Pointer<FPDF_ANNOTATION_SUBTYPE>,
-              ffi.Size)>>('FPDFAnnot_GetFocusableSubtypes');
-  late final _FPDFAnnot_GetFocusableSubtypes =
-      _FPDFAnnot_GetFocusableSubtypesPtr.asFunction<
-          int Function(
-              FPDF_FORMHANDLE, ffi.Pointer<FPDF_ANNOTATION_SUBTYPE>, int)>();
+  late final _FPDFAnnot_GetFocusableSubtypesPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FORMHANDLE, ffi.Pointer<FPDF_ANNOTATION_SUBTYPE>, ffi.Size)>>(
+          'FPDFAnnot_GetFocusableSubtypes');
+  late final _FPDFAnnot_GetFocusableSubtypes = _FPDFAnnot_GetFocusableSubtypesPtr.asFunction<
+      int Function(FPDF_FORMHANDLE, ffi.Pointer<FPDF_ANNOTATION_SUBTYPE>, int)>();
 
   FPDF_LINK FPDFAnnot_GetLink(
     FPDF_ANNOTATION annot,
@@ -2859,10 +2503,8 @@ class pdfium {
   }
 
   late final _FPDFAnnot_GetLinkPtr =
-      _lookup<ffi.NativeFunction<FPDF_LINK Function(FPDF_ANNOTATION)>>(
-          'FPDFAnnot_GetLink');
-  late final _FPDFAnnot_GetLink =
-      _FPDFAnnot_GetLinkPtr.asFunction<FPDF_LINK Function(FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<FPDF_LINK Function(FPDF_ANNOTATION)>>('FPDFAnnot_GetLink');
+  late final _FPDFAnnot_GetLink = _FPDFAnnot_GetLinkPtr.asFunction<FPDF_LINK Function(FPDF_ANNOTATION)>();
 
   int FPDFAnnot_GetFormControlCount(
     FPDF_FORMHANDLE hHandle,
@@ -2874,12 +2516,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetFormControlCountPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>(
-      'FPDFAnnot_GetFormControlCount');
-  late final _FPDFAnnot_GetFormControlCount = _FPDFAnnot_GetFormControlCountPtr
-      .asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
+  late final _FPDFAnnot_GetFormControlCountPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FPDFAnnot_GetFormControlCount');
+  late final _FPDFAnnot_GetFormControlCount =
+      _FPDFAnnot_GetFormControlCountPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
 
   int FPDFAnnot_GetFormControlIndex(
     FPDF_FORMHANDLE hHandle,
@@ -2891,12 +2531,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_GetFormControlIndexPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>(
-      'FPDFAnnot_GetFormControlIndex');
-  late final _FPDFAnnot_GetFormControlIndex = _FPDFAnnot_GetFormControlIndexPtr
-      .asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
+  late final _FPDFAnnot_GetFormControlIndexPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>>('FPDFAnnot_GetFormControlIndex');
+  late final _FPDFAnnot_GetFormControlIndex =
+      _FPDFAnnot_GetFormControlIndexPtr.asFunction<int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION)>();
 
   int FPDFAnnot_GetFormFieldExportValue(
     FPDF_FORMHANDLE hHandle,
@@ -2914,15 +2552,10 @@ class pdfium {
 
   late final _FPDFAnnot_GetFormFieldExportValuePtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_FORMHANDLE,
-              FPDF_ANNOTATION,
-              ffi.Pointer<FPDF_WCHAR>,
+          ffi.UnsignedLong Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<FPDF_WCHAR>,
               ffi.UnsignedLong)>>('FPDFAnnot_GetFormFieldExportValue');
-  late final _FPDFAnnot_GetFormFieldExportValue =
-      _FPDFAnnot_GetFormFieldExportValuePtr.asFunction<
-          int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION,
-              ffi.Pointer<FPDF_WCHAR>, int)>();
+  late final _FPDFAnnot_GetFormFieldExportValue = _FPDFAnnot_GetFormFieldExportValuePtr.asFunction<
+      int Function(FPDF_FORMHANDLE, FPDF_ANNOTATION, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   int FPDFAnnot_SetURI(
     FPDF_ANNOTATION annot,
@@ -2934,12 +2567,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_SetURIPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_ANNOTATION, ffi.Pointer<ffi.Char>)>>('FPDFAnnot_SetURI');
-  late final _FPDFAnnot_SetURI = _FPDFAnnot_SetURIPtr.asFunction<
-      int Function(FPDF_ANNOTATION, ffi.Pointer<ffi.Char>)>();
+  late final _FPDFAnnot_SetURIPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_ANNOTATION, ffi.Pointer<ffi.Char>)>>('FPDFAnnot_SetURI');
+  late final _FPDFAnnot_SetURI =
+      _FPDFAnnot_SetURIPtr.asFunction<int Function(FPDF_ANNOTATION, ffi.Pointer<ffi.Char>)>();
 
   FPDF_ATTACHMENT FPDFAnnot_GetFileAttachment(
     FPDF_ANNOTATION annot,
@@ -2950,10 +2581,9 @@ class pdfium {
   }
 
   late final _FPDFAnnot_GetFileAttachmentPtr =
-      _lookup<ffi.NativeFunction<FPDF_ATTACHMENT Function(FPDF_ANNOTATION)>>(
-          'FPDFAnnot_GetFileAttachment');
-  late final _FPDFAnnot_GetFileAttachment = _FPDFAnnot_GetFileAttachmentPtr
-      .asFunction<FPDF_ATTACHMENT Function(FPDF_ANNOTATION)>();
+      _lookup<ffi.NativeFunction<FPDF_ATTACHMENT Function(FPDF_ANNOTATION)>>('FPDFAnnot_GetFileAttachment');
+  late final _FPDFAnnot_GetFileAttachment =
+      _FPDFAnnot_GetFileAttachmentPtr.asFunction<FPDF_ATTACHMENT Function(FPDF_ANNOTATION)>();
 
   FPDF_ATTACHMENT FPDFAnnot_AddFileAttachment(
     FPDF_ANNOTATION annot,
@@ -2965,12 +2595,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAnnot_AddFileAttachmentPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_ATTACHMENT Function(FPDF_ANNOTATION,
-              FPDF_WIDESTRING)>>('FPDFAnnot_AddFileAttachment');
-  late final _FPDFAnnot_AddFileAttachment = _FPDFAnnot_AddFileAttachmentPtr
-      .asFunction<FPDF_ATTACHMENT Function(FPDF_ANNOTATION, FPDF_WIDESTRING)>();
+  late final _FPDFAnnot_AddFileAttachmentPtr =
+      _lookup<ffi.NativeFunction<FPDF_ATTACHMENT Function(FPDF_ANNOTATION, FPDF_WIDESTRING)>>(
+          'FPDFAnnot_AddFileAttachment');
+  late final _FPDFAnnot_AddFileAttachment =
+      _FPDFAnnot_AddFileAttachmentPtr.asFunction<FPDF_ATTACHMENT Function(FPDF_ANNOTATION, FPDF_WIDESTRING)>();
 
   FPDF_TEXTPAGE FPDFText_LoadPage(
     FPDF_PAGE page,
@@ -2981,10 +2610,8 @@ class pdfium {
   }
 
   late final _FPDFText_LoadPagePtr =
-      _lookup<ffi.NativeFunction<FPDF_TEXTPAGE Function(FPDF_PAGE)>>(
-          'FPDFText_LoadPage');
-  late final _FPDFText_LoadPage =
-      _FPDFText_LoadPagePtr.asFunction<FPDF_TEXTPAGE Function(FPDF_PAGE)>();
+      _lookup<ffi.NativeFunction<FPDF_TEXTPAGE Function(FPDF_PAGE)>>('FPDFText_LoadPage');
+  late final _FPDFText_LoadPage = _FPDFText_LoadPagePtr.asFunction<FPDF_TEXTPAGE Function(FPDF_PAGE)>();
 
   void FPDFText_ClosePage(
     FPDF_TEXTPAGE text_page,
@@ -2995,10 +2622,8 @@ class pdfium {
   }
 
   late final _FPDFText_ClosePagePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_TEXTPAGE)>>(
-          'FPDFText_ClosePage');
-  late final _FPDFText_ClosePage =
-      _FPDFText_ClosePagePtr.asFunction<void Function(FPDF_TEXTPAGE)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_TEXTPAGE)>>('FPDFText_ClosePage');
+  late final _FPDFText_ClosePage = _FPDFText_ClosePagePtr.asFunction<void Function(FPDF_TEXTPAGE)>();
 
   int FPDFText_CountChars(
     FPDF_TEXTPAGE text_page,
@@ -3009,10 +2634,8 @@ class pdfium {
   }
 
   late final _FPDFText_CountCharsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE)>>(
-          'FPDFText_CountChars');
-  late final _FPDFText_CountChars =
-      _FPDFText_CountCharsPtr.asFunction<int Function(FPDF_TEXTPAGE)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE)>>('FPDFText_CountChars');
+  late final _FPDFText_CountChars = _FPDFText_CountCharsPtr.asFunction<int Function(FPDF_TEXTPAGE)>();
 
   int FPDFText_GetUnicode(
     FPDF_TEXTPAGE text_page,
@@ -3024,11 +2647,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_GetUnicodePtr = _lookup<
-          ffi.NativeFunction<ffi.UnsignedInt Function(FPDF_TEXTPAGE, ffi.Int)>>(
-      'FPDFText_GetUnicode');
-  late final _FPDFText_GetUnicode =
-      _FPDFText_GetUnicodePtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
+  late final _FPDFText_GetUnicodePtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedInt Function(FPDF_TEXTPAGE, ffi.Int)>>('FPDFText_GetUnicode');
+  late final _FPDFText_GetUnicode = _FPDFText_GetUnicodePtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
 
   int FPDFText_IsGenerated(
     FPDF_TEXTPAGE text_page,
@@ -3041,10 +2662,8 @@ class pdfium {
   }
 
   late final _FPDFText_IsGeneratedPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int)>>(
-          'FPDFText_IsGenerated');
-  late final _FPDFText_IsGenerated =
-      _FPDFText_IsGeneratedPtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int)>>('FPDFText_IsGenerated');
+  late final _FPDFText_IsGenerated = _FPDFText_IsGeneratedPtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
 
   int FPDFText_IsHyphen(
     FPDF_TEXTPAGE text_page,
@@ -3057,10 +2676,8 @@ class pdfium {
   }
 
   late final _FPDFText_IsHyphenPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int)>>(
-          'FPDFText_IsHyphen');
-  late final _FPDFText_IsHyphen =
-      _FPDFText_IsHyphenPtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int)>>('FPDFText_IsHyphen');
+  late final _FPDFText_IsHyphen = _FPDFText_IsHyphenPtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
 
   int FPDFText_HasUnicodeMapError(
     FPDF_TEXTPAGE text_page,
@@ -3073,10 +2690,9 @@ class pdfium {
   }
 
   late final _FPDFText_HasUnicodeMapErrorPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int)>>(
-          'FPDFText_HasUnicodeMapError');
-  late final _FPDFText_HasUnicodeMapError = _FPDFText_HasUnicodeMapErrorPtr
-      .asFunction<int Function(FPDF_TEXTPAGE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int)>>('FPDFText_HasUnicodeMapError');
+  late final _FPDFText_HasUnicodeMapError =
+      _FPDFText_HasUnicodeMapErrorPtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
 
   double FPDFText_GetFontSize(
     FPDF_TEXTPAGE text_page,
@@ -3089,10 +2705,8 @@ class pdfium {
   }
 
   late final _FPDFText_GetFontSizePtr =
-      _lookup<ffi.NativeFunction<ffi.Double Function(FPDF_TEXTPAGE, ffi.Int)>>(
-          'FPDFText_GetFontSize');
-  late final _FPDFText_GetFontSize = _FPDFText_GetFontSizePtr.asFunction<
-      double Function(FPDF_TEXTPAGE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Double Function(FPDF_TEXTPAGE, ffi.Int)>>('FPDFText_GetFontSize');
+  late final _FPDFText_GetFontSize = _FPDFText_GetFontSizePtr.asFunction<double Function(FPDF_TEXTPAGE, int)>();
 
   int FPDFText_GetFontInfo(
     FPDF_TEXTPAGE text_page,
@@ -3112,15 +2726,10 @@ class pdfium {
 
   late final _FPDFText_GetFontInfoPtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(
-              FPDF_TEXTPAGE,
-              ffi.Int,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong,
+          ffi.UnsignedLong Function(FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<ffi.Void>, ffi.UnsignedLong,
               ffi.Pointer<ffi.Int>)>>('FPDFText_GetFontInfo');
   late final _FPDFText_GetFontInfo = _FPDFText_GetFontInfoPtr.asFunction<
-      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<ffi.Void>, int,
-          ffi.Pointer<ffi.Int>)>();
+      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<ffi.Void>, int, ffi.Pointer<ffi.Int>)>();
 
   int FPDFText_GetFontWeight(
     FPDF_TEXTPAGE text_page,
@@ -3133,10 +2742,8 @@ class pdfium {
   }
 
   late final _FPDFText_GetFontWeightPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int)>>(
-          'FPDFText_GetFontWeight');
-  late final _FPDFText_GetFontWeight =
-      _FPDFText_GetFontWeightPtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int)>>('FPDFText_GetFontWeight');
+  late final _FPDFText_GetFontWeight = _FPDFText_GetFontWeightPtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
 
   int FPDFText_GetTextRenderMode(
     FPDF_TEXTPAGE text_page,
@@ -3149,10 +2756,9 @@ class pdfium {
   }
 
   late final _FPDFText_GetTextRenderModePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(FPDF_TEXTPAGE, ffi.Int)>>(
-          'FPDFText_GetTextRenderMode');
-  late final _FPDFText_GetTextRenderMode = _FPDFText_GetTextRenderModePtr
-      .asFunction<int Function(FPDF_TEXTPAGE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(FPDF_TEXTPAGE, ffi.Int)>>('FPDFText_GetTextRenderMode');
+  late final _FPDFText_GetTextRenderMode =
+      _FPDFText_GetTextRenderModePtr.asFunction<int Function(FPDF_TEXTPAGE, int)>();
 
   int FPDFText_GetFillColor(
     FPDF_TEXTPAGE text_page,
@@ -3174,21 +2780,11 @@ class pdfium {
 
   late final _FPDFText_GetFillColorPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_TEXTPAGE,
-              ffi.Int,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>)>>('FPDFText_GetFillColor');
+          FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+              ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>>('FPDFText_GetFillColor');
   late final _FPDFText_GetFillColor = _FPDFText_GetFillColorPtr.asFunction<
-      int Function(
-          FPDF_TEXTPAGE,
-          int,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>)>();
+      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+          ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>();
 
   int FPDFText_GetStrokeColor(
     FPDF_TEXTPAGE text_page,
@@ -3210,21 +2806,11 @@ class pdfium {
 
   late final _FPDFText_GetStrokeColorPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_TEXTPAGE,
-              ffi.Int,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>)>>('FPDFText_GetStrokeColor');
+          FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+              ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>>('FPDFText_GetStrokeColor');
   late final _FPDFText_GetStrokeColor = _FPDFText_GetStrokeColorPtr.asFunction<
-      int Function(
-          FPDF_TEXTPAGE,
-          int,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>,
-          ffi.Pointer<ffi.UnsignedInt>)>();
+      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+          ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>();
 
   double FPDFText_GetCharAngle(
     FPDF_TEXTPAGE text_page,
@@ -3237,10 +2823,8 @@ class pdfium {
   }
 
   late final _FPDFText_GetCharAnglePtr =
-      _lookup<ffi.NativeFunction<ffi.Float Function(FPDF_TEXTPAGE, ffi.Int)>>(
-          'FPDFText_GetCharAngle');
-  late final _FPDFText_GetCharAngle = _FPDFText_GetCharAnglePtr.asFunction<
-      double Function(FPDF_TEXTPAGE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Float Function(FPDF_TEXTPAGE, ffi.Int)>>('FPDFText_GetCharAngle');
+  late final _FPDFText_GetCharAngle = _FPDFText_GetCharAnglePtr.asFunction<double Function(FPDF_TEXTPAGE, int)>();
 
   int FPDFText_GetCharBox(
     FPDF_TEXTPAGE text_page,
@@ -3262,20 +2846,10 @@ class pdfium {
 
   late final _FPDFText_GetCharBoxPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_TEXTPAGE,
-              ffi.Int,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>)>>('FPDFText_GetCharBox');
+          FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>,
+              ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>>('FPDFText_GetCharBox');
   late final _FPDFText_GetCharBox = _FPDFText_GetCharBoxPtr.asFunction<
-      int Function(
-          FPDF_TEXTPAGE,
-          int,
-          ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>,
+      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>,
           ffi.Pointer<ffi.Double>)>();
 
   int FPDFText_GetLooseCharBox(
@@ -3290,12 +2864,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_GetLooseCharBoxPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int,
-              ffi.Pointer<FS_RECTF>)>>('FPDFText_GetLooseCharBox');
-  late final _FPDFText_GetLooseCharBox = _FPDFText_GetLooseCharBoxPtr
-      .asFunction<int Function(FPDF_TEXTPAGE, int, ffi.Pointer<FS_RECTF>)>();
+  late final _FPDFText_GetLooseCharBoxPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<FS_RECTF>)>>(
+          'FPDFText_GetLooseCharBox');
+  late final _FPDFText_GetLooseCharBox =
+      _FPDFText_GetLooseCharBoxPtr.asFunction<int Function(FPDF_TEXTPAGE, int, ffi.Pointer<FS_RECTF>)>();
 
   int FPDFText_GetMatrix(
     FPDF_TEXTPAGE text_page,
@@ -3309,12 +2882,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_GetMatrixPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int,
-              ffi.Pointer<FS_MATRIX>)>>('FPDFText_GetMatrix');
-  late final _FPDFText_GetMatrix = _FPDFText_GetMatrixPtr.asFunction<
-      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<FS_MATRIX>)>();
+  late final _FPDFText_GetMatrixPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<FS_MATRIX>)>>(
+          'FPDFText_GetMatrix');
+  late final _FPDFText_GetMatrix =
+      _FPDFText_GetMatrixPtr.asFunction<int Function(FPDF_TEXTPAGE, int, ffi.Pointer<FS_MATRIX>)>();
 
   int FPDFText_GetCharOrigin(
     FPDF_TEXTPAGE text_page,
@@ -3332,11 +2904,10 @@ class pdfium {
 
   late final _FPDFText_GetCharOriginPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>)>>('FPDFText_GetCharOrigin');
+          FPDF_BOOL Function(
+              FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>>('FPDFText_GetCharOrigin');
   late final _FPDFText_GetCharOrigin = _FPDFText_GetCharOriginPtr.asFunction<
-      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>)>();
+      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>();
 
   int FPDFText_GetCharIndexAtPos(
     FPDF_TEXTPAGE text_page,
@@ -3354,13 +2925,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_GetCharIndexAtPosPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(FPDF_TEXTPAGE, ffi.Double, ffi.Double, ffi.Double,
-              ffi.Double)>>('FPDFText_GetCharIndexAtPos');
+  late final _FPDFText_GetCharIndexAtPosPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Double, ffi.Double, ffi.Double, ffi.Double)>>(
+          'FPDFText_GetCharIndexAtPos');
   late final _FPDFText_GetCharIndexAtPos =
-      _FPDFText_GetCharIndexAtPosPtr.asFunction<
-          int Function(FPDF_TEXTPAGE, double, double, double, double)>();
+      _FPDFText_GetCharIndexAtPosPtr.asFunction<int Function(FPDF_TEXTPAGE, double, double, double, double)>();
 
   int FPDFText_GetText(
     FPDF_TEXTPAGE text_page,
@@ -3376,12 +2945,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_GetTextPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(FPDF_TEXTPAGE, ffi.Int, ffi.Int,
-              ffi.Pointer<ffi.UnsignedShort>)>>('FPDFText_GetText');
-  late final _FPDFText_GetText = _FPDFText_GetTextPtr.asFunction<
-      int Function(FPDF_TEXTPAGE, int, int, ffi.Pointer<ffi.UnsignedShort>)>();
+  late final _FPDFText_GetTextPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int, ffi.Int, ffi.Pointer<ffi.UnsignedShort>)>>(
+          'FPDFText_GetText');
+  late final _FPDFText_GetText =
+      _FPDFText_GetTextPtr.asFunction<int Function(FPDF_TEXTPAGE, int, int, ffi.Pointer<ffi.UnsignedShort>)>();
 
   int FPDFText_CountRects(
     FPDF_TEXTPAGE text_page,
@@ -3395,12 +2963,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_CountRectsPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int, ffi.Int)>>(
-      'FPDFText_CountRects');
-  late final _FPDFText_CountRects = _FPDFText_CountRectsPtr.asFunction<
-      int Function(FPDF_TEXTPAGE, int, int)>();
+  late final _FPDFText_CountRectsPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_TEXTPAGE, ffi.Int, ffi.Int)>>('FPDFText_CountRects');
+  late final _FPDFText_CountRects = _FPDFText_CountRectsPtr.asFunction<int Function(FPDF_TEXTPAGE, int, int)>();
 
   int FPDFText_GetRect(
     FPDF_TEXTPAGE text_page,
@@ -3422,20 +2987,10 @@ class pdfium {
 
   late final _FPDFText_GetRectPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_TEXTPAGE,
-              ffi.Int,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>)>>('FPDFText_GetRect');
+          FPDF_BOOL Function(FPDF_TEXTPAGE, ffi.Int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>,
+              ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>>('FPDFText_GetRect');
   late final _FPDFText_GetRect = _FPDFText_GetRectPtr.asFunction<
-      int Function(
-          FPDF_TEXTPAGE,
-          int,
-          ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>,
+      int Function(FPDF_TEXTPAGE, int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>,
           ffi.Pointer<ffi.Double>)>();
 
   int FPDFText_GetBoundedText(
@@ -3460,17 +3015,10 @@ class pdfium {
 
   late final _FPDFText_GetBoundedTextPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Int Function(
-              FPDF_TEXTPAGE,
-              ffi.Double,
-              ffi.Double,
-              ffi.Double,
-              ffi.Double,
-              ffi.Pointer<ffi.UnsignedShort>,
-              ffi.Int)>>('FPDFText_GetBoundedText');
+          ffi.Int Function(FPDF_TEXTPAGE, ffi.Double, ffi.Double, ffi.Double, ffi.Double,
+              ffi.Pointer<ffi.UnsignedShort>, ffi.Int)>>('FPDFText_GetBoundedText');
   late final _FPDFText_GetBoundedText = _FPDFText_GetBoundedTextPtr.asFunction<
-      int Function(FPDF_TEXTPAGE, double, double, double, double,
-          ffi.Pointer<ffi.UnsignedShort>, int)>();
+      int Function(FPDF_TEXTPAGE, double, double, double, double, ffi.Pointer<ffi.UnsignedShort>, int)>();
 
   FPDF_SCHHANDLE FPDFText_FindStart(
     FPDF_TEXTPAGE text_page,
@@ -3486,12 +3034,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_FindStartPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_SCHHANDLE Function(FPDF_TEXTPAGE, FPDF_WIDESTRING,
-              ffi.UnsignedLong, ffi.Int)>>('FPDFText_FindStart');
-  late final _FPDFText_FindStart = _FPDFText_FindStartPtr.asFunction<
-      FPDF_SCHHANDLE Function(FPDF_TEXTPAGE, FPDF_WIDESTRING, int, int)>();
+  late final _FPDFText_FindStartPtr =
+      _lookup<ffi.NativeFunction<FPDF_SCHHANDLE Function(FPDF_TEXTPAGE, FPDF_WIDESTRING, ffi.UnsignedLong, ffi.Int)>>(
+          'FPDFText_FindStart');
+  late final _FPDFText_FindStart =
+      _FPDFText_FindStartPtr.asFunction<FPDF_SCHHANDLE Function(FPDF_TEXTPAGE, FPDF_WIDESTRING, int, int)>();
 
   int FPDFText_FindNext(
     FPDF_SCHHANDLE handle,
@@ -3502,10 +3049,8 @@ class pdfium {
   }
 
   late final _FPDFText_FindNextPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_SCHHANDLE)>>(
-          'FPDFText_FindNext');
-  late final _FPDFText_FindNext =
-      _FPDFText_FindNextPtr.asFunction<int Function(FPDF_SCHHANDLE)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_SCHHANDLE)>>('FPDFText_FindNext');
+  late final _FPDFText_FindNext = _FPDFText_FindNextPtr.asFunction<int Function(FPDF_SCHHANDLE)>();
 
   int FPDFText_FindPrev(
     FPDF_SCHHANDLE handle,
@@ -3516,10 +3061,8 @@ class pdfium {
   }
 
   late final _FPDFText_FindPrevPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_SCHHANDLE)>>(
-          'FPDFText_FindPrev');
-  late final _FPDFText_FindPrev =
-      _FPDFText_FindPrevPtr.asFunction<int Function(FPDF_SCHHANDLE)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_SCHHANDLE)>>('FPDFText_FindPrev');
+  late final _FPDFText_FindPrev = _FPDFText_FindPrevPtr.asFunction<int Function(FPDF_SCHHANDLE)>();
 
   int FPDFText_GetSchResultIndex(
     FPDF_SCHHANDLE handle,
@@ -3530,10 +3073,8 @@ class pdfium {
   }
 
   late final _FPDFText_GetSchResultIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_SCHHANDLE)>>(
-          'FPDFText_GetSchResultIndex');
-  late final _FPDFText_GetSchResultIndex =
-      _FPDFText_GetSchResultIndexPtr.asFunction<int Function(FPDF_SCHHANDLE)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_SCHHANDLE)>>('FPDFText_GetSchResultIndex');
+  late final _FPDFText_GetSchResultIndex = _FPDFText_GetSchResultIndexPtr.asFunction<int Function(FPDF_SCHHANDLE)>();
 
   int FPDFText_GetSchCount(
     FPDF_SCHHANDLE handle,
@@ -3544,10 +3085,8 @@ class pdfium {
   }
 
   late final _FPDFText_GetSchCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_SCHHANDLE)>>(
-          'FPDFText_GetSchCount');
-  late final _FPDFText_GetSchCount =
-      _FPDFText_GetSchCountPtr.asFunction<int Function(FPDF_SCHHANDLE)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_SCHHANDLE)>>('FPDFText_GetSchCount');
+  late final _FPDFText_GetSchCount = _FPDFText_GetSchCountPtr.asFunction<int Function(FPDF_SCHHANDLE)>();
 
   void FPDFText_FindClose(
     FPDF_SCHHANDLE handle,
@@ -3558,10 +3097,8 @@ class pdfium {
   }
 
   late final _FPDFText_FindClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_SCHHANDLE)>>(
-          'FPDFText_FindClose');
-  late final _FPDFText_FindClose =
-      _FPDFText_FindClosePtr.asFunction<void Function(FPDF_SCHHANDLE)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_SCHHANDLE)>>('FPDFText_FindClose');
+  late final _FPDFText_FindClose = _FPDFText_FindClosePtr.asFunction<void Function(FPDF_SCHHANDLE)>();
 
   FPDF_PAGELINK FPDFLink_LoadWebLinks(
     FPDF_TEXTPAGE text_page,
@@ -3572,10 +3109,8 @@ class pdfium {
   }
 
   late final _FPDFLink_LoadWebLinksPtr =
-      _lookup<ffi.NativeFunction<FPDF_PAGELINK Function(FPDF_TEXTPAGE)>>(
-          'FPDFLink_LoadWebLinks');
-  late final _FPDFLink_LoadWebLinks = _FPDFLink_LoadWebLinksPtr.asFunction<
-      FPDF_PAGELINK Function(FPDF_TEXTPAGE)>();
+      _lookup<ffi.NativeFunction<FPDF_PAGELINK Function(FPDF_TEXTPAGE)>>('FPDFLink_LoadWebLinks');
+  late final _FPDFLink_LoadWebLinks = _FPDFLink_LoadWebLinksPtr.asFunction<FPDF_PAGELINK Function(FPDF_TEXTPAGE)>();
 
   int FPDFLink_CountWebLinks(
     FPDF_PAGELINK link_page,
@@ -3586,10 +3121,8 @@ class pdfium {
   }
 
   late final _FPDFLink_CountWebLinksPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGELINK)>>(
-          'FPDFLink_CountWebLinks');
-  late final _FPDFLink_CountWebLinks =
-      _FPDFLink_CountWebLinksPtr.asFunction<int Function(FPDF_PAGELINK)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGELINK)>>('FPDFLink_CountWebLinks');
+  late final _FPDFLink_CountWebLinks = _FPDFLink_CountWebLinksPtr.asFunction<int Function(FPDF_PAGELINK)>();
 
   int FPDFLink_GetURL(
     FPDF_PAGELINK link_page,
@@ -3605,12 +3138,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFLink_GetURLPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(FPDF_PAGELINK, ffi.Int,
-              ffi.Pointer<ffi.UnsignedShort>, ffi.Int)>>('FPDFLink_GetURL');
-  late final _FPDFLink_GetURL = _FPDFLink_GetURLPtr.asFunction<
-      int Function(FPDF_PAGELINK, int, ffi.Pointer<ffi.UnsignedShort>, int)>();
+  late final _FPDFLink_GetURLPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGELINK, ffi.Int, ffi.Pointer<ffi.UnsignedShort>, ffi.Int)>>(
+          'FPDFLink_GetURL');
+  late final _FPDFLink_GetURL =
+      _FPDFLink_GetURLPtr.asFunction<int Function(FPDF_PAGELINK, int, ffi.Pointer<ffi.UnsignedShort>, int)>();
 
   int FPDFLink_CountRects(
     FPDF_PAGELINK link_page,
@@ -3623,10 +3155,8 @@ class pdfium {
   }
 
   late final _FPDFLink_CountRectsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGELINK, ffi.Int)>>(
-          'FPDFLink_CountRects');
-  late final _FPDFLink_CountRects =
-      _FPDFLink_CountRectsPtr.asFunction<int Function(FPDF_PAGELINK, int)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGELINK, ffi.Int)>>('FPDFLink_CountRects');
+  late final _FPDFLink_CountRects = _FPDFLink_CountRectsPtr.asFunction<int Function(FPDF_PAGELINK, int)>();
 
   int FPDFLink_GetRect(
     FPDF_PAGELINK link_page,
@@ -3650,22 +3180,10 @@ class pdfium {
 
   late final _FPDFLink_GetRectPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGELINK,
-              ffi.Int,
-              ffi.Int,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>,
-              ffi.Pointer<ffi.Double>)>>('FPDFLink_GetRect');
+          FPDF_BOOL Function(FPDF_PAGELINK, ffi.Int, ffi.Int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>,
+              ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>)>>('FPDFLink_GetRect');
   late final _FPDFLink_GetRect = _FPDFLink_GetRectPtr.asFunction<
-      int Function(
-          FPDF_PAGELINK,
-          int,
-          int,
-          ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>,
-          ffi.Pointer<ffi.Double>,
+      int Function(FPDF_PAGELINK, int, int, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>, ffi.Pointer<ffi.Double>,
           ffi.Pointer<ffi.Double>)>();
 
   int FPDFLink_GetTextRange(
@@ -3683,12 +3201,10 @@ class pdfium {
   }
 
   late final _FPDFLink_GetTextRangePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGELINK, ffi.Int, ffi.Pointer<ffi.Int>,
-              ffi.Pointer<ffi.Int>)>>('FPDFLink_GetTextRange');
+          ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGELINK, ffi.Int, ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>>(
+      'FPDFLink_GetTextRange');
   late final _FPDFLink_GetTextRange = _FPDFLink_GetTextRangePtr.asFunction<
-      int Function(
-          FPDF_PAGELINK, int, ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>();
+      int Function(FPDF_PAGELINK, int, ffi.Pointer<ffi.Int>, ffi.Pointer<ffi.Int>)>();
 
   void FPDFLink_CloseWebLinks(
     FPDF_PAGELINK link_page,
@@ -3699,10 +3215,8 @@ class pdfium {
   }
 
   late final _FPDFLink_CloseWebLinksPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGELINK)>>(
-          'FPDFLink_CloseWebLinks');
-  late final _FPDFLink_CloseWebLinks =
-      _FPDFLink_CloseWebLinksPtr.asFunction<void Function(FPDF_PAGELINK)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGELINK)>>('FPDFLink_CloseWebLinks');
+  late final _FPDFLink_CloseWebLinks = _FPDFLink_CloseWebLinksPtr.asFunction<void Function(FPDF_PAGELINK)>();
 
   FPDF_BOOKMARK FPDFBookmark_GetFirstChild(
     FPDF_DOCUMENT document,
@@ -3714,12 +3228,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFBookmark_GetFirstChildPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOKMARK Function(
-              FPDF_DOCUMENT, FPDF_BOOKMARK)>>('FPDFBookmark_GetFirstChild');
-  late final _FPDFBookmark_GetFirstChild = _FPDFBookmark_GetFirstChildPtr
-      .asFunction<FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>();
+  late final _FPDFBookmark_GetFirstChildPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>>('FPDFBookmark_GetFirstChild');
+  late final _FPDFBookmark_GetFirstChild =
+      _FPDFBookmark_GetFirstChildPtr.asFunction<FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>();
 
   FPDF_BOOKMARK FPDFBookmark_GetNextSibling(
     FPDF_DOCUMENT document,
@@ -3731,12 +3243,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFBookmark_GetNextSiblingPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOKMARK Function(
-              FPDF_DOCUMENT, FPDF_BOOKMARK)>>('FPDFBookmark_GetNextSibling');
-  late final _FPDFBookmark_GetNextSibling = _FPDFBookmark_GetNextSiblingPtr
-      .asFunction<FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>();
+  late final _FPDFBookmark_GetNextSiblingPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>>('FPDFBookmark_GetNextSibling');
+  late final _FPDFBookmark_GetNextSibling =
+      _FPDFBookmark_GetNextSiblingPtr.asFunction<FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>();
 
   int FPDFBookmark_GetTitle(
     FPDF_BOOKMARK bookmark,
@@ -3750,12 +3260,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFBookmark_GetTitlePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_BOOKMARK, ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDFBookmark_GetTitle');
-  late final _FPDFBookmark_GetTitle = _FPDFBookmark_GetTitlePtr.asFunction<
-      int Function(FPDF_BOOKMARK, ffi.Pointer<ffi.Void>, int)>();
+  late final _FPDFBookmark_GetTitlePtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_BOOKMARK, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>(
+          'FPDFBookmark_GetTitle');
+  late final _FPDFBookmark_GetTitle =
+      _FPDFBookmark_GetTitlePtr.asFunction<int Function(FPDF_BOOKMARK, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDFBookmark_GetCount(
     FPDF_BOOKMARK bookmark,
@@ -3766,10 +3275,8 @@ class pdfium {
   }
 
   late final _FPDFBookmark_GetCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BOOKMARK)>>(
-          'FPDFBookmark_GetCount');
-  late final _FPDFBookmark_GetCount =
-      _FPDFBookmark_GetCountPtr.asFunction<int Function(FPDF_BOOKMARK)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_BOOKMARK)>>('FPDFBookmark_GetCount');
+  late final _FPDFBookmark_GetCount = _FPDFBookmark_GetCountPtr.asFunction<int Function(FPDF_BOOKMARK)>();
 
   FPDF_BOOKMARK FPDFBookmark_Find(
     FPDF_DOCUMENT document,
@@ -3781,12 +3288,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFBookmark_FindPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOKMARK Function(
-              FPDF_DOCUMENT, FPDF_WIDESTRING)>>('FPDFBookmark_Find');
-  late final _FPDFBookmark_Find = _FPDFBookmark_FindPtr.asFunction<
-      FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_WIDESTRING)>();
+  late final _FPDFBookmark_FindPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_WIDESTRING)>>('FPDFBookmark_Find');
+  late final _FPDFBookmark_Find =
+      _FPDFBookmark_FindPtr.asFunction<FPDF_BOOKMARK Function(FPDF_DOCUMENT, FPDF_WIDESTRING)>();
 
   FPDF_DEST FPDFBookmark_GetDest(
     FPDF_DOCUMENT document,
@@ -3798,11 +3303,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFBookmark_GetDestPtr = _lookup<
-          ffi.NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>>(
-      'FPDFBookmark_GetDest');
-  late final _FPDFBookmark_GetDest = _FPDFBookmark_GetDestPtr.asFunction<
-      FPDF_DEST Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>();
+  late final _FPDFBookmark_GetDestPtr =
+      _lookup<ffi.NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>>('FPDFBookmark_GetDest');
+  late final _FPDFBookmark_GetDest =
+      _FPDFBookmark_GetDestPtr.asFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_BOOKMARK)>();
 
   FPDF_ACTION FPDFBookmark_GetAction(
     FPDF_BOOKMARK bookmark,
@@ -3813,10 +3317,8 @@ class pdfium {
   }
 
   late final _FPDFBookmark_GetActionPtr =
-      _lookup<ffi.NativeFunction<FPDF_ACTION Function(FPDF_BOOKMARK)>>(
-          'FPDFBookmark_GetAction');
-  late final _FPDFBookmark_GetAction = _FPDFBookmark_GetActionPtr.asFunction<
-      FPDF_ACTION Function(FPDF_BOOKMARK)>();
+      _lookup<ffi.NativeFunction<FPDF_ACTION Function(FPDF_BOOKMARK)>>('FPDFBookmark_GetAction');
+  late final _FPDFBookmark_GetAction = _FPDFBookmark_GetActionPtr.asFunction<FPDF_ACTION Function(FPDF_BOOKMARK)>();
 
   int FPDFAction_GetType(
     FPDF_ACTION action,
@@ -3827,10 +3329,8 @@ class pdfium {
   }
 
   late final _FPDFAction_GetTypePtr =
-      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_ACTION)>>(
-          'FPDFAction_GetType');
-  late final _FPDFAction_GetType =
-      _FPDFAction_GetTypePtr.asFunction<int Function(FPDF_ACTION)>();
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_ACTION)>>('FPDFAction_GetType');
+  late final _FPDFAction_GetType = _FPDFAction_GetTypePtr.asFunction<int Function(FPDF_ACTION)>();
 
   FPDF_DEST FPDFAction_GetDest(
     FPDF_DOCUMENT document,
@@ -3842,11 +3342,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFAction_GetDestPtr = _lookup<
-          ffi.NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_ACTION)>>(
-      'FPDFAction_GetDest');
-  late final _FPDFAction_GetDest = _FPDFAction_GetDestPtr.asFunction<
-      FPDF_DEST Function(FPDF_DOCUMENT, FPDF_ACTION)>();
+  late final _FPDFAction_GetDestPtr =
+      _lookup<ffi.NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_ACTION)>>('FPDFAction_GetDest');
+  late final _FPDFAction_GetDest = _FPDFAction_GetDestPtr.asFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_ACTION)>();
 
   int FPDFAction_GetFilePath(
     FPDF_ACTION action,
@@ -3860,12 +3358,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFAction_GetFilePathPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_ACTION, ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDFAction_GetFilePath');
-  late final _FPDFAction_GetFilePath = _FPDFAction_GetFilePathPtr.asFunction<
-      int Function(FPDF_ACTION, ffi.Pointer<ffi.Void>, int)>();
+  late final _FPDFAction_GetFilePathPtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_ACTION, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>(
+          'FPDFAction_GetFilePath');
+  late final _FPDFAction_GetFilePath =
+      _FPDFAction_GetFilePathPtr.asFunction<int Function(FPDF_ACTION, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDFAction_GetURIPath(
     FPDF_DOCUMENT document,
@@ -3884,12 +3381,9 @@ class pdfium {
   late final _FPDFAction_GetURIPathPtr = _lookup<
       ffi.NativeFunction<
           ffi.UnsignedLong Function(
-              FPDF_DOCUMENT,
-              FPDF_ACTION,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDFAction_GetURIPath');
-  late final _FPDFAction_GetURIPath = _FPDFAction_GetURIPathPtr.asFunction<
-      int Function(FPDF_DOCUMENT, FPDF_ACTION, ffi.Pointer<ffi.Void>, int)>();
+              FPDF_DOCUMENT, FPDF_ACTION, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FPDFAction_GetURIPath');
+  late final _FPDFAction_GetURIPath =
+      _FPDFAction_GetURIPathPtr.asFunction<int Function(FPDF_DOCUMENT, FPDF_ACTION, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDFDest_GetDestPageIndex(
     FPDF_DOCUMENT document,
@@ -3902,10 +3396,9 @@ class pdfium {
   }
 
   late final _FPDFDest_GetDestPageIndexPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT, FPDF_DEST)>>(
-          'FPDFDest_GetDestPageIndex');
-  late final _FPDFDest_GetDestPageIndex = _FPDFDest_GetDestPageIndexPtr
-      .asFunction<int Function(FPDF_DOCUMENT, FPDF_DEST)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_DOCUMENT, FPDF_DEST)>>('FPDFDest_GetDestPageIndex');
+  late final _FPDFDest_GetDestPageIndex =
+      _FPDFDest_GetDestPageIndexPtr.asFunction<int Function(FPDF_DOCUMENT, FPDF_DEST)>();
 
   int FPDFDest_GetView(
     FPDF_DEST dest,
@@ -3920,12 +3413,11 @@ class pdfium {
   }
 
   late final _FPDFDest_GetViewPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_DEST, ffi.Pointer<ffi.UnsignedLong>,
-              ffi.Pointer<FS_FLOAT>)>>('FPDFDest_GetView');
-  late final _FPDFDest_GetView = _FPDFDest_GetViewPtr.asFunction<
-      int Function(
-          FPDF_DEST, ffi.Pointer<ffi.UnsignedLong>, ffi.Pointer<FS_FLOAT>)>();
+          ffi
+          .NativeFunction<ffi.UnsignedLong Function(FPDF_DEST, ffi.Pointer<ffi.UnsignedLong>, ffi.Pointer<FS_FLOAT>)>>(
+      'FPDFDest_GetView');
+  late final _FPDFDest_GetView =
+      _FPDFDest_GetViewPtr.asFunction<int Function(FPDF_DEST, ffi.Pointer<ffi.UnsignedLong>, ffi.Pointer<FS_FLOAT>)>();
 
   int FPDFDest_GetLocationInPage(
     FPDF_DEST dest,
@@ -3949,24 +3441,11 @@ class pdfium {
 
   late final _FPDFDest_GetLocationInPagePtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_DEST,
-              ffi.Pointer<FPDF_BOOL>,
-              ffi.Pointer<FPDF_BOOL>,
-              ffi.Pointer<FPDF_BOOL>,
-              ffi.Pointer<FS_FLOAT>,
-              ffi.Pointer<FS_FLOAT>,
-              ffi.Pointer<FS_FLOAT>)>>('FPDFDest_GetLocationInPage');
-  late final _FPDFDest_GetLocationInPage =
-      _FPDFDest_GetLocationInPagePtr.asFunction<
-          int Function(
-              FPDF_DEST,
-              ffi.Pointer<FPDF_BOOL>,
-              ffi.Pointer<FPDF_BOOL>,
-              ffi.Pointer<FPDF_BOOL>,
-              ffi.Pointer<FS_FLOAT>,
-              ffi.Pointer<FS_FLOAT>,
-              ffi.Pointer<FS_FLOAT>)>();
+          FPDF_BOOL Function(FPDF_DEST, ffi.Pointer<FPDF_BOOL>, ffi.Pointer<FPDF_BOOL>, ffi.Pointer<FPDF_BOOL>,
+              ffi.Pointer<FS_FLOAT>, ffi.Pointer<FS_FLOAT>, ffi.Pointer<FS_FLOAT>)>>('FPDFDest_GetLocationInPage');
+  late final _FPDFDest_GetLocationInPage = _FPDFDest_GetLocationInPagePtr.asFunction<
+      int Function(FPDF_DEST, ffi.Pointer<FPDF_BOOL>, ffi.Pointer<FPDF_BOOL>, ffi.Pointer<FPDF_BOOL>,
+          ffi.Pointer<FS_FLOAT>, ffi.Pointer<FS_FLOAT>, ffi.Pointer<FS_FLOAT>)>();
 
   FPDF_LINK FPDFLink_GetLinkAtPoint(
     FPDF_PAGE page,
@@ -3980,12 +3459,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFLink_GetLinkAtPointPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_LINK Function(
-              FPDF_PAGE, ffi.Double, ffi.Double)>>('FPDFLink_GetLinkAtPoint');
-  late final _FPDFLink_GetLinkAtPoint = _FPDFLink_GetLinkAtPointPtr.asFunction<
-      FPDF_LINK Function(FPDF_PAGE, double, double)>();
+  late final _FPDFLink_GetLinkAtPointPtr =
+      _lookup<ffi.NativeFunction<FPDF_LINK Function(FPDF_PAGE, ffi.Double, ffi.Double)>>('FPDFLink_GetLinkAtPoint');
+  late final _FPDFLink_GetLinkAtPoint =
+      _FPDFLink_GetLinkAtPointPtr.asFunction<FPDF_LINK Function(FPDF_PAGE, double, double)>();
 
   int FPDFLink_GetLinkZOrderAtPoint(
     FPDF_PAGE page,
@@ -3999,12 +3476,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFLink_GetLinkZOrderAtPointPtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Int Function(FPDF_PAGE, ffi.Double, ffi.Double)>>(
-      'FPDFLink_GetLinkZOrderAtPoint');
-  late final _FPDFLink_GetLinkZOrderAtPoint = _FPDFLink_GetLinkZOrderAtPointPtr
-      .asFunction<int Function(FPDF_PAGE, double, double)>();
+  late final _FPDFLink_GetLinkZOrderAtPointPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE, ffi.Double, ffi.Double)>>('FPDFLink_GetLinkZOrderAtPoint');
+  late final _FPDFLink_GetLinkZOrderAtPoint =
+      _FPDFLink_GetLinkZOrderAtPointPtr.asFunction<int Function(FPDF_PAGE, double, double)>();
 
   FPDF_DEST FPDFLink_GetDest(
     FPDF_DOCUMENT document,
@@ -4017,10 +3492,8 @@ class pdfium {
   }
 
   late final _FPDFLink_GetDestPtr =
-      _lookup<ffi.NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_LINK)>>(
-          'FPDFLink_GetDest');
-  late final _FPDFLink_GetDest = _FPDFLink_GetDestPtr.asFunction<
-      FPDF_DEST Function(FPDF_DOCUMENT, FPDF_LINK)>();
+      _lookup<ffi.NativeFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_LINK)>>('FPDFLink_GetDest');
+  late final _FPDFLink_GetDest = _FPDFLink_GetDestPtr.asFunction<FPDF_DEST Function(FPDF_DOCUMENT, FPDF_LINK)>();
 
   FPDF_ACTION FPDFLink_GetAction(
     FPDF_LINK link,
@@ -4031,10 +3504,8 @@ class pdfium {
   }
 
   late final _FPDFLink_GetActionPtr =
-      _lookup<ffi.NativeFunction<FPDF_ACTION Function(FPDF_LINK)>>(
-          'FPDFLink_GetAction');
-  late final _FPDFLink_GetAction =
-      _FPDFLink_GetActionPtr.asFunction<FPDF_ACTION Function(FPDF_LINK)>();
+      _lookup<ffi.NativeFunction<FPDF_ACTION Function(FPDF_LINK)>>('FPDFLink_GetAction');
+  late final _FPDFLink_GetAction = _FPDFLink_GetActionPtr.asFunction<FPDF_ACTION Function(FPDF_LINK)>();
 
   int FPDFLink_Enumerate(
     FPDF_PAGE page,
@@ -4048,12 +3519,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFLink_EnumeratePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGE, ffi.Pointer<ffi.Int>,
-              ffi.Pointer<FPDF_LINK>)>>('FPDFLink_Enumerate');
-  late final _FPDFLink_Enumerate = _FPDFLink_EnumeratePtr.asFunction<
-      int Function(FPDF_PAGE, ffi.Pointer<ffi.Int>, ffi.Pointer<FPDF_LINK>)>();
+  late final _FPDFLink_EnumeratePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE, ffi.Pointer<ffi.Int>, ffi.Pointer<FPDF_LINK>)>>(
+          'FPDFLink_Enumerate');
+  late final _FPDFLink_Enumerate =
+      _FPDFLink_EnumeratePtr.asFunction<int Function(FPDF_PAGE, ffi.Pointer<ffi.Int>, ffi.Pointer<FPDF_LINK>)>();
 
   FPDF_ANNOTATION FPDFLink_GetAnnot(
     FPDF_PAGE page,
@@ -4065,11 +3535,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFLink_GetAnnotPtr = _lookup<
-          ffi.NativeFunction<FPDF_ANNOTATION Function(FPDF_PAGE, FPDF_LINK)>>(
-      'FPDFLink_GetAnnot');
-  late final _FPDFLink_GetAnnot = _FPDFLink_GetAnnotPtr.asFunction<
-      FPDF_ANNOTATION Function(FPDF_PAGE, FPDF_LINK)>();
+  late final _FPDFLink_GetAnnotPtr =
+      _lookup<ffi.NativeFunction<FPDF_ANNOTATION Function(FPDF_PAGE, FPDF_LINK)>>('FPDFLink_GetAnnot');
+  late final _FPDFLink_GetAnnot = _FPDFLink_GetAnnotPtr.asFunction<FPDF_ANNOTATION Function(FPDF_PAGE, FPDF_LINK)>();
 
   int FPDFLink_GetAnnotRect(
     FPDF_LINK link_annot,
@@ -4081,12 +3549,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFLink_GetAnnotRectPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_LINK, ffi.Pointer<FS_RECTF>)>>('FPDFLink_GetAnnotRect');
-  late final _FPDFLink_GetAnnotRect = _FPDFLink_GetAnnotRectPtr.asFunction<
-      int Function(FPDF_LINK, ffi.Pointer<FS_RECTF>)>();
+  late final _FPDFLink_GetAnnotRectPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_LINK, ffi.Pointer<FS_RECTF>)>>('FPDFLink_GetAnnotRect');
+  late final _FPDFLink_GetAnnotRect =
+      _FPDFLink_GetAnnotRectPtr.asFunction<int Function(FPDF_LINK, ffi.Pointer<FS_RECTF>)>();
 
   int FPDFLink_CountQuadPoints(
     FPDF_LINK link_annot,
@@ -4097,10 +3563,8 @@ class pdfium {
   }
 
   late final _FPDFLink_CountQuadPointsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_LINK)>>(
-          'FPDFLink_CountQuadPoints');
-  late final _FPDFLink_CountQuadPoints =
-      _FPDFLink_CountQuadPointsPtr.asFunction<int Function(FPDF_LINK)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_LINK)>>('FPDFLink_CountQuadPoints');
+  late final _FPDFLink_CountQuadPoints = _FPDFLink_CountQuadPointsPtr.asFunction<int Function(FPDF_LINK)>();
 
   int FPDFLink_GetQuadPoints(
     FPDF_LINK link_annot,
@@ -4114,12 +3578,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFLink_GetQuadPointsPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_LINK, ffi.Int,
-              ffi.Pointer<FS_QUADPOINTSF>)>>('FPDFLink_GetQuadPoints');
-  late final _FPDFLink_GetQuadPoints = _FPDFLink_GetQuadPointsPtr.asFunction<
-      int Function(FPDF_LINK, int, ffi.Pointer<FS_QUADPOINTSF>)>();
+  late final _FPDFLink_GetQuadPointsPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_LINK, ffi.Int, ffi.Pointer<FS_QUADPOINTSF>)>>(
+          'FPDFLink_GetQuadPoints');
+  late final _FPDFLink_GetQuadPoints =
+      _FPDFLink_GetQuadPointsPtr.asFunction<int Function(FPDF_LINK, int, ffi.Pointer<FS_QUADPOINTSF>)>();
 
   FPDF_ACTION FPDF_GetPageAAction(
     FPDF_PAGE page,
@@ -4132,10 +3595,8 @@ class pdfium {
   }
 
   late final _FPDF_GetPageAActionPtr =
-      _lookup<ffi.NativeFunction<FPDF_ACTION Function(FPDF_PAGE, ffi.Int)>>(
-          'FPDF_GetPageAAction');
-  late final _FPDF_GetPageAAction = _FPDF_GetPageAActionPtr.asFunction<
-      FPDF_ACTION Function(FPDF_PAGE, int)>();
+      _lookup<ffi.NativeFunction<FPDF_ACTION Function(FPDF_PAGE, ffi.Int)>>('FPDF_GetPageAAction');
+  late final _FPDF_GetPageAAction = _FPDF_GetPageAActionPtr.asFunction<FPDF_ACTION Function(FPDF_PAGE, int)>();
 
   int FPDF_GetFileIdentifier(
     FPDF_DOCUMENT document,
@@ -4154,12 +3615,9 @@ class pdfium {
   late final _FPDF_GetFileIdentifierPtr = _lookup<
       ffi.NativeFunction<
           ffi.UnsignedLong Function(
-              FPDF_DOCUMENT,
-              ffi.Int32,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDF_GetFileIdentifier');
-  late final _FPDF_GetFileIdentifier = _FPDF_GetFileIdentifierPtr.asFunction<
-      int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, int)>();
+              FPDF_DOCUMENT, ffi.Int32, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FPDF_GetFileIdentifier');
+  late final _FPDF_GetFileIdentifier =
+      _FPDF_GetFileIdentifierPtr.asFunction<int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDF_GetMetaText(
     FPDF_DOCUMENT document,
@@ -4177,11 +3635,10 @@ class pdfium {
 
   late final _FPDF_GetMetaTextPtr = _lookup<
       ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_DOCUMENT, FPDF_BYTESTRING,
-              ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FPDF_GetMetaText');
-  late final _FPDF_GetMetaText = _FPDF_GetMetaTextPtr.asFunction<
-      int Function(
-          FPDF_DOCUMENT, FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, int)>();
+          ffi.UnsignedLong Function(
+              FPDF_DOCUMENT, FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FPDF_GetMetaText');
+  late final _FPDF_GetMetaText =
+      _FPDF_GetMetaTextPtr.asFunction<int Function(FPDF_DOCUMENT, FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDF_GetPageLabel(
     FPDF_DOCUMENT document,
@@ -4198,21 +3655,19 @@ class pdfium {
   }
 
   late final _FPDF_GetPageLabelPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_DOCUMENT, ffi.Int,
-              ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FPDF_GetPageLabel');
-  late final _FPDF_GetPageLabel = _FPDF_GetPageLabelPtr.asFunction<
-      int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, int)>();
+          ffi
+          .NativeFunction<ffi.UnsignedLong Function(FPDF_DOCUMENT, ffi.Int, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>(
+      'FPDF_GetPageLabel');
+  late final _FPDF_GetPageLabel =
+      _FPDF_GetPageLabelPtr.asFunction<int Function(FPDF_DOCUMENT, int, ffi.Pointer<ffi.Void>, int)>();
 
   FPDF_DOCUMENT FPDF_CreateNewDocument() {
     return _FPDF_CreateNewDocument();
   }
 
   late final _FPDF_CreateNewDocumentPtr =
-      _lookup<ffi.NativeFunction<FPDF_DOCUMENT Function()>>(
-          'FPDF_CreateNewDocument');
-  late final _FPDF_CreateNewDocument =
-      _FPDF_CreateNewDocumentPtr.asFunction<FPDF_DOCUMENT Function()>();
+      _lookup<ffi.NativeFunction<FPDF_DOCUMENT Function()>>('FPDF_CreateNewDocument');
+  late final _FPDF_CreateNewDocument = _FPDF_CreateNewDocumentPtr.asFunction<FPDF_DOCUMENT Function()>();
 
   FPDF_PAGE FPDFPage_New(
     FPDF_DOCUMENT document,
@@ -4228,12 +3683,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFPage_NewPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_PAGE Function(
-              FPDF_DOCUMENT, ffi.Int, ffi.Double, ffi.Double)>>('FPDFPage_New');
-  late final _FPDFPage_New = _FPDFPage_NewPtr.asFunction<
-      FPDF_PAGE Function(FPDF_DOCUMENT, int, double, double)>();
+  late final _FPDFPage_NewPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGE Function(FPDF_DOCUMENT, ffi.Int, ffi.Double, ffi.Double)>>('FPDFPage_New');
+  late final _FPDFPage_New = _FPDFPage_NewPtr.asFunction<FPDF_PAGE Function(FPDF_DOCUMENT, int, double, double)>();
 
   void FPDFPage_Delete(
     FPDF_DOCUMENT document,
@@ -4246,10 +3698,8 @@ class pdfium {
   }
 
   late final _FPDFPage_DeletePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_DOCUMENT, ffi.Int)>>(
-          'FPDFPage_Delete');
-  late final _FPDFPage_Delete =
-      _FPDFPage_DeletePtr.asFunction<void Function(FPDF_DOCUMENT, int)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_DOCUMENT, ffi.Int)>>('FPDFPage_Delete');
+  late final _FPDFPage_Delete = _FPDFPage_DeletePtr.asFunction<void Function(FPDF_DOCUMENT, int)>();
 
   int FPDF_MovePages(
     FPDF_DOCUMENT document,
@@ -4265,12 +3715,11 @@ class pdfium {
     );
   }
 
-  late final _FPDF_MovePagesPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Int>,
-              ffi.UnsignedLong, ffi.Int)>>('FPDF_MovePages');
-  late final _FPDF_MovePages = _FPDF_MovePagesPtr.asFunction<
-      int Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Int>, int, int)>();
+  late final _FPDF_MovePagesPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Int>, ffi.UnsignedLong, ffi.Int)>>(
+          'FPDF_MovePages');
+  late final _FPDF_MovePages =
+      _FPDF_MovePagesPtr.asFunction<int Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Int>, int, int)>();
 
   int FPDFPage_GetRotation(
     FPDF_PAGE page,
@@ -4281,10 +3730,8 @@ class pdfium {
   }
 
   late final _FPDFPage_GetRotationPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE)>>(
-          'FPDFPage_GetRotation');
-  late final _FPDFPage_GetRotation =
-      _FPDFPage_GetRotationPtr.asFunction<int Function(FPDF_PAGE)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE)>>('FPDFPage_GetRotation');
+  late final _FPDFPage_GetRotation = _FPDFPage_GetRotationPtr.asFunction<int Function(FPDF_PAGE)>();
 
   void FPDFPage_SetRotation(
     FPDF_PAGE page,
@@ -4297,10 +3744,8 @@ class pdfium {
   }
 
   late final _FPDFPage_SetRotationPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, ffi.Int)>>(
-          'FPDFPage_SetRotation');
-  late final _FPDFPage_SetRotation =
-      _FPDFPage_SetRotationPtr.asFunction<void Function(FPDF_PAGE, int)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, ffi.Int)>>('FPDFPage_SetRotation');
+  late final _FPDFPage_SetRotation = _FPDFPage_SetRotationPtr.asFunction<void Function(FPDF_PAGE, int)>();
 
   void FPDFPage_InsertObject(
     FPDF_PAGE page,
@@ -4312,11 +3757,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFPage_InsertObjectPtr = _lookup<
-          ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, FPDF_PAGEOBJECT)>>(
-      'FPDFPage_InsertObject');
-  late final _FPDFPage_InsertObject = _FPDFPage_InsertObjectPtr.asFunction<
-      void Function(FPDF_PAGE, FPDF_PAGEOBJECT)>();
+  late final _FPDFPage_InsertObjectPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGE, FPDF_PAGEOBJECT)>>('FPDFPage_InsertObject');
+  late final _FPDFPage_InsertObject = _FPDFPage_InsertObjectPtr.asFunction<void Function(FPDF_PAGE, FPDF_PAGEOBJECT)>();
 
   int FPDFPage_RemoveObject(
     FPDF_PAGE page,
@@ -4328,11 +3771,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFPage_RemoveObjectPtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE, FPDF_PAGEOBJECT)>>(
-      'FPDFPage_RemoveObject');
-  late final _FPDFPage_RemoveObject = _FPDFPage_RemoveObjectPtr.asFunction<
-      int Function(FPDF_PAGE, FPDF_PAGEOBJECT)>();
+  late final _FPDFPage_RemoveObjectPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE, FPDF_PAGEOBJECT)>>('FPDFPage_RemoveObject');
+  late final _FPDFPage_RemoveObject = _FPDFPage_RemoveObjectPtr.asFunction<int Function(FPDF_PAGE, FPDF_PAGEOBJECT)>();
 
   int FPDFPage_CountObjects(
     FPDF_PAGE page,
@@ -4343,10 +3784,8 @@ class pdfium {
   }
 
   late final _FPDFPage_CountObjectsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE)>>(
-          'FPDFPage_CountObjects');
-  late final _FPDFPage_CountObjects =
-      _FPDFPage_CountObjectsPtr.asFunction<int Function(FPDF_PAGE)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGE)>>('FPDFPage_CountObjects');
+  late final _FPDFPage_CountObjects = _FPDFPage_CountObjectsPtr.asFunction<int Function(FPDF_PAGE)>();
 
   FPDF_PAGEOBJECT FPDFPage_GetObject(
     FPDF_PAGE page,
@@ -4359,10 +3798,8 @@ class pdfium {
   }
 
   late final _FPDFPage_GetObjectPtr =
-      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(FPDF_PAGE, ffi.Int)>>(
-          'FPDFPage_GetObject');
-  late final _FPDFPage_GetObject = _FPDFPage_GetObjectPtr.asFunction<
-      FPDF_PAGEOBJECT Function(FPDF_PAGE, int)>();
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(FPDF_PAGE, ffi.Int)>>('FPDFPage_GetObject');
+  late final _FPDFPage_GetObject = _FPDFPage_GetObjectPtr.asFunction<FPDF_PAGEOBJECT Function(FPDF_PAGE, int)>();
 
   int FPDFPage_HasTransparency(
     FPDF_PAGE page,
@@ -4373,10 +3810,8 @@ class pdfium {
   }
 
   late final _FPDFPage_HasTransparencyPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE)>>(
-          'FPDFPage_HasTransparency');
-  late final _FPDFPage_HasTransparency =
-      _FPDFPage_HasTransparencyPtr.asFunction<int Function(FPDF_PAGE)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE)>>('FPDFPage_HasTransparency');
+  late final _FPDFPage_HasTransparency = _FPDFPage_HasTransparencyPtr.asFunction<int Function(FPDF_PAGE)>();
 
   int FPDFPage_GenerateContent(
     FPDF_PAGE page,
@@ -4387,10 +3822,8 @@ class pdfium {
   }
 
   late final _FPDFPage_GenerateContentPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE)>>(
-          'FPDFPage_GenerateContent');
-  late final _FPDFPage_GenerateContent =
-      _FPDFPage_GenerateContentPtr.asFunction<int Function(FPDF_PAGE)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGE)>>('FPDFPage_GenerateContent');
+  late final _FPDFPage_GenerateContent = _FPDFPage_GenerateContentPtr.asFunction<int Function(FPDF_PAGE)>();
 
   void FPDFPageObj_Destroy(
     FPDF_PAGEOBJECT page_object,
@@ -4401,10 +3834,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_DestroyPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPageObj_Destroy');
-  late final _FPDFPageObj_Destroy =
-      _FPDFPageObj_DestroyPtr.asFunction<void Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGEOBJECT)>>('FPDFPageObj_Destroy');
+  late final _FPDFPageObj_Destroy = _FPDFPageObj_DestroyPtr.asFunction<void Function(FPDF_PAGEOBJECT)>();
 
   int FPDFPageObj_HasTransparency(
     FPDF_PAGEOBJECT page_object,
@@ -4415,10 +3846,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_HasTransparencyPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPageObj_HasTransparency');
-  late final _FPDFPageObj_HasTransparency = _FPDFPageObj_HasTransparencyPtr
-      .asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT)>>('FPDFPageObj_HasTransparency');
+  late final _FPDFPageObj_HasTransparency = _FPDFPageObj_HasTransparencyPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   int FPDFPageObj_GetType(
     FPDF_PAGEOBJECT page_object,
@@ -4429,10 +3858,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_GetTypePtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPageObj_GetType');
-  late final _FPDFPageObj_GetType =
-      _FPDFPageObj_GetTypePtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>('FPDFPageObj_GetType');
+  late final _FPDFPageObj_GetType = _FPDFPageObj_GetTypePtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   void FPDFPageObj_Transform(
     FPDF_PAGEOBJECT page_object,
@@ -4456,11 +3883,10 @@ class pdfium {
 
   late final _FPDFPageObj_TransformPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(FPDF_PAGEOBJECT, ffi.Double, ffi.Double, ffi.Double,
-              ffi.Double, ffi.Double, ffi.Double)>>('FPDFPageObj_Transform');
+          ffi.Void Function(FPDF_PAGEOBJECT, ffi.Double, ffi.Double, ffi.Double, ffi.Double, ffi.Double,
+              ffi.Double)>>('FPDFPageObj_Transform');
   late final _FPDFPageObj_Transform = _FPDFPageObj_TransformPtr.asFunction<
-      void Function(
-          FPDF_PAGEOBJECT, double, double, double, double, double, double)>();
+      void Function(FPDF_PAGEOBJECT, double, double, double, double, double, double)>();
 
   int FPDFPageObj_GetMatrix(
     FPDF_PAGEOBJECT page_object,
@@ -4472,12 +3898,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_GetMatrixPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT,
-              ffi.Pointer<FS_MATRIX>)>>('FPDFPageObj_GetMatrix');
-  late final _FPDFPageObj_GetMatrix = _FPDFPageObj_GetMatrixPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_MATRIX>)>();
+  late final _FPDFPageObj_GetMatrixPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_MATRIX>)>>('FPDFPageObj_GetMatrix');
+  late final _FPDFPageObj_GetMatrix =
+      _FPDFPageObj_GetMatrixPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_MATRIX>)>();
 
   int FPDFPageObj_SetMatrix(
     FPDF_PAGEOBJECT page_object,
@@ -4489,12 +3913,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_SetMatrixPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT,
-              ffi.Pointer<FS_MATRIX>)>>('FPDFPageObj_SetMatrix');
-  late final _FPDFPageObj_SetMatrix = _FPDFPageObj_SetMatrixPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_MATRIX>)>();
+  late final _FPDFPageObj_SetMatrixPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_MATRIX>)>>('FPDFPageObj_SetMatrix');
+  late final _FPDFPageObj_SetMatrix =
+      _FPDFPageObj_SetMatrixPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_MATRIX>)>();
 
   void FPDFPage_TransformAnnots(
     FPDF_PAGE page,
@@ -4518,12 +3940,10 @@ class pdfium {
 
   late final _FPDFPage_TransformAnnotsPtr = _lookup<
       ffi.NativeFunction<
-          ffi.Void Function(FPDF_PAGE, ffi.Double, ffi.Double, ffi.Double,
-              ffi.Double, ffi.Double, ffi.Double)>>('FPDFPage_TransformAnnots');
-  late final _FPDFPage_TransformAnnots =
-      _FPDFPage_TransformAnnotsPtr.asFunction<
-          void Function(
-              FPDF_PAGE, double, double, double, double, double, double)>();
+          ffi.Void Function(FPDF_PAGE, ffi.Double, ffi.Double, ffi.Double, ffi.Double, ffi.Double,
+              ffi.Double)>>('FPDFPage_TransformAnnots');
+  late final _FPDFPage_TransformAnnots = _FPDFPage_TransformAnnotsPtr.asFunction<
+      void Function(FPDF_PAGE, double, double, double, double, double, double)>();
 
   FPDF_PAGEOBJECT FPDFPageObj_NewImageObj(
     FPDF_DOCUMENT document,
@@ -4534,10 +3954,9 @@ class pdfium {
   }
 
   late final _FPDFPageObj_NewImageObjPtr =
-      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(FPDF_DOCUMENT)>>(
-          'FPDFPageObj_NewImageObj');
-  late final _FPDFPageObj_NewImageObj = _FPDFPageObj_NewImageObjPtr.asFunction<
-      FPDF_PAGEOBJECT Function(FPDF_DOCUMENT)>();
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(FPDF_DOCUMENT)>>('FPDFPageObj_NewImageObj');
+  late final _FPDFPageObj_NewImageObj =
+      _FPDFPageObj_NewImageObjPtr.asFunction<FPDF_PAGEOBJECT Function(FPDF_DOCUMENT)>();
 
   int FPDFPageObj_CountMarks(
     FPDF_PAGEOBJECT page_object,
@@ -4548,10 +3967,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_CountMarksPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPageObj_CountMarks');
-  late final _FPDFPageObj_CountMarks =
-      _FPDFPageObj_CountMarksPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>('FPDFPageObj_CountMarks');
+  late final _FPDFPageObj_CountMarks = _FPDFPageObj_CountMarksPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   FPDF_PAGEOBJECTMARK FPDFPageObj_GetMark(
     FPDF_PAGEOBJECT page_object,
@@ -4563,12 +3980,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_GetMarkPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_PAGEOBJECTMARK Function(
-              FPDF_PAGEOBJECT, ffi.UnsignedLong)>>('FPDFPageObj_GetMark');
-  late final _FPDFPageObj_GetMark = _FPDFPageObj_GetMarkPtr.asFunction<
-      FPDF_PAGEOBJECTMARK Function(FPDF_PAGEOBJECT, int)>();
+  late final _FPDFPageObj_GetMarkPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECTMARK Function(FPDF_PAGEOBJECT, ffi.UnsignedLong)>>(
+          'FPDFPageObj_GetMark');
+  late final _FPDFPageObj_GetMark =
+      _FPDFPageObj_GetMarkPtr.asFunction<FPDF_PAGEOBJECTMARK Function(FPDF_PAGEOBJECT, int)>();
 
   FPDF_PAGEOBJECTMARK FPDFPageObj_AddMark(
     FPDF_PAGEOBJECT page_object,
@@ -4580,12 +3996,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_AddMarkPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_PAGEOBJECTMARK Function(
-              FPDF_PAGEOBJECT, FPDF_BYTESTRING)>>('FPDFPageObj_AddMark');
-  late final _FPDFPageObj_AddMark = _FPDFPageObj_AddMarkPtr.asFunction<
-      FPDF_PAGEOBJECTMARK Function(FPDF_PAGEOBJECT, FPDF_BYTESTRING)>();
+  late final _FPDFPageObj_AddMarkPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECTMARK Function(FPDF_PAGEOBJECT, FPDF_BYTESTRING)>>(
+          'FPDFPageObj_AddMark');
+  late final _FPDFPageObj_AddMark =
+      _FPDFPageObj_AddMarkPtr.asFunction<FPDF_PAGEOBJECTMARK Function(FPDF_PAGEOBJECT, FPDF_BYTESTRING)>();
 
   int FPDFPageObj_RemoveMark(
     FPDF_PAGEOBJECT page_object,
@@ -4597,12 +4012,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_RemoveMarkPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK)>>('FPDFPageObj_RemoveMark');
-  late final _FPDFPageObj_RemoveMark = _FPDFPageObj_RemoveMarkPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK)>();
+  late final _FPDFPageObj_RemoveMarkPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK)>>('FPDFPageObj_RemoveMark');
+  late final _FPDFPageObj_RemoveMark =
+      _FPDFPageObj_RemoveMarkPtr.asFunction<int Function(FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK)>();
 
   int FPDFPageObjMark_GetName(
     FPDF_PAGEOBJECTMARK mark,
@@ -4620,14 +4033,10 @@ class pdfium {
 
   late final _FPDFPageObjMark_GetNamePtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECTMARK,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong,
+          FPDF_BOOL Function(FPDF_PAGEOBJECTMARK, ffi.Pointer<ffi.Void>, ffi.UnsignedLong,
               ffi.Pointer<ffi.UnsignedLong>)>>('FPDFPageObjMark_GetName');
   late final _FPDFPageObjMark_GetName = _FPDFPageObjMark_GetNamePtr.asFunction<
-      int Function(FPDF_PAGEOBJECTMARK, ffi.Pointer<ffi.Void>, int,
-          ffi.Pointer<ffi.UnsignedLong>)>();
+      int Function(FPDF_PAGEOBJECTMARK, ffi.Pointer<ffi.Void>, int, ffi.Pointer<ffi.UnsignedLong>)>();
 
   int FPDFPageObjMark_CountParams(
     FPDF_PAGEOBJECTMARK mark,
@@ -4638,10 +4047,9 @@ class pdfium {
   }
 
   late final _FPDFPageObjMark_CountParamsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECTMARK)>>(
-          'FPDFPageObjMark_CountParams');
-  late final _FPDFPageObjMark_CountParams = _FPDFPageObjMark_CountParamsPtr
-      .asFunction<int Function(FPDF_PAGEOBJECTMARK)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECTMARK)>>('FPDFPageObjMark_CountParams');
+  late final _FPDFPageObjMark_CountParams =
+      _FPDFPageObjMark_CountParamsPtr.asFunction<int Function(FPDF_PAGEOBJECTMARK)>();
 
   int FPDFPageObjMark_GetParamKey(
     FPDF_PAGEOBJECTMARK mark,
@@ -4661,16 +4069,10 @@ class pdfium {
 
   late final _FPDFPageObjMark_GetParamKeyPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECTMARK,
-              ffi.UnsignedLong,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong,
+          FPDF_BOOL Function(FPDF_PAGEOBJECTMARK, ffi.UnsignedLong, ffi.Pointer<ffi.Void>, ffi.UnsignedLong,
               ffi.Pointer<ffi.UnsignedLong>)>>('FPDFPageObjMark_GetParamKey');
-  late final _FPDFPageObjMark_GetParamKey =
-      _FPDFPageObjMark_GetParamKeyPtr.asFunction<
-          int Function(FPDF_PAGEOBJECTMARK, int, ffi.Pointer<ffi.Void>, int,
-              ffi.Pointer<ffi.UnsignedLong>)>();
+  late final _FPDFPageObjMark_GetParamKey = _FPDFPageObjMark_GetParamKeyPtr.asFunction<
+      int Function(FPDF_PAGEOBJECTMARK, int, ffi.Pointer<ffi.Void>, int, ffi.Pointer<ffi.UnsignedLong>)>();
 
   int FPDFPageObjMark_GetParamValueType(
     FPDF_PAGEOBJECTMARK mark,
@@ -4682,13 +4084,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObjMark_GetParamValueTypePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_OBJECT_TYPE Function(FPDF_PAGEOBJECTMARK,
-              FPDF_BYTESTRING)>>('FPDFPageObjMark_GetParamValueType');
+  late final _FPDFPageObjMark_GetParamValueTypePtr =
+      _lookup<ffi.NativeFunction<FPDF_OBJECT_TYPE Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING)>>(
+          'FPDFPageObjMark_GetParamValueType');
   late final _FPDFPageObjMark_GetParamValueType =
-      _FPDFPageObjMark_GetParamValueTypePtr.asFunction<
-          int Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING)>();
+      _FPDFPageObjMark_GetParamValueTypePtr.asFunction<int Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING)>();
 
   int FPDFPageObjMark_GetParamIntValue(
     FPDF_PAGEOBJECTMARK mark,
@@ -4702,14 +4102,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObjMark_GetParamIntValuePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING,
-              ffi.Pointer<ffi.Int>)>>('FPDFPageObjMark_GetParamIntValue');
-  late final _FPDFPageObjMark_GetParamIntValue =
-      _FPDFPageObjMark_GetParamIntValuePtr.asFunction<
-          int Function(
-              FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, ffi.Pointer<ffi.Int>)>();
+  late final _FPDFPageObjMark_GetParamIntValuePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, ffi.Pointer<ffi.Int>)>>(
+          'FPDFPageObjMark_GetParamIntValue');
+  late final _FPDFPageObjMark_GetParamIntValue = _FPDFPageObjMark_GetParamIntValuePtr.asFunction<
+      int Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, ffi.Pointer<ffi.Int>)>();
 
   int FPDFPageObjMark_GetParamStringValue(
     FPDF_PAGEOBJECTMARK mark,
@@ -4728,18 +4125,11 @@ class pdfium {
   }
 
   late final _FPDFPageObjMark_GetParamStringValuePtr = _lookup<
-          ffi.NativeFunction<
-              FPDF_BOOL Function(
-                  FPDF_PAGEOBJECTMARK,
-                  FPDF_BYTESTRING,
-                  ffi.Pointer<ffi.Void>,
-                  ffi.UnsignedLong,
-                  ffi.Pointer<ffi.UnsignedLong>)>>(
-      'FPDFPageObjMark_GetParamStringValue');
-  late final _FPDFPageObjMark_GetParamStringValue =
-      _FPDFPageObjMark_GetParamStringValuePtr.asFunction<
-          int Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING,
-              ffi.Pointer<ffi.Void>, int, ffi.Pointer<ffi.UnsignedLong>)>();
+      ffi.NativeFunction<
+          FPDF_BOOL Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, ffi.UnsignedLong,
+              ffi.Pointer<ffi.UnsignedLong>)>>('FPDFPageObjMark_GetParamStringValue');
+  late final _FPDFPageObjMark_GetParamStringValue = _FPDFPageObjMark_GetParamStringValuePtr.asFunction<
+      int Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, int, ffi.Pointer<ffi.UnsignedLong>)>();
 
   int FPDFPageObjMark_GetParamBlobValue(
     FPDF_PAGEOBJECTMARK mark,
@@ -4758,18 +4148,11 @@ class pdfium {
   }
 
   late final _FPDFPageObjMark_GetParamBlobValuePtr = _lookup<
-          ffi.NativeFunction<
-              FPDF_BOOL Function(
-                  FPDF_PAGEOBJECTMARK,
-                  FPDF_BYTESTRING,
-                  ffi.Pointer<ffi.Void>,
-                  ffi.UnsignedLong,
-                  ffi.Pointer<ffi.UnsignedLong>)>>(
-      'FPDFPageObjMark_GetParamBlobValue');
-  late final _FPDFPageObjMark_GetParamBlobValue =
-      _FPDFPageObjMark_GetParamBlobValuePtr.asFunction<
-          int Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING,
-              ffi.Pointer<ffi.Void>, int, ffi.Pointer<ffi.UnsignedLong>)>();
+      ffi.NativeFunction<
+          FPDF_BOOL Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, ffi.UnsignedLong,
+              ffi.Pointer<ffi.UnsignedLong>)>>('FPDFPageObjMark_GetParamBlobValue');
+  late final _FPDFPageObjMark_GetParamBlobValue = _FPDFPageObjMark_GetParamBlobValuePtr.asFunction<
+      int Function(FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, int, ffi.Pointer<ffi.UnsignedLong>)>();
 
   int FPDFPageObjMark_SetIntParam(
     FPDF_DOCUMENT document,
@@ -4789,16 +4172,10 @@ class pdfium {
 
   late final _FPDFPageObjMark_SetIntParamPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_DOCUMENT,
-              FPDF_PAGEOBJECT,
-              FPDF_PAGEOBJECTMARK,
-              FPDF_BYTESTRING,
+          FPDF_BOOL Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING,
               ffi.Int)>>('FPDFPageObjMark_SetIntParam');
-  late final _FPDFPageObjMark_SetIntParam =
-      _FPDFPageObjMark_SetIntParamPtr.asFunction<
-          int Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK,
-              FPDF_BYTESTRING, int)>();
+  late final _FPDFPageObjMark_SetIntParam = _FPDFPageObjMark_SetIntParamPtr.asFunction<
+      int Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, int)>();
 
   int FPDFPageObjMark_SetStringParam(
     FPDF_DOCUMENT document,
@@ -4818,16 +4195,10 @@ class pdfium {
 
   late final _FPDFPageObjMark_SetStringParamPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_DOCUMENT,
-              FPDF_PAGEOBJECT,
-              FPDF_PAGEOBJECTMARK,
-              FPDF_BYTESTRING,
+          FPDF_BOOL Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING,
               FPDF_BYTESTRING)>>('FPDFPageObjMark_SetStringParam');
-  late final _FPDFPageObjMark_SetStringParam =
-      _FPDFPageObjMark_SetStringParamPtr.asFunction<
-          int Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK,
-              FPDF_BYTESTRING, FPDF_BYTESTRING)>();
+  late final _FPDFPageObjMark_SetStringParam = _FPDFPageObjMark_SetStringParamPtr.asFunction<
+      int Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, FPDF_BYTESTRING)>();
 
   int FPDFPageObjMark_SetBlobParam(
     FPDF_DOCUMENT document,
@@ -4849,17 +4220,10 @@ class pdfium {
 
   late final _FPDFPageObjMark_SetBlobParamPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_DOCUMENT,
-              FPDF_PAGEOBJECT,
-              FPDF_PAGEOBJECTMARK,
-              FPDF_BYTESTRING,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDFPageObjMark_SetBlobParam');
-  late final _FPDFPageObjMark_SetBlobParam =
-      _FPDFPageObjMark_SetBlobParamPtr.asFunction<
-          int Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK,
-              FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, int)>();
+          FPDF_BOOL Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING,
+              ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FPDFPageObjMark_SetBlobParam');
+  late final _FPDFPageObjMark_SetBlobParam = _FPDFPageObjMark_SetBlobParamPtr.asFunction<
+      int Function(FPDF_DOCUMENT, FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDFPageObjMark_RemoveParam(
     FPDF_PAGEOBJECT page_object,
@@ -4873,14 +4237,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObjMark_RemoveParamPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK,
-              FPDF_BYTESTRING)>>('FPDFPageObjMark_RemoveParam');
+  late final _FPDFPageObjMark_RemoveParamPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING)>>(
+          'FPDFPageObjMark_RemoveParam');
   late final _FPDFPageObjMark_RemoveParam =
-      _FPDFPageObjMark_RemoveParamPtr.asFunction<
-          int Function(
-              FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING)>();
+      _FPDFPageObjMark_RemoveParamPtr.asFunction<int Function(FPDF_PAGEOBJECT, FPDF_PAGEOBJECTMARK, FPDF_BYTESTRING)>();
 
   int FPDFImageObj_LoadJpegFile(
     ffi.Pointer<FPDF_PAGE> pages,
@@ -4900,10 +4261,8 @@ class pdfium {
       ffi.NativeFunction<
           FPDF_BOOL Function(ffi.Pointer<FPDF_PAGE>, ffi.Int, FPDF_PAGEOBJECT,
               ffi.Pointer<FPDF_FILEACCESS>)>>('FPDFImageObj_LoadJpegFile');
-  late final _FPDFImageObj_LoadJpegFile =
-      _FPDFImageObj_LoadJpegFilePtr.asFunction<
-          int Function(ffi.Pointer<FPDF_PAGE>, int, FPDF_PAGEOBJECT,
-              ffi.Pointer<FPDF_FILEACCESS>)>();
+  late final _FPDFImageObj_LoadJpegFile = _FPDFImageObj_LoadJpegFilePtr.asFunction<
+      int Function(ffi.Pointer<FPDF_PAGE>, int, FPDF_PAGEOBJECT, ffi.Pointer<FPDF_FILEACCESS>)>();
 
   int FPDFImageObj_LoadJpegFileInline(
     ffi.Pointer<FPDF_PAGE> pages,
@@ -4920,14 +4279,11 @@ class pdfium {
   }
 
   late final _FPDFImageObj_LoadJpegFileInlinePtr = _lookup<
-          ffi.NativeFunction<
-              FPDF_BOOL Function(ffi.Pointer<FPDF_PAGE>, ffi.Int,
-                  FPDF_PAGEOBJECT, ffi.Pointer<FPDF_FILEACCESS>)>>(
-      'FPDFImageObj_LoadJpegFileInline');
-  late final _FPDFImageObj_LoadJpegFileInline =
-      _FPDFImageObj_LoadJpegFileInlinePtr.asFunction<
-          int Function(ffi.Pointer<FPDF_PAGE>, int, FPDF_PAGEOBJECT,
-              ffi.Pointer<FPDF_FILEACCESS>)>();
+      ffi.NativeFunction<
+          FPDF_BOOL Function(ffi.Pointer<FPDF_PAGE>, ffi.Int, FPDF_PAGEOBJECT,
+              ffi.Pointer<FPDF_FILEACCESS>)>>('FPDFImageObj_LoadJpegFileInline');
+  late final _FPDFImageObj_LoadJpegFileInline = _FPDFImageObj_LoadJpegFileInlinePtr.asFunction<
+      int Function(ffi.Pointer<FPDF_PAGE>, int, FPDF_PAGEOBJECT, ffi.Pointer<FPDF_FILEACCESS>)>();
 
   int FPDFImageObj_SetMatrix(
     FPDF_PAGEOBJECT image_object,
@@ -4951,17 +4307,10 @@ class pdfium {
 
   late final _FPDFImageObj_SetMatrixPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT,
-              ffi.Double,
-              ffi.Double,
-              ffi.Double,
-              ffi.Double,
-              ffi.Double,
+          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Double, ffi.Double, ffi.Double, ffi.Double, ffi.Double,
               ffi.Double)>>('FPDFImageObj_SetMatrix');
   late final _FPDFImageObj_SetMatrix = _FPDFImageObj_SetMatrixPtr.asFunction<
-      int Function(
-          FPDF_PAGEOBJECT, double, double, double, double, double, double)>();
+      int Function(FPDF_PAGEOBJECT, double, double, double, double, double, double)>();
 
   int FPDFImageObj_SetBitmap(
     ffi.Pointer<FPDF_PAGE> pages,
@@ -4977,13 +4326,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFImageObj_SetBitmapPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(ffi.Pointer<FPDF_PAGE>, ffi.Int, FPDF_PAGEOBJECT,
-              FPDF_BITMAP)>>('FPDFImageObj_SetBitmap');
-  late final _FPDFImageObj_SetBitmap = _FPDFImageObj_SetBitmapPtr.asFunction<
-      int Function(
-          ffi.Pointer<FPDF_PAGE>, int, FPDF_PAGEOBJECT, FPDF_BITMAP)>();
+  late final _FPDFImageObj_SetBitmapPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(ffi.Pointer<FPDF_PAGE>, ffi.Int, FPDF_PAGEOBJECT, FPDF_BITMAP)>>(
+          'FPDFImageObj_SetBitmap');
+  late final _FPDFImageObj_SetBitmap =
+      _FPDFImageObj_SetBitmapPtr.asFunction<int Function(ffi.Pointer<FPDF_PAGE>, int, FPDF_PAGEOBJECT, FPDF_BITMAP)>();
 
   FPDF_BITMAP FPDFImageObj_GetBitmap(
     FPDF_PAGEOBJECT image_object,
@@ -4994,10 +4341,8 @@ class pdfium {
   }
 
   late final _FPDFImageObj_GetBitmapPtr =
-      _lookup<ffi.NativeFunction<FPDF_BITMAP Function(FPDF_PAGEOBJECT)>>(
-          'FPDFImageObj_GetBitmap');
-  late final _FPDFImageObj_GetBitmap = _FPDFImageObj_GetBitmapPtr.asFunction<
-      FPDF_BITMAP Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<FPDF_BITMAP Function(FPDF_PAGEOBJECT)>>('FPDFImageObj_GetBitmap');
+  late final _FPDFImageObj_GetBitmap = _FPDFImageObj_GetBitmapPtr.asFunction<FPDF_BITMAP Function(FPDF_PAGEOBJECT)>();
 
   FPDF_BITMAP FPDFImageObj_GetRenderedBitmap(
     FPDF_DOCUMENT document,
@@ -5011,13 +4356,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFImageObj_GetRenderedBitmapPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BITMAP Function(FPDF_DOCUMENT, FPDF_PAGE,
-              FPDF_PAGEOBJECT)>>('FPDFImageObj_GetRenderedBitmap');
+  late final _FPDFImageObj_GetRenderedBitmapPtr =
+      _lookup<ffi.NativeFunction<FPDF_BITMAP Function(FPDF_DOCUMENT, FPDF_PAGE, FPDF_PAGEOBJECT)>>(
+          'FPDFImageObj_GetRenderedBitmap');
   late final _FPDFImageObj_GetRenderedBitmap =
-      _FPDFImageObj_GetRenderedBitmapPtr.asFunction<
-          FPDF_BITMAP Function(FPDF_DOCUMENT, FPDF_PAGE, FPDF_PAGEOBJECT)>();
+      _FPDFImageObj_GetRenderedBitmapPtr.asFunction<FPDF_BITMAP Function(FPDF_DOCUMENT, FPDF_PAGE, FPDF_PAGEOBJECT)>();
 
   int FPDFImageObj_GetImageDataDecoded(
     FPDF_PAGEOBJECT image_object,
@@ -5031,13 +4374,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFImageObj_GetImageDataDecodedPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDFImageObj_GetImageDataDecoded');
+  late final _FPDFImageObj_GetImageDataDecodedPtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>(
+          'FPDFImageObj_GetImageDataDecoded');
   late final _FPDFImageObj_GetImageDataDecoded =
-      _FPDFImageObj_GetImageDataDecodedPtr.asFunction<
-          int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Void>, int)>();
+      _FPDFImageObj_GetImageDataDecodedPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDFImageObj_GetImageDataRaw(
     FPDF_PAGEOBJECT image_object,
@@ -5051,12 +4392,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFImageObj_GetImageDataRawPtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDFImageObj_GetImageDataRaw');
-  late final _FPDFImageObj_GetImageDataRaw = _FPDFImageObj_GetImageDataRawPtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Void>, int)>();
+  late final _FPDFImageObj_GetImageDataRawPtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>(
+          'FPDFImageObj_GetImageDataRaw');
+  late final _FPDFImageObj_GetImageDataRaw =
+      _FPDFImageObj_GetImageDataRawPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDFImageObj_GetImageFilterCount(
     FPDF_PAGEOBJECT image_object,
@@ -5067,11 +4407,9 @@ class pdfium {
   }
 
   late final _FPDFImageObj_GetImageFilterCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>(
-          'FPDFImageObj_GetImageFilterCount');
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>('FPDFImageObj_GetImageFilterCount');
   late final _FPDFImageObj_GetImageFilterCount =
-      _FPDFImageObj_GetImageFilterCountPtr.asFunction<
-          int Function(FPDF_PAGEOBJECT)>();
+      _FPDFImageObj_GetImageFilterCountPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   int FPDFImageObj_GetImageFilter(
     FPDF_PAGEOBJECT image_object,
@@ -5090,13 +4428,9 @@ class pdfium {
   late final _FPDFImageObj_GetImageFilterPtr = _lookup<
       ffi.NativeFunction<
           ffi.UnsignedLong Function(
-              FPDF_PAGEOBJECT,
-              ffi.Int,
-              ffi.Pointer<ffi.Void>,
-              ffi.UnsignedLong)>>('FPDFImageObj_GetImageFilter');
+              FPDF_PAGEOBJECT, ffi.Int, ffi.Pointer<ffi.Void>, ffi.UnsignedLong)>>('FPDFImageObj_GetImageFilter');
   late final _FPDFImageObj_GetImageFilter =
-      _FPDFImageObj_GetImageFilterPtr.asFunction<
-          int Function(FPDF_PAGEOBJECT, int, ffi.Pointer<ffi.Void>, int)>();
+      _FPDFImageObj_GetImageFilterPtr.asFunction<int Function(FPDF_PAGEOBJECT, int, ffi.Pointer<ffi.Void>, int)>();
 
   int FPDFImageObj_GetImageMetadata(
     FPDF_PAGEOBJECT image_object,
@@ -5110,15 +4444,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFImageObj_GetImageMetadataPtr = _lookup<
-          ffi.NativeFunction<
-              FPDF_BOOL Function(FPDF_PAGEOBJECT, FPDF_PAGE,
-                  ffi.Pointer<FPDF_IMAGEOBJ_METADATA>)>>(
-      'FPDFImageObj_GetImageMetadata');
-  late final _FPDFImageObj_GetImageMetadata =
-      _FPDFImageObj_GetImageMetadataPtr.asFunction<
-          int Function(FPDF_PAGEOBJECT, FPDF_PAGE,
-              ffi.Pointer<FPDF_IMAGEOBJ_METADATA>)>();
+  late final _FPDFImageObj_GetImageMetadataPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, FPDF_PAGE, ffi.Pointer<FPDF_IMAGEOBJ_METADATA>)>>(
+          'FPDFImageObj_GetImageMetadata');
+  late final _FPDFImageObj_GetImageMetadata = _FPDFImageObj_GetImageMetadataPtr.asFunction<
+      int Function(FPDF_PAGEOBJECT, FPDF_PAGE, ffi.Pointer<FPDF_IMAGEOBJ_METADATA>)>();
 
   int FPDFImageObj_GetImagePixelSize(
     FPDF_PAGEOBJECT image_object,
@@ -5136,10 +4466,8 @@ class pdfium {
       ffi.NativeFunction<
           FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.UnsignedInt>,
               ffi.Pointer<ffi.UnsignedInt>)>>('FPDFImageObj_GetImagePixelSize');
-  late final _FPDFImageObj_GetImagePixelSize =
-      _FPDFImageObj_GetImagePixelSizePtr.asFunction<
-          int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>)>();
+  late final _FPDFImageObj_GetImagePixelSize = _FPDFImageObj_GetImagePixelSizePtr.asFunction<
+      int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>();
 
   FPDF_PAGEOBJECT FPDFPageObj_CreateNewPath(
     double x,
@@ -5151,11 +4479,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_CreateNewPathPtr = _lookup<
-          ffi.NativeFunction<FPDF_PAGEOBJECT Function(ffi.Float, ffi.Float)>>(
-      'FPDFPageObj_CreateNewPath');
-  late final _FPDFPageObj_CreateNewPath = _FPDFPageObj_CreateNewPathPtr
-      .asFunction<FPDF_PAGEOBJECT Function(double, double)>();
+  late final _FPDFPageObj_CreateNewPathPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(ffi.Float, ffi.Float)>>('FPDFPageObj_CreateNewPath');
+  late final _FPDFPageObj_CreateNewPath =
+      _FPDFPageObj_CreateNewPathPtr.asFunction<FPDF_PAGEOBJECT Function(double, double)>();
 
   FPDF_PAGEOBJECT FPDFPageObj_CreateNewRect(
     double x,
@@ -5171,12 +4498,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_CreateNewRectPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_PAGEOBJECT Function(ffi.Float, ffi.Float, ffi.Float,
-              ffi.Float)>>('FPDFPageObj_CreateNewRect');
-  late final _FPDFPageObj_CreateNewRect = _FPDFPageObj_CreateNewRectPtr
-      .asFunction<FPDF_PAGEOBJECT Function(double, double, double, double)>();
+  late final _FPDFPageObj_CreateNewRectPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(ffi.Float, ffi.Float, ffi.Float, ffi.Float)>>(
+          'FPDFPageObj_CreateNewRect');
+  late final _FPDFPageObj_CreateNewRect =
+      _FPDFPageObj_CreateNewRectPtr.asFunction<FPDF_PAGEOBJECT Function(double, double, double, double)>();
 
   int FPDFPageObj_GetBounds(
     FPDF_PAGEOBJECT page_object,
@@ -5196,18 +4522,10 @@ class pdfium {
 
   late final _FPDFPageObj_GetBoundsPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT,
-              ffi.Pointer<ffi.Float>,
-              ffi.Pointer<ffi.Float>,
-              ffi.Pointer<ffi.Float>,
+          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>,
               ffi.Pointer<ffi.Float>)>>('FPDFPageObj_GetBounds');
   late final _FPDFPageObj_GetBounds = _FPDFPageObj_GetBoundsPtr.asFunction<
-      int Function(
-          FPDF_PAGEOBJECT,
-          ffi.Pointer<ffi.Float>,
-          ffi.Pointer<ffi.Float>,
-          ffi.Pointer<ffi.Float>,
+      int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>,
           ffi.Pointer<ffi.Float>)>();
 
   int FPDFPageObj_GetRotatedBounds(
@@ -5220,12 +4538,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_GetRotatedBoundsPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT,
-              ffi.Pointer<FS_QUADPOINTSF>)>>('FPDFPageObj_GetRotatedBounds');
-  late final _FPDFPageObj_GetRotatedBounds = _FPDFPageObj_GetRotatedBoundsPtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_QUADPOINTSF>)>();
+  late final _FPDFPageObj_GetRotatedBoundsPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_QUADPOINTSF>)>>(
+          'FPDFPageObj_GetRotatedBounds');
+  late final _FPDFPageObj_GetRotatedBounds =
+      _FPDFPageObj_GetRotatedBoundsPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<FS_QUADPOINTSF>)>();
 
   void FPDFPageObj_SetBlendMode(
     FPDF_PAGEOBJECT page_object,
@@ -5237,12 +4554,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_SetBlendModePtr = _lookup<
-          ffi
-          .NativeFunction<ffi.Void Function(FPDF_PAGEOBJECT, FPDF_BYTESTRING)>>(
-      'FPDFPageObj_SetBlendMode');
-  late final _FPDFPageObj_SetBlendMode = _FPDFPageObj_SetBlendModePtr
-      .asFunction<void Function(FPDF_PAGEOBJECT, FPDF_BYTESTRING)>();
+  late final _FPDFPageObj_SetBlendModePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_PAGEOBJECT, FPDF_BYTESTRING)>>('FPDFPageObj_SetBlendMode');
+  late final _FPDFPageObj_SetBlendMode =
+      _FPDFPageObj_SetBlendModePtr.asFunction<void Function(FPDF_PAGEOBJECT, FPDF_BYTESTRING)>();
 
   int FPDFPageObj_SetStrokeColor(
     FPDF_PAGEOBJECT page_object,
@@ -5262,10 +4577,10 @@ class pdfium {
 
   late final _FPDFPageObj_SetStrokeColorPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.UnsignedInt, ffi.UnsignedInt,
-              ffi.UnsignedInt, ffi.UnsignedInt)>>('FPDFPageObj_SetStrokeColor');
-  late final _FPDFPageObj_SetStrokeColor = _FPDFPageObj_SetStrokeColorPtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, int, int, int, int)>();
+          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.UnsignedInt, ffi.UnsignedInt, ffi.UnsignedInt,
+              ffi.UnsignedInt)>>('FPDFPageObj_SetStrokeColor');
+  late final _FPDFPageObj_SetStrokeColor =
+      _FPDFPageObj_SetStrokeColorPtr.asFunction<int Function(FPDF_PAGEOBJECT, int, int, int, int)>();
 
   int FPDFPageObj_GetStrokeColor(
     FPDF_PAGEOBJECT page_object,
@@ -5285,20 +4600,11 @@ class pdfium {
 
   late final _FPDFPageObj_GetStrokeColorPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>)>>('FPDFPageObj_GetStrokeColor');
-  late final _FPDFPageObj_GetStrokeColor =
-      _FPDFPageObj_GetStrokeColorPtr.asFunction<
-          int Function(
-              FPDF_PAGEOBJECT,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>)>();
+          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+              ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>>('FPDFPageObj_GetStrokeColor');
+  late final _FPDFPageObj_GetStrokeColor = _FPDFPageObj_GetStrokeColorPtr.asFunction<
+      int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+          ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>();
 
   int FPDFPageObj_SetStrokeWidth(
     FPDF_PAGEOBJECT page_object,
@@ -5310,11 +4616,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_SetStrokeWidthPtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Float)>>(
-      'FPDFPageObj_SetStrokeWidth');
-  late final _FPDFPageObj_SetStrokeWidth = _FPDFPageObj_SetStrokeWidthPtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, double)>();
+  late final _FPDFPageObj_SetStrokeWidthPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Float)>>('FPDFPageObj_SetStrokeWidth');
+  late final _FPDFPageObj_SetStrokeWidth =
+      _FPDFPageObj_SetStrokeWidthPtr.asFunction<int Function(FPDF_PAGEOBJECT, double)>();
 
   int FPDFPageObj_GetStrokeWidth(
     FPDF_PAGEOBJECT page_object,
@@ -5326,12 +4631,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_GetStrokeWidthPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT,
-              ffi.Pointer<ffi.Float>)>>('FPDFPageObj_GetStrokeWidth');
-  late final _FPDFPageObj_GetStrokeWidth = _FPDFPageObj_GetStrokeWidthPtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>();
+  late final _FPDFPageObj_GetStrokeWidthPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>>(
+          'FPDFPageObj_GetStrokeWidth');
+  late final _FPDFPageObj_GetStrokeWidth =
+      _FPDFPageObj_GetStrokeWidthPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>();
 
   int FPDFPageObj_GetLineJoin(
     FPDF_PAGEOBJECT page_object,
@@ -5342,10 +4646,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_GetLineJoinPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPageObj_GetLineJoin');
-  late final _FPDFPageObj_GetLineJoin =
-      _FPDFPageObj_GetLineJoinPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>('FPDFPageObj_GetLineJoin');
+  late final _FPDFPageObj_GetLineJoin = _FPDFPageObj_GetLineJoinPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   int FPDFPageObj_SetLineJoin(
     FPDF_PAGEOBJECT page_object,
@@ -5358,10 +4660,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_SetLineJoinPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Int)>>(
-          'FPDFPageObj_SetLineJoin');
-  late final _FPDFPageObj_SetLineJoin = _FPDFPageObj_SetLineJoinPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, int)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Int)>>('FPDFPageObj_SetLineJoin');
+  late final _FPDFPageObj_SetLineJoin = _FPDFPageObj_SetLineJoinPtr.asFunction<int Function(FPDF_PAGEOBJECT, int)>();
 
   int FPDFPageObj_GetLineCap(
     FPDF_PAGEOBJECT page_object,
@@ -5372,10 +4672,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_GetLineCapPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPageObj_GetLineCap');
-  late final _FPDFPageObj_GetLineCap =
-      _FPDFPageObj_GetLineCapPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>('FPDFPageObj_GetLineCap');
+  late final _FPDFPageObj_GetLineCap = _FPDFPageObj_GetLineCapPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   int FPDFPageObj_SetLineCap(
     FPDF_PAGEOBJECT page_object,
@@ -5388,10 +4686,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_SetLineCapPtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Int)>>(
-          'FPDFPageObj_SetLineCap');
-  late final _FPDFPageObj_SetLineCap = _FPDFPageObj_SetLineCapPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, int)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Int)>>('FPDFPageObj_SetLineCap');
+  late final _FPDFPageObj_SetLineCap = _FPDFPageObj_SetLineCapPtr.asFunction<int Function(FPDF_PAGEOBJECT, int)>();
 
   int FPDFPageObj_SetFillColor(
     FPDF_PAGEOBJECT page_object,
@@ -5411,10 +4707,10 @@ class pdfium {
 
   late final _FPDFPageObj_SetFillColorPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.UnsignedInt, ffi.UnsignedInt,
-              ffi.UnsignedInt, ffi.UnsignedInt)>>('FPDFPageObj_SetFillColor');
-  late final _FPDFPageObj_SetFillColor = _FPDFPageObj_SetFillColorPtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, int, int, int, int)>();
+          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.UnsignedInt, ffi.UnsignedInt, ffi.UnsignedInt,
+              ffi.UnsignedInt)>>('FPDFPageObj_SetFillColor');
+  late final _FPDFPageObj_SetFillColor =
+      _FPDFPageObj_SetFillColorPtr.asFunction<int Function(FPDF_PAGEOBJECT, int, int, int, int)>();
 
   int FPDFPageObj_GetFillColor(
     FPDF_PAGEOBJECT page_object,
@@ -5434,20 +4730,11 @@ class pdfium {
 
   late final _FPDFPageObj_GetFillColorPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>)>>('FPDFPageObj_GetFillColor');
-  late final _FPDFPageObj_GetFillColor =
-      _FPDFPageObj_GetFillColorPtr.asFunction<
-          int Function(
-              FPDF_PAGEOBJECT,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>,
-              ffi.Pointer<ffi.UnsignedInt>)>();
+          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+              ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>>('FPDFPageObj_GetFillColor');
+  late final _FPDFPageObj_GetFillColor = _FPDFPageObj_GetFillColorPtr.asFunction<
+      int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>,
+          ffi.Pointer<ffi.UnsignedInt>, ffi.Pointer<ffi.UnsignedInt>)>();
 
   int FPDFPageObj_GetDashPhase(
     FPDF_PAGEOBJECT page_object,
@@ -5459,12 +4746,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_GetDashPhasePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT,
-              ffi.Pointer<ffi.Float>)>>('FPDFPageObj_GetDashPhase');
-  late final _FPDFPageObj_GetDashPhase = _FPDFPageObj_GetDashPhasePtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>();
+  late final _FPDFPageObj_GetDashPhasePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>>(
+          'FPDFPageObj_GetDashPhase');
+  late final _FPDFPageObj_GetDashPhase =
+      _FPDFPageObj_GetDashPhasePtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>();
 
   int FPDFPageObj_SetDashPhase(
     FPDF_PAGEOBJECT page_object,
@@ -5476,11 +4762,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_SetDashPhasePtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Float)>>(
-      'FPDFPageObj_SetDashPhase');
-  late final _FPDFPageObj_SetDashPhase = _FPDFPageObj_SetDashPhasePtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, double)>();
+  late final _FPDFPageObj_SetDashPhasePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Float)>>('FPDFPageObj_SetDashPhase');
+  late final _FPDFPageObj_SetDashPhase =
+      _FPDFPageObj_SetDashPhasePtr.asFunction<int Function(FPDF_PAGEOBJECT, double)>();
 
   int FPDFPageObj_GetDashCount(
     FPDF_PAGEOBJECT page_object,
@@ -5491,10 +4776,8 @@ class pdfium {
   }
 
   late final _FPDFPageObj_GetDashCountPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPageObj_GetDashCount');
-  late final _FPDFPageObj_GetDashCount =
-      _FPDFPageObj_GetDashCountPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>('FPDFPageObj_GetDashCount');
+  late final _FPDFPageObj_GetDashCount = _FPDFPageObj_GetDashCountPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   int FPDFPageObj_GetDashArray(
     FPDF_PAGEOBJECT page_object,
@@ -5508,12 +4791,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_GetDashArrayPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>,
-              ffi.Size)>>('FPDFPageObj_GetDashArray');
-  late final _FPDFPageObj_GetDashArray = _FPDFPageObj_GetDashArrayPtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, int)>();
+  late final _FPDFPageObj_GetDashArrayPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, ffi.Size)>>(
+          'FPDFPageObj_GetDashArray');
+  late final _FPDFPageObj_GetDashArray =
+      _FPDFPageObj_GetDashArrayPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, int)>();
 
   int FPDFPageObj_SetDashArray(
     FPDF_PAGEOBJECT page_object,
@@ -5529,13 +4811,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_SetDashArrayPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, ffi.Size,
-              ffi.Float)>>('FPDFPageObj_SetDashArray');
+  late final _FPDFPageObj_SetDashArrayPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, ffi.Size, ffi.Float)>>(
+          'FPDFPageObj_SetDashArray');
   late final _FPDFPageObj_SetDashArray =
-      _FPDFPageObj_SetDashArrayPtr.asFunction<
-          int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, int, double)>();
+      _FPDFPageObj_SetDashArrayPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>, int, double)>();
 
   int FPDFPath_CountSegments(
     FPDF_PAGEOBJECT path,
@@ -5546,10 +4826,8 @@ class pdfium {
   }
 
   late final _FPDFPath_CountSegmentsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPath_CountSegments');
-  late final _FPDFPath_CountSegments =
-      _FPDFPath_CountSegmentsPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>('FPDFPath_CountSegments');
+  late final _FPDFPath_CountSegments = _FPDFPath_CountSegmentsPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   FPDF_PATHSEGMENT FPDFPath_GetPathSegment(
     FPDF_PAGEOBJECT path,
@@ -5561,12 +4839,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFPath_GetPathSegmentPtr = _lookup<
-          ffi
-          .NativeFunction<FPDF_PATHSEGMENT Function(FPDF_PAGEOBJECT, ffi.Int)>>(
-      'FPDFPath_GetPathSegment');
-  late final _FPDFPath_GetPathSegment = _FPDFPath_GetPathSegmentPtr.asFunction<
-      FPDF_PATHSEGMENT Function(FPDF_PAGEOBJECT, int)>();
+  late final _FPDFPath_GetPathSegmentPtr =
+      _lookup<ffi.NativeFunction<FPDF_PATHSEGMENT Function(FPDF_PAGEOBJECT, ffi.Int)>>('FPDFPath_GetPathSegment');
+  late final _FPDFPath_GetPathSegment =
+      _FPDFPath_GetPathSegmentPtr.asFunction<FPDF_PATHSEGMENT Function(FPDF_PAGEOBJECT, int)>();
 
   int FPDFPathSegment_GetPoint(
     FPDF_PATHSEGMENT segment,
@@ -5580,14 +4856,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPathSegment_GetPointPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PATHSEGMENT, ffi.Pointer<ffi.Float>,
-              ffi.Pointer<ffi.Float>)>>('FPDFPathSegment_GetPoint');
-  late final _FPDFPathSegment_GetPoint =
-      _FPDFPathSegment_GetPointPtr.asFunction<
-          int Function(FPDF_PATHSEGMENT, ffi.Pointer<ffi.Float>,
-              ffi.Pointer<ffi.Float>)>();
+  late final _FPDFPathSegment_GetPointPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PATHSEGMENT, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>)>>(
+          'FPDFPathSegment_GetPoint');
+  late final _FPDFPathSegment_GetPoint = _FPDFPathSegment_GetPointPtr.asFunction<
+      int Function(FPDF_PATHSEGMENT, ffi.Pointer<ffi.Float>, ffi.Pointer<ffi.Float>)>();
 
   int FPDFPathSegment_GetType(
     FPDF_PATHSEGMENT segment,
@@ -5598,10 +4871,8 @@ class pdfium {
   }
 
   late final _FPDFPathSegment_GetTypePtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PATHSEGMENT)>>(
-          'FPDFPathSegment_GetType');
-  late final _FPDFPathSegment_GetType =
-      _FPDFPathSegment_GetTypePtr.asFunction<int Function(FPDF_PATHSEGMENT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PATHSEGMENT)>>('FPDFPathSegment_GetType');
+  late final _FPDFPathSegment_GetType = _FPDFPathSegment_GetTypePtr.asFunction<int Function(FPDF_PATHSEGMENT)>();
 
   int FPDFPathSegment_GetClose(
     FPDF_PATHSEGMENT segment,
@@ -5612,10 +4883,8 @@ class pdfium {
   }
 
   late final _FPDFPathSegment_GetClosePtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PATHSEGMENT)>>(
-          'FPDFPathSegment_GetClose');
-  late final _FPDFPathSegment_GetClose =
-      _FPDFPathSegment_GetClosePtr.asFunction<int Function(FPDF_PATHSEGMENT)>();
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PATHSEGMENT)>>('FPDFPathSegment_GetClose');
+  late final _FPDFPathSegment_GetClose = _FPDFPathSegment_GetClosePtr.asFunction<int Function(FPDF_PATHSEGMENT)>();
 
   int FPDFPath_MoveTo(
     FPDF_PAGEOBJECT path,
@@ -5629,12 +4898,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFPath_MoveToPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT, ffi.Float, ffi.Float)>>('FPDFPath_MoveTo');
-  late final _FPDFPath_MoveTo = _FPDFPath_MoveToPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, double, double)>();
+  late final _FPDFPath_MoveToPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Float, ffi.Float)>>('FPDFPath_MoveTo');
+  late final _FPDFPath_MoveTo = _FPDFPath_MoveToPtr.asFunction<int Function(FPDF_PAGEOBJECT, double, double)>();
 
   int FPDFPath_LineTo(
     FPDF_PAGEOBJECT path,
@@ -5648,12 +4914,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFPath_LineToPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT, ffi.Float, ffi.Float)>>('FPDFPath_LineTo');
-  late final _FPDFPath_LineTo = _FPDFPath_LineToPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, double, double)>();
+  late final _FPDFPath_LineToPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Float, ffi.Float)>>('FPDFPath_LineTo');
+  late final _FPDFPath_LineTo = _FPDFPath_LineToPtr.asFunction<int Function(FPDF_PAGEOBJECT, double, double)>();
 
   int FPDFPath_BezierTo(
     FPDF_PAGEOBJECT path,
@@ -5677,11 +4940,10 @@ class pdfium {
 
   late final _FPDFPath_BezierToPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Float, ffi.Float, ffi.Float,
-              ffi.Float, ffi.Float, ffi.Float)>>('FPDFPath_BezierTo');
-  late final _FPDFPath_BezierTo = _FPDFPath_BezierToPtr.asFunction<
-      int Function(
-          FPDF_PAGEOBJECT, double, double, double, double, double, double)>();
+          FPDF_BOOL Function(
+              FPDF_PAGEOBJECT, ffi.Float, ffi.Float, ffi.Float, ffi.Float, ffi.Float, ffi.Float)>>('FPDFPath_BezierTo');
+  late final _FPDFPath_BezierTo =
+      _FPDFPath_BezierToPtr.asFunction<int Function(FPDF_PAGEOBJECT, double, double, double, double, double, double)>();
 
   int FPDFPath_Close(
     FPDF_PAGEOBJECT path,
@@ -5691,11 +4953,8 @@ class pdfium {
     );
   }
 
-  late final _FPDFPath_ClosePtr =
-      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT)>>(
-          'FPDFPath_Close');
-  late final _FPDFPath_Close =
-      _FPDFPath_ClosePtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
+  late final _FPDFPath_ClosePtr = _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT)>>('FPDFPath_Close');
+  late final _FPDFPath_Close = _FPDFPath_ClosePtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   int FPDFPath_SetDrawMode(
     FPDF_PAGEOBJECT path,
@@ -5709,12 +4968,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFPath_SetDrawModePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT, ffi.Int, FPDF_BOOL)>>('FPDFPath_SetDrawMode');
-  late final _FPDFPath_SetDrawMode = _FPDFPath_SetDrawModePtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, int, int)>();
+  late final _FPDFPath_SetDrawModePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Int, FPDF_BOOL)>>('FPDFPath_SetDrawMode');
+  late final _FPDFPath_SetDrawMode = _FPDFPath_SetDrawModePtr.asFunction<int Function(FPDF_PAGEOBJECT, int, int)>();
 
   int FPDFPath_GetDrawMode(
     FPDF_PAGEOBJECT path,
@@ -5728,13 +4984,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPath_GetDrawModePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Int>,
-              ffi.Pointer<FPDF_BOOL>)>>('FPDFPath_GetDrawMode');
+  late final _FPDFPath_GetDrawModePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Int>, ffi.Pointer<FPDF_BOOL>)>>(
+          'FPDFPath_GetDrawMode');
   late final _FPDFPath_GetDrawMode = _FPDFPath_GetDrawModePtr.asFunction<
-      int Function(
-          FPDF_PAGEOBJECT, ffi.Pointer<ffi.Int>, ffi.Pointer<FPDF_BOOL>)>();
+      int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Int>, ffi.Pointer<FPDF_BOOL>)>();
 
   FPDF_PAGEOBJECT FPDFPageObj_NewTextObj(
     FPDF_DOCUMENT document,
@@ -5748,12 +5002,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_NewTextObjPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_PAGEOBJECT Function(FPDF_DOCUMENT, FPDF_BYTESTRING,
-              ffi.Float)>>('FPDFPageObj_NewTextObj');
-  late final _FPDFPageObj_NewTextObj = _FPDFPageObj_NewTextObjPtr.asFunction<
-      FPDF_PAGEOBJECT Function(FPDF_DOCUMENT, FPDF_BYTESTRING, double)>();
+  late final _FPDFPageObj_NewTextObjPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(FPDF_DOCUMENT, FPDF_BYTESTRING, ffi.Float)>>(
+          'FPDFPageObj_NewTextObj');
+  late final _FPDFPageObj_NewTextObj =
+      _FPDFPageObj_NewTextObjPtr.asFunction<FPDF_PAGEOBJECT Function(FPDF_DOCUMENT, FPDF_BYTESTRING, double)>();
 
   int FPDFText_SetText(
     FPDF_PAGEOBJECT text_object,
@@ -5765,12 +5018,9 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_SetTextPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(
-              FPDF_PAGEOBJECT, FPDF_WIDESTRING)>>('FPDFText_SetText');
-  late final _FPDFText_SetText = _FPDFText_SetTextPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, FPDF_WIDESTRING)>();
+  late final _FPDFText_SetTextPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, FPDF_WIDESTRING)>>('FPDFText_SetText');
+  late final _FPDFText_SetText = _FPDFText_SetTextPtr.asFunction<int Function(FPDF_PAGEOBJECT, FPDF_WIDESTRING)>();
 
   int FPDFText_SetCharcodes(
     FPDF_PAGEOBJECT text_object,
@@ -5784,12 +5034,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_SetCharcodesPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Uint32>,
-              ffi.Size)>>('FPDFText_SetCharcodes');
-  late final _FPDFText_SetCharcodes = _FPDFText_SetCharcodesPtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Uint32>, int)>();
+  late final _FPDFText_SetCharcodesPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Uint32>, ffi.Size)>>(
+          'FPDFText_SetCharcodes');
+  late final _FPDFText_SetCharcodes =
+      _FPDFText_SetCharcodesPtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Uint32>, int)>();
 
   FPDF_FONT FPDFText_LoadFont(
     FPDF_DOCUMENT document,
@@ -5808,12 +5057,11 @@ class pdfium {
   }
 
   late final _FPDFText_LoadFontPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_FONT Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Uint8>, ffi.Uint32,
-              ffi.Int, FPDF_BOOL)>>('FPDFText_LoadFont');
-  late final _FPDFText_LoadFont = _FPDFText_LoadFontPtr.asFunction<
-      FPDF_FONT Function(
-          FPDF_DOCUMENT, ffi.Pointer<ffi.Uint8>, int, int, int)>();
+          ffi
+          .NativeFunction<FPDF_FONT Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Uint8>, ffi.Uint32, ffi.Int, FPDF_BOOL)>>(
+      'FPDFText_LoadFont');
+  late final _FPDFText_LoadFont =
+      _FPDFText_LoadFontPtr.asFunction<FPDF_FONT Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Uint8>, int, int, int)>();
 
   FPDF_FONT FPDFText_LoadStandardFont(
     FPDF_DOCUMENT document,
@@ -5825,12 +5073,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFText_LoadStandardFontPtr = _lookup<
-          ffi
-          .NativeFunction<FPDF_FONT Function(FPDF_DOCUMENT, FPDF_BYTESTRING)>>(
-      'FPDFText_LoadStandardFont');
-  late final _FPDFText_LoadStandardFont = _FPDFText_LoadStandardFontPtr
-      .asFunction<FPDF_FONT Function(FPDF_DOCUMENT, FPDF_BYTESTRING)>();
+  late final _FPDFText_LoadStandardFontPtr =
+      _lookup<ffi.NativeFunction<FPDF_FONT Function(FPDF_DOCUMENT, FPDF_BYTESTRING)>>('FPDFText_LoadStandardFont');
+  late final _FPDFText_LoadStandardFont =
+      _FPDFText_LoadStandardFontPtr.asFunction<FPDF_FONT Function(FPDF_DOCUMENT, FPDF_BYTESTRING)>();
 
   FPDF_FONT FPDFText_LoadCidType2Font(
     FPDF_DOCUMENT document,
@@ -5852,17 +5098,10 @@ class pdfium {
 
   late final _FPDFText_LoadCidType2FontPtr = _lookup<
       ffi.NativeFunction<
-          FPDF_FONT Function(
-              FPDF_DOCUMENT,
-              ffi.Pointer<ffi.Uint8>,
-              ffi.Uint32,
-              FPDF_BYTESTRING,
-              ffi.Pointer<ffi.Uint8>,
+          FPDF_FONT Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Uint8>, ffi.Uint32, FPDF_BYTESTRING, ffi.Pointer<ffi.Uint8>,
               ffi.Uint32)>>('FPDFText_LoadCidType2Font');
-  late final _FPDFText_LoadCidType2Font =
-      _FPDFText_LoadCidType2FontPtr.asFunction<
-          FPDF_FONT Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Uint8>, int,
-              FPDF_BYTESTRING, ffi.Pointer<ffi.Uint8>, int)>();
+  late final _FPDFText_LoadCidType2Font = _FPDFText_LoadCidType2FontPtr.asFunction<
+      FPDF_FONT Function(FPDF_DOCUMENT, ffi.Pointer<ffi.Uint8>, int, FPDF_BYTESTRING, ffi.Pointer<ffi.Uint8>, int)>();
 
   int FPDFTextObj_GetFontSize(
     FPDF_PAGEOBJECT text,
@@ -5874,12 +5113,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFTextObj_GetFontSizePtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_PAGEOBJECT,
-              ffi.Pointer<ffi.Float>)>>('FPDFTextObj_GetFontSize');
-  late final _FPDFTextObj_GetFontSize = _FPDFTextObj_GetFontSizePtr.asFunction<
-      int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>();
+  late final _FPDFTextObj_GetFontSizePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>>(
+          'FPDFTextObj_GetFontSize');
+  late final _FPDFTextObj_GetFontSize =
+      _FPDFTextObj_GetFontSizePtr.asFunction<int Function(FPDF_PAGEOBJECT, ffi.Pointer<ffi.Float>)>();
 
   void FPDFFont_Close(
     FPDF_FONT font,
@@ -5889,11 +5127,8 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_ClosePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FONT)>>(
-          'FPDFFont_Close');
-  late final _FPDFFont_Close =
-      _FPDFFont_ClosePtr.asFunction<void Function(FPDF_FONT)>();
+  late final _FPDFFont_ClosePtr = _lookup<ffi.NativeFunction<ffi.Void Function(FPDF_FONT)>>('FPDFFont_Close');
+  late final _FPDFFont_Close = _FPDFFont_ClosePtr.asFunction<void Function(FPDF_FONT)>();
 
   FPDF_PAGEOBJECT FPDFPageObj_CreateTextObj(
     FPDF_DOCUMENT document,
@@ -5907,12 +5142,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFPageObj_CreateTextObjPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_PAGEOBJECT Function(FPDF_DOCUMENT, FPDF_FONT,
-              ffi.Float)>>('FPDFPageObj_CreateTextObj');
-  late final _FPDFPageObj_CreateTextObj = _FPDFPageObj_CreateTextObjPtr
-      .asFunction<FPDF_PAGEOBJECT Function(FPDF_DOCUMENT, FPDF_FONT, double)>();
+  late final _FPDFPageObj_CreateTextObjPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(FPDF_DOCUMENT, FPDF_FONT, ffi.Float)>>(
+          'FPDFPageObj_CreateTextObj');
+  late final _FPDFPageObj_CreateTextObj =
+      _FPDFPageObj_CreateTextObjPtr.asFunction<FPDF_PAGEOBJECT Function(FPDF_DOCUMENT, FPDF_FONT, double)>();
 
   int FPDFTextObj_GetTextRenderMode(
     FPDF_PAGEOBJECT text,
@@ -5923,10 +5157,9 @@ class pdfium {
   }
 
   late final _FPDFTextObj_GetTextRenderModePtr =
-      _lookup<ffi.NativeFunction<ffi.Int32 Function(FPDF_PAGEOBJECT)>>(
-          'FPDFTextObj_GetTextRenderMode');
-  late final _FPDFTextObj_GetTextRenderMode = _FPDFTextObj_GetTextRenderModePtr
-      .asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(FPDF_PAGEOBJECT)>>('FPDFTextObj_GetTextRenderMode');
+  late final _FPDFTextObj_GetTextRenderMode =
+      _FPDFTextObj_GetTextRenderModePtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   int FPDFTextObj_SetTextRenderMode(
     FPDF_PAGEOBJECT text,
@@ -5938,11 +5171,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFTextObj_SetTextRenderModePtr = _lookup<
-          ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Int32)>>(
-      'FPDFTextObj_SetTextRenderMode');
-  late final _FPDFTextObj_SetTextRenderMode = _FPDFTextObj_SetTextRenderModePtr
-      .asFunction<int Function(FPDF_PAGEOBJECT, int)>();
+  late final _FPDFTextObj_SetTextRenderModePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_PAGEOBJECT, ffi.Int32)>>('FPDFTextObj_SetTextRenderMode');
+  late final _FPDFTextObj_SetTextRenderMode =
+      _FPDFTextObj_SetTextRenderModePtr.asFunction<int Function(FPDF_PAGEOBJECT, int)>();
 
   int FPDFTextObj_GetText(
     FPDF_PAGEOBJECT text_object,
@@ -5961,13 +5193,9 @@ class pdfium {
   late final _FPDFTextObj_GetTextPtr = _lookup<
       ffi.NativeFunction<
           ffi.UnsignedLong Function(
-              FPDF_PAGEOBJECT,
-              FPDF_TEXTPAGE,
-              ffi.Pointer<FPDF_WCHAR>,
-              ffi.UnsignedLong)>>('FPDFTextObj_GetText');
-  late final _FPDFTextObj_GetText = _FPDFTextObj_GetTextPtr.asFunction<
-      int Function(
-          FPDF_PAGEOBJECT, FPDF_TEXTPAGE, ffi.Pointer<FPDF_WCHAR>, int)>();
+              FPDF_PAGEOBJECT, FPDF_TEXTPAGE, ffi.Pointer<FPDF_WCHAR>, ffi.UnsignedLong)>>('FPDFTextObj_GetText');
+  late final _FPDFTextObj_GetText =
+      _FPDFTextObj_GetTextPtr.asFunction<int Function(FPDF_PAGEOBJECT, FPDF_TEXTPAGE, ffi.Pointer<FPDF_WCHAR>, int)>();
 
   FPDF_BITMAP FPDFTextObj_GetRenderedBitmap(
     FPDF_DOCUMENT document,
@@ -5983,14 +5211,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFTextObj_GetRenderedBitmapPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BITMAP Function(FPDF_DOCUMENT, FPDF_PAGE, FPDF_PAGEOBJECT,
-              ffi.Float)>>('FPDFTextObj_GetRenderedBitmap');
-  late final _FPDFTextObj_GetRenderedBitmap =
-      _FPDFTextObj_GetRenderedBitmapPtr.asFunction<
-          FPDF_BITMAP Function(
-              FPDF_DOCUMENT, FPDF_PAGE, FPDF_PAGEOBJECT, double)>();
+  late final _FPDFTextObj_GetRenderedBitmapPtr =
+      _lookup<ffi.NativeFunction<FPDF_BITMAP Function(FPDF_DOCUMENT, FPDF_PAGE, FPDF_PAGEOBJECT, ffi.Float)>>(
+          'FPDFTextObj_GetRenderedBitmap');
+  late final _FPDFTextObj_GetRenderedBitmap = _FPDFTextObj_GetRenderedBitmapPtr.asFunction<
+      FPDF_BITMAP Function(FPDF_DOCUMENT, FPDF_PAGE, FPDF_PAGEOBJECT, double)>();
 
   FPDF_FONT FPDFTextObj_GetFont(
     FPDF_PAGEOBJECT text,
@@ -6001,10 +5226,8 @@ class pdfium {
   }
 
   late final _FPDFTextObj_GetFontPtr =
-      _lookup<ffi.NativeFunction<FPDF_FONT Function(FPDF_PAGEOBJECT)>>(
-          'FPDFTextObj_GetFont');
-  late final _FPDFTextObj_GetFont =
-      _FPDFTextObj_GetFontPtr.asFunction<FPDF_FONT Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<FPDF_FONT Function(FPDF_PAGEOBJECT)>>('FPDFTextObj_GetFont');
+  late final _FPDFTextObj_GetFont = _FPDFTextObj_GetFontPtr.asFunction<FPDF_FONT Function(FPDF_PAGEOBJECT)>();
 
   int FPDFFont_GetFontName(
     FPDF_FONT font,
@@ -6018,12 +5241,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_GetFontNamePtr = _lookup<
-      ffi.NativeFunction<
-          ffi.UnsignedLong Function(FPDF_FONT, ffi.Pointer<ffi.Char>,
-              ffi.UnsignedLong)>>('FPDFFont_GetFontName');
-  late final _FPDFFont_GetFontName = _FPDFFont_GetFontNamePtr.asFunction<
-      int Function(FPDF_FONT, ffi.Pointer<ffi.Char>, int)>();
+  late final _FPDFFont_GetFontNamePtr =
+      _lookup<ffi.NativeFunction<ffi.UnsignedLong Function(FPDF_FONT, ffi.Pointer<ffi.Char>, ffi.UnsignedLong)>>(
+          'FPDFFont_GetFontName');
+  late final _FPDFFont_GetFontName =
+      _FPDFFont_GetFontNamePtr.asFunction<int Function(FPDF_FONT, ffi.Pointer<ffi.Char>, int)>();
 
   int FPDFFont_GetFontData(
     FPDF_FONT font,
@@ -6040,12 +5262,10 @@ class pdfium {
   }
 
   late final _FPDFFont_GetFontDataPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FONT, ffi.Pointer<ffi.Uint8>, ffi.Size,
-              ffi.Pointer<ffi.Size>)>>('FPDFFont_GetFontData');
+          ffi.NativeFunction<FPDF_BOOL Function(FPDF_FONT, ffi.Pointer<ffi.Uint8>, ffi.Size, ffi.Pointer<ffi.Size>)>>(
+      'FPDFFont_GetFontData');
   late final _FPDFFont_GetFontData = _FPDFFont_GetFontDataPtr.asFunction<
-      int Function(
-          FPDF_FONT, ffi.Pointer<ffi.Uint8>, int, ffi.Pointer<ffi.Size>)>();
+      int Function(FPDF_FONT, ffi.Pointer<ffi.Uint8>, int, ffi.Pointer<ffi.Size>)>();
 
   int FPDFFont_GetIsEmbedded(
     FPDF_FONT font,
@@ -6056,10 +5276,8 @@ class pdfium {
   }
 
   late final _FPDFFont_GetIsEmbeddedPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FONT)>>(
-          'FPDFFont_GetIsEmbedded');
-  late final _FPDFFont_GetIsEmbedded =
-      _FPDFFont_GetIsEmbeddedPtr.asFunction<int Function(FPDF_FONT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FONT)>>('FPDFFont_GetIsEmbedded');
+  late final _FPDFFont_GetIsEmbedded = _FPDFFont_GetIsEmbeddedPtr.asFunction<int Function(FPDF_FONT)>();
 
   int FPDFFont_GetFlags(
     FPDF_FONT font,
@@ -6069,11 +5287,8 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_GetFlagsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FONT)>>(
-          'FPDFFont_GetFlags');
-  late final _FPDFFont_GetFlags =
-      _FPDFFont_GetFlagsPtr.asFunction<int Function(FPDF_FONT)>();
+  late final _FPDFFont_GetFlagsPtr = _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FONT)>>('FPDFFont_GetFlags');
+  late final _FPDFFont_GetFlags = _FPDFFont_GetFlagsPtr.asFunction<int Function(FPDF_FONT)>();
 
   int FPDFFont_GetWeight(
     FPDF_FONT font,
@@ -6083,11 +5298,8 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_GetWeightPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FONT)>>(
-          'FPDFFont_GetWeight');
-  late final _FPDFFont_GetWeight =
-      _FPDFFont_GetWeightPtr.asFunction<int Function(FPDF_FONT)>();
+  late final _FPDFFont_GetWeightPtr = _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_FONT)>>('FPDFFont_GetWeight');
+  late final _FPDFFont_GetWeight = _FPDFFont_GetWeightPtr.asFunction<int Function(FPDF_FONT)>();
 
   int FPDFFont_GetItalicAngle(
     FPDF_FONT font,
@@ -6099,12 +5311,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_GetItalicAnglePtr = _lookup<
-          ffi
-          .NativeFunction<FPDF_BOOL Function(FPDF_FONT, ffi.Pointer<ffi.Int>)>>(
-      'FPDFFont_GetItalicAngle');
-  late final _FPDFFont_GetItalicAngle = _FPDFFont_GetItalicAnglePtr.asFunction<
-      int Function(FPDF_FONT, ffi.Pointer<ffi.Int>)>();
+  late final _FPDFFont_GetItalicAnglePtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FONT, ffi.Pointer<ffi.Int>)>>('FPDFFont_GetItalicAngle');
+  late final _FPDFFont_GetItalicAngle =
+      _FPDFFont_GetItalicAnglePtr.asFunction<int Function(FPDF_FONT, ffi.Pointer<ffi.Int>)>();
 
   int FPDFFont_GetAscent(
     FPDF_FONT font,
@@ -6118,12 +5328,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_GetAscentPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FONT, ffi.Float,
-              ffi.Pointer<ffi.Float>)>>('FPDFFont_GetAscent');
-  late final _FPDFFont_GetAscent = _FPDFFont_GetAscentPtr.asFunction<
-      int Function(FPDF_FONT, double, ffi.Pointer<ffi.Float>)>();
+  late final _FPDFFont_GetAscentPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FONT, ffi.Float, ffi.Pointer<ffi.Float>)>>(
+          'FPDFFont_GetAscent');
+  late final _FPDFFont_GetAscent =
+      _FPDFFont_GetAscentPtr.asFunction<int Function(FPDF_FONT, double, ffi.Pointer<ffi.Float>)>();
 
   int FPDFFont_GetDescent(
     FPDF_FONT font,
@@ -6137,12 +5346,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_GetDescentPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FONT, ffi.Float,
-              ffi.Pointer<ffi.Float>)>>('FPDFFont_GetDescent');
-  late final _FPDFFont_GetDescent = _FPDFFont_GetDescentPtr.asFunction<
-      int Function(FPDF_FONT, double, ffi.Pointer<ffi.Float>)>();
+  late final _FPDFFont_GetDescentPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FONT, ffi.Float, ffi.Pointer<ffi.Float>)>>(
+          'FPDFFont_GetDescent');
+  late final _FPDFFont_GetDescent =
+      _FPDFFont_GetDescentPtr.asFunction<int Function(FPDF_FONT, double, ffi.Pointer<ffi.Float>)>();
 
   int FPDFFont_GetGlyphWidth(
     FPDF_FONT font,
@@ -6158,12 +5366,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_GetGlyphWidthPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_BOOL Function(FPDF_FONT, ffi.Uint32, ffi.Float,
-              ffi.Pointer<ffi.Float>)>>('FPDFFont_GetGlyphWidth');
-  late final _FPDFFont_GetGlyphWidth = _FPDFFont_GetGlyphWidthPtr.asFunction<
-      int Function(FPDF_FONT, int, double, ffi.Pointer<ffi.Float>)>();
+  late final _FPDFFont_GetGlyphWidthPtr =
+      _lookup<ffi.NativeFunction<FPDF_BOOL Function(FPDF_FONT, ffi.Uint32, ffi.Float, ffi.Pointer<ffi.Float>)>>(
+          'FPDFFont_GetGlyphWidth');
+  late final _FPDFFont_GetGlyphWidth =
+      _FPDFFont_GetGlyphWidthPtr.asFunction<int Function(FPDF_FONT, int, double, ffi.Pointer<ffi.Float>)>();
 
   FPDF_GLYPHPATH FPDFFont_GetGlyphPath(
     FPDF_FONT font,
@@ -6177,12 +5384,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFFont_GetGlyphPathPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_GLYPHPATH Function(
-              FPDF_FONT, ffi.Uint32, ffi.Float)>>('FPDFFont_GetGlyphPath');
-  late final _FPDFFont_GetGlyphPath = _FPDFFont_GetGlyphPathPtr.asFunction<
-      FPDF_GLYPHPATH Function(FPDF_FONT, int, double)>();
+  late final _FPDFFont_GetGlyphPathPtr =
+      _lookup<ffi.NativeFunction<FPDF_GLYPHPATH Function(FPDF_FONT, ffi.Uint32, ffi.Float)>>('FPDFFont_GetGlyphPath');
+  late final _FPDFFont_GetGlyphPath =
+      _FPDFFont_GetGlyphPathPtr.asFunction<FPDF_GLYPHPATH Function(FPDF_FONT, int, double)>();
 
   int FPDFGlyphPath_CountGlyphSegments(
     FPDF_GLYPHPATH glyphpath,
@@ -6193,11 +5398,9 @@ class pdfium {
   }
 
   late final _FPDFGlyphPath_CountGlyphSegmentsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_GLYPHPATH)>>(
-          'FPDFGlyphPath_CountGlyphSegments');
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_GLYPHPATH)>>('FPDFGlyphPath_CountGlyphSegments');
   late final _FPDFGlyphPath_CountGlyphSegments =
-      _FPDFGlyphPath_CountGlyphSegmentsPtr.asFunction<
-          int Function(FPDF_GLYPHPATH)>();
+      _FPDFGlyphPath_CountGlyphSegmentsPtr.asFunction<int Function(FPDF_GLYPHPATH)>();
 
   FPDF_PATHSEGMENT FPDFGlyphPath_GetGlyphPathSegment(
     FPDF_GLYPHPATH glyphpath,
@@ -6209,13 +5412,11 @@ class pdfium {
     );
   }
 
-  late final _FPDFGlyphPath_GetGlyphPathSegmentPtr = _lookup<
-          ffi
-          .NativeFunction<FPDF_PATHSEGMENT Function(FPDF_GLYPHPATH, ffi.Int)>>(
-      'FPDFGlyphPath_GetGlyphPathSegment');
+  late final _FPDFGlyphPath_GetGlyphPathSegmentPtr =
+      _lookup<ffi.NativeFunction<FPDF_PATHSEGMENT Function(FPDF_GLYPHPATH, ffi.Int)>>(
+          'FPDFGlyphPath_GetGlyphPathSegment');
   late final _FPDFGlyphPath_GetGlyphPathSegment =
-      _FPDFGlyphPath_GetGlyphPathSegmentPtr.asFunction<
-          FPDF_PATHSEGMENT Function(FPDF_GLYPHPATH, int)>();
+      _FPDFGlyphPath_GetGlyphPathSegmentPtr.asFunction<FPDF_PATHSEGMENT Function(FPDF_GLYPHPATH, int)>();
 
   int FPDFFormObj_CountObjects(
     FPDF_PAGEOBJECT form_object,
@@ -6226,10 +5427,8 @@ class pdfium {
   }
 
   late final _FPDFFormObj_CountObjectsPtr =
-      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>(
-          'FPDFFormObj_CountObjects');
-  late final _FPDFFormObj_CountObjects =
-      _FPDFFormObj_CountObjectsPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
+      _lookup<ffi.NativeFunction<ffi.Int Function(FPDF_PAGEOBJECT)>>('FPDFFormObj_CountObjects');
+  late final _FPDFFormObj_CountObjects = _FPDFFormObj_CountObjectsPtr.asFunction<int Function(FPDF_PAGEOBJECT)>();
 
   FPDF_PAGEOBJECT FPDFFormObj_GetObject(
     FPDF_PAGEOBJECT form_object,
@@ -6241,12 +5440,10 @@ class pdfium {
     );
   }
 
-  late final _FPDFFormObj_GetObjectPtr = _lookup<
-      ffi.NativeFunction<
-          FPDF_PAGEOBJECT Function(
-              FPDF_PAGEOBJECT, ffi.UnsignedLong)>>('FPDFFormObj_GetObject');
-  late final _FPDFFormObj_GetObject = _FPDFFormObj_GetObjectPtr.asFunction<
-      FPDF_PAGEOBJECT Function(FPDF_PAGEOBJECT, int)>();
+  late final _FPDFFormObj_GetObjectPtr =
+      _lookup<ffi.NativeFunction<FPDF_PAGEOBJECT Function(FPDF_PAGEOBJECT, ffi.UnsignedLong)>>('FPDFFormObj_GetObject');
+  late final _FPDFFormObj_GetObject =
+      _FPDFFormObj_GetObjectPtr.asFunction<FPDF_PAGEOBJECT Function(FPDF_PAGEOBJECT, int)>();
 }
 
 abstract class FPDF_TEXT_RENDERMODE {
@@ -6450,10 +5647,7 @@ final class FPDF_FILEACCESS extends ffi.Struct {
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<ffi.Void> param,
-              ffi.UnsignedLong position,
-              ffi.Pointer<ffi.UnsignedChar> pBuf,
+          ffi.Int Function(ffi.Pointer<ffi.Void> param, ffi.UnsignedLong position, ffi.Pointer<ffi.UnsignedChar> pBuf,
               ffi.UnsignedLong size)>> m_GetBlock;
 
   external ffi.Pointer<ffi.Void> m_Param;
@@ -6462,39 +5656,26 @@ final class FPDF_FILEACCESS extends ffi.Struct {
 final class FPDF_FILEHANDLER_ extends ffi.Struct {
   external ffi.Pointer<ffi.Void> clientData;
 
-  external ffi.Pointer<
-          ffi
-          .NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void> clientData)>>
-      Release;
+  external ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void> clientData)>> Release;
+
+  external ffi.Pointer<ffi.NativeFunction<FPDF_DWORD Function(ffi.Pointer<ffi.Void> clientData)>> GetSize;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          FPDF_DWORD Function(ffi.Pointer<ffi.Void> clientData)>> GetSize;
+          ffi.NativeFunction<
+              FPDF_RESULT Function(
+                  ffi.Pointer<ffi.Void> clientData, FPDF_DWORD offset, ffi.Pointer<ffi.Void> buffer, FPDF_DWORD size)>>
+      ReadBlock;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          FPDF_RESULT Function(
-              ffi.Pointer<ffi.Void> clientData,
-              FPDF_DWORD offset,
-              ffi.Pointer<ffi.Void> buffer,
-              FPDF_DWORD size)>> ReadBlock;
+          ffi.NativeFunction<
+              FPDF_RESULT Function(
+                  ffi.Pointer<ffi.Void> clientData, FPDF_DWORD offset, ffi.Pointer<ffi.Void> buffer, FPDF_DWORD size)>>
+      WriteBlock;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          FPDF_RESULT Function(
-              ffi.Pointer<ffi.Void> clientData,
-              FPDF_DWORD offset,
-              ffi.Pointer<ffi.Void> buffer,
-              FPDF_DWORD size)>> WriteBlock;
+  external ffi.Pointer<ffi.NativeFunction<FPDF_RESULT Function(ffi.Pointer<ffi.Void> clientData)>> Flush;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          FPDF_RESULT Function(ffi.Pointer<ffi.Void> clientData)>> Flush;
-
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          FPDF_RESULT Function(
-              ffi.Pointer<ffi.Void> clientData, FPDF_DWORD size)>> Truncate;
+  external ffi.Pointer<ffi.NativeFunction<FPDF_RESULT Function(ffi.Pointer<ffi.Void> clientData, FPDF_DWORD size)>>
+      Truncate;
 }
 
 typedef FPDF_RESULT = ffi.Int;
@@ -6535,17 +5716,11 @@ final class _IPDF_JsPlatform extends ffi.Struct {
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<_IPDF_JsPlatform> pThis,
-              FPDF_WIDESTRING Msg,
-              FPDF_WIDESTRING Title,
-              ffi.Int Type,
-              ffi.Int Icon)>> app_alert;
+          ffi.Int Function(ffi.Pointer<_IPDF_JsPlatform> pThis, FPDF_WIDESTRING Msg, FPDF_WIDESTRING Title,
+              ffi.Int Type, ffi.Int Icon)>> app_alert;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_IPDF_JsPlatform> pThis, ffi.Int nType)>> app_beep;
+  external ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_IPDF_JsPlatform> pThis, ffi.Int nType)>>
+      app_beep;
 
   external ffi.Pointer<
       ffi.NativeFunction<
@@ -6560,9 +5735,9 @@ final class _IPDF_JsPlatform extends ffi.Struct {
               ffi.Int length)>> app_response;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<_IPDF_JsPlatform> pThis,
-              ffi.Pointer<ffi.Void> filePath, ffi.Int length)>> Doc_getFilePath;
+          ffi.NativeFunction<
+              ffi.Int Function(ffi.Pointer<_IPDF_JsPlatform> pThis, ffi.Pointer<ffi.Void> filePath, ffi.Int length)>>
+      Doc_getFilePath;
 
   external ffi.Pointer<
       ffi.NativeFunction<
@@ -6592,22 +5767,16 @@ final class _IPDF_JsPlatform extends ffi.Struct {
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_IPDF_JsPlatform> pThis,
-              ffi.Pointer<ffi.Void> formData,
-              ffi.Int length,
+          ffi.Void Function(ffi.Pointer<_IPDF_JsPlatform> pThis, ffi.Pointer<ffi.Void> formData, ffi.Int length,
               FPDF_WIDESTRING URL)>> Doc_submitForm;
 
-  external ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Pointer<_IPDF_JsPlatform> pThis, ffi.Int nPageNum)>>
+  external ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_IPDF_JsPlatform> pThis, ffi.Int nPageNum)>>
       Doc_gotoPage;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<_IPDF_JsPlatform> pThis,
-              ffi.Pointer<ffi.Void> filePath, ffi.Int length)>> Field_browse;
+          ffi.NativeFunction<
+              ffi.Int Function(ffi.Pointer<_IPDF_JsPlatform> pThis, ffi.Pointer<ffi.Void> filePath, ffi.Int length)>>
+      Field_browse;
 
   external ffi.Pointer<ffi.Void> m_pFormfillinfo;
 
@@ -6651,99 +5820,64 @@ final class _FPDF_FORMFILLINFO extends ffi.Struct {
   @ffi.Int()
   external int version;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis)>> Release;
+  external ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis)>> Release;
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_PAGE page,
-              ffi.Double left,
-              ffi.Double top,
-              ffi.Double right,
-              ffi.Double bottom)>> FFI_Invalidate;
+          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_PAGE page, ffi.Double left, ffi.Double top,
+              ffi.Double right, ffi.Double bottom)>> FFI_Invalidate;
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_PAGE page,
-              ffi.Double left,
-              ffi.Double top,
-              ffi.Double right,
-              ffi.Double bottom)>> FFI_OutputSelectedRect;
+          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_PAGE page, ffi.Double left, ffi.Double top,
+              ffi.Double right, ffi.Double bottom)>> FFI_OutputSelectedRect;
 
-  external ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Int nCursorType)>>
+  external ffi
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Int nCursorType)>>
       FFI_SetCursor;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              ffi.Int uElapse, TimerCallback lpTimerFunc)>> FFI_SetTimer;
-
-  external ffi.Pointer<
           ffi.NativeFunction<
-              ffi.Void Function(
-                  ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Int nTimerID)>>
+              ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Int uElapse, TimerCallback lpTimerFunc)>>
+      FFI_SetTimer;
+
+  external ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Int nTimerID)>>
       FFI_KillTimer;
 
-  external ffi.Pointer<
-          ffi.NativeFunction<
-              FPDF_SYSTEMTIME Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis)>>
+  external ffi.Pointer<ffi.NativeFunction<FPDF_SYSTEMTIME Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis)>>
       FFI_GetLocalTime;
 
-  external ffi.Pointer<
-          ffi.NativeFunction<
-              ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis)>>
-      FFI_OnChange;
-
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          FPDF_PAGE Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_DOCUMENT document, ffi.Int nPageIndex)>> FFI_GetPage;
-
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          FPDF_PAGE Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_DOCUMENT document)>> FFI_GetCurrentPage;
+  external ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis)>> FFI_OnChange;
 
   external ffi.Pointer<
           ffi.NativeFunction<
-              ffi.Int Function(
-                  ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_PAGE page)>>
+              FPDF_PAGE Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_DOCUMENT document, ffi.Int nPageIndex)>>
+      FFI_GetPage;
+
+  external ffi
+      .Pointer<ffi.NativeFunction<FPDF_PAGE Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_DOCUMENT document)>>
+      FFI_GetCurrentPage;
+
+  external ffi.Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_PAGE page)>>
       FFI_GetRotation;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_BYTESTRING namedAction)>> FFI_ExecuteNamedAction;
+          ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_BYTESTRING namedAction)>>
+      FFI_ExecuteNamedAction;
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_WIDESTRING value,
-              FPDF_DWORD valueLen,
+          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_WIDESTRING value, FPDF_DWORD valueLen,
               FPDF_BOOL is_focus)>> FFI_SetTextFieldFocus;
 
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_BYTESTRING bsURI)>> FFI_DoURIAction;
+  external ffi
+      .Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_BYTESTRING bsURI)>>
+      FFI_DoURIAction;
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              ffi.Int nPageIndex,
-              ffi.Int zoomMode,
-              ffi.Pointer<ffi.Float> fPosArray,
-              ffi.Int sizeofArray)>> FFI_DoGoToAction;
+          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Int nPageIndex, ffi.Int zoomMode,
+              ffi.Pointer<ffi.Float> fPosArray, ffi.Int sizeofArray)>> FFI_DoGoToAction;
 
   external ffi.Pointer<IPDF_JSPLATFORM> m_pJsPlatform;
 
@@ -6752,29 +5886,22 @@ final class _FPDF_FORMFILLINFO extends ffi.Struct {
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_PAGE page,
-              FPDF_BOOL bVisible,
-              ffi.Double left,
-              ffi.Double top,
-              ffi.Double right,
-              ffi.Double bottom)>> FFI_DisplayCaret;
+          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_PAGE page, FPDF_BOOL bVisible, ffi.Double left,
+              ffi.Double top, ffi.Double right, ffi.Double bottom)>> FFI_DisplayCaret;
+
+  external ffi
+      .Pointer<ffi.NativeFunction<ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_DOCUMENT document)>>
+      FFI_GetCurrentPageIndex;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_DOCUMENT document)>> FFI_GetCurrentPageIndex;
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_DOCUMENT document, ffi.Int iCurPage)>>
+      FFI_SetCurrentPage;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_DOCUMENT document, ffi.Int iCurPage)>> FFI_SetCurrentPage;
-
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_DOCUMENT document, FPDF_WIDESTRING wsURL)>> FFI_GotoURL;
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_DOCUMENT document, FPDF_WIDESTRING wsURL)>>
+      FFI_GotoURL;
 
   external ffi.Pointer<
       ffi.NativeFunction<
@@ -6787,27 +5914,19 @@ final class _FPDF_FORMFILLINFO extends ffi.Struct {
               ffi.Pointer<ffi.Double> bottom)>> FFI_GetPageViewRect;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              ffi.Int page_count, FPDF_DWORD event_type)>> FFI_PageEvent;
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Int page_count, FPDF_DWORD event_type)>>
+      FFI_PageEvent;
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_PAGE page,
-              FPDF_WIDGET hWidget,
-              ffi.Int menuFlag,
-              ffi.Float x,
-              ffi.Float y)>> FFI_PopupMenu;
+          FPDF_BOOL Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_PAGE page, FPDF_WIDGET hWidget,
+              ffi.Int menuFlag, ffi.Float x, ffi.Float y)>> FFI_PopupMenu;
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Pointer<FPDF_FILEHANDLER> Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              ffi.Int fileFlag,
-              FPDF_WIDESTRING wsURL,
-              ffi.Pointer<ffi.Char> mode)>> FFI_OpenFile;
+          ffi.Pointer<FPDF_FILEHANDLER> Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Int fileFlag,
+              FPDF_WIDESTRING wsURL, ffi.Pointer<ffi.Char> mode)>> FFI_OpenFile;
 
   external ffi.Pointer<
       ffi.NativeFunction<
@@ -6822,26 +5941,22 @@ final class _FPDF_FORMFILLINFO extends ffi.Struct {
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              ffi.Pointer<FPDF_FILEHANDLER> fileHandler,
-              ffi.Int fileFlag,
-              FPDF_WIDESTRING uploadTo)>> FFI_UploadTo;
-
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              ffi.Pointer<ffi.Void> platform, ffi.Int length)>> FFI_GetPlatform;
-
-  external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              ffi.Pointer<ffi.Void> language, ffi.Int length)>> FFI_GetLanguage;
+          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Pointer<FPDF_FILEHANDLER> fileHandler,
+              ffi.Int fileFlag, FPDF_WIDESTRING uploadTo)>> FFI_UploadTo;
 
   external ffi.Pointer<
           ffi.NativeFunction<
-              ffi.Pointer<FPDF_FILEHANDLER> Function(
-                  ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_WIDESTRING URL)>>
+              ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Pointer<ffi.Void> platform, ffi.Int length)>>
+      FFI_GetPlatform;
+
+  external ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Int Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, ffi.Pointer<ffi.Void> language, ffi.Int length)>>
+      FFI_GetLanguage;
+
+  external ffi.Pointer<
+          ffi.NativeFunction<
+              ffi.Pointer<FPDF_FILEHANDLER> Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_WIDESTRING URL)>>
       FFI_DownloadFromURL;
 
   external ffi.Pointer<
@@ -6857,16 +5972,13 @@ final class _FPDF_FORMFILLINFO extends ffi.Struct {
 
   external ffi.Pointer<
       ffi.NativeFunction<
-          FPDF_BOOL Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> pThis,
-              FPDF_WIDESTRING wsURL,
-              FPDF_WIDESTRING wsData,
+          FPDF_BOOL Function(ffi.Pointer<_FPDF_FORMFILLINFO> pThis, FPDF_WIDESTRING wsURL, FPDF_WIDESTRING wsData,
               FPDF_WIDESTRING wsEncode)>> FFI_PutRequestURL;
 
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> param,
-              FPDF_ANNOTATION annot, ffi.Int page_index)>> FFI_OnFocusChange;
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> param, FPDF_ANNOTATION annot, ffi.Int page_index)>>
+      FFI_OnFocusChange;
 
   /// Method: FFI_DoURIActionWithKeyboardModifier
   /// Ask the implementation to navigate to a uniform resource identifier
@@ -6889,11 +6001,9 @@ final class _FPDF_FORMFILLINFO extends ffi.Struct {
   /// See the URI actions description of <<PDF Reference, version 1.7>>
   /// for more details.
   external ffi.Pointer<
-      ffi.NativeFunction<
-          ffi.Void Function(
-              ffi.Pointer<_FPDF_FORMFILLINFO> param,
-              FPDF_BYTESTRING uri,
-              ffi.Int modifiers)>> FFI_DoURIActionWithKeyboardModifier;
+          ffi.NativeFunction<
+              ffi.Void Function(ffi.Pointer<_FPDF_FORMFILLINFO> param, FPDF_BYTESTRING uri, ffi.Int modifiers)>>
+      FFI_DoURIActionWithKeyboardModifier;
 }
 
 typedef TimerCallback = ffi.Pointer<ffi.NativeFunction<TimerCallbackFunction>>;

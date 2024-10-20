@@ -55,8 +55,7 @@ abstract class PdfFileCache {
   Future<void> write(int position, List<int> bytes);
 
   /// Read [size] bytes from the cache to [buffer] (from the [position]).
-  Future<void> read(
-      List<int> buffer, int bufferPosition, int position, int size);
+  Future<void> read(List<int> buffer, int bufferPosition, int position, int size);
 
   /// Set flag to indicate that the cache block is available.
   Future<void> setCached(int startBlock, {int? lastBlock});
@@ -88,8 +87,7 @@ abstract class PdfFileCache {
   /// Create [PdfFileCache] object from URI.
   ///
   /// You can override the default implementation by setting [fromUri].
-  static Future<PdfFileCache> Function(Uri uri) fromUri =
-      PdfFileCacheNative.fromUri;
+  static Future<PdfFileCache> Function(Uri uri) fromUri = PdfFileCacheNative.fromUri;
 }
 
 /// PDF file cache backed by a file.
@@ -136,8 +134,7 @@ class PdfFileCacheNative extends PdfFileCache {
     _raf ??= await file.open(mode: FileMode.append);
   }
 
-  Future<void> _read(
-      List<int> buffer, int bufferPosition, int position, int size) async {
+  Future<void> _read(List<int> buffer, int bufferPosition, int position, int size) async {
     await _ensureFileOpen();
     await _raf!.setPosition(position);
     await _raf!.readInto(buffer, bufferPosition, bufferPosition + size);
@@ -155,13 +152,11 @@ class PdfFileCacheNative extends PdfFileCache {
   }
 
   @override
-  Future<void> read(
-          List<int> buffer, int bufferPosition, int position, int size) =>
+  Future<void> read(List<int> buffer, int bufferPosition, int position, int size) =>
       _read(buffer, bufferPosition, _headerSize! + position, size);
 
   @override
-  Future<void> write(int position, List<int> bytes) =>
-      _write(_headerSize! + position, bytes);
+  Future<void> write(int position, List<int> bytes) => _write(_headerSize! + position, bytes);
 
   @override
   bool isCached(int block) => _cacheState[block >> 3] & (1 << (block & 7)) != 0;
@@ -211,8 +206,7 @@ class PdfFileCacheNative extends PdfFileCache {
       if (dataStrSize != 0) {
         final dataStrBytes = Uint8List(dataStrSize);
         await _read(dataStrBytes, 0, header1Size, dataStrBytes.length);
-        _cacheControlState =
-            HttpCacheControlState.parseDataStr(utf8.decode(dataStrBytes));
+        _cacheControlState = HttpCacheControlState.parseDataStr(utf8.decode(dataStrBytes));
       } else {
         _cacheControlState = HttpCacheControlState.empty;
       }
@@ -295,19 +289,15 @@ class PdfFileCacheNative extends PdfFileCache {
   }
 
   @override
-  Future<void> setCacheControlState(
-      HttpCacheControlState cacheControlState) async {
+  Future<void> setCacheControlState(HttpCacheControlState cacheControlState) async {
     _cacheControlState = cacheControlState;
     await _saveCacheControlState();
   }
 
   static Future<File> getCacheFilePathForUri(Uri uri) async {
     final cacheDir = await getCacheDirectory();
-    final fnHash = sha1
-        .convert(utf8.encode(uri.toString()))
-        .bytes
-        .map((b) => b.toRadixString(16).padLeft(2, '0'))
-        .join();
+    final fnHash =
+        sha1.convert(utf8.encode(uri.toString())).bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
     final dir1 = fnHash.substring(0, 2);
     final dir2 = fnHash.substring(2, 4);
     final body = fnHash.substring(4);
@@ -323,8 +313,7 @@ class PdfFileCacheNative extends PdfFileCache {
   /// Function to determine the cache directory.
   ///
   /// You can override the default cache directory by setting this variable.
-  static Future<Directory> Function() getCacheDirectory =
-      getApplicationCacheDirectory;
+  static Future<Directory> Function() getCacheDirectory = getApplicationCacheDirectory;
 }
 
 /// Open PDF file from [uri].
@@ -376,8 +365,7 @@ Future<PdfDocument> pdfDocumentFromUri(
       }
     } else {
       // Check if the file is fresh (no-need-to-reload).
-      if (cache.cacheControlState.cacheControl.mustRevalidate &&
-          cache.cacheControlState.isFresh(now: DateTime.now())) {
+      if (cache.cacheControlState.cacheControl.mustRevalidate && cache.cacheControlState.isFresh(now: DateTime.now())) {
         // cache is valid; no need to download.
       } else {
         final result = await _downloadBlock(
@@ -484,8 +472,7 @@ Future<_DownloadResult> _downloadBlock(
     ..headers.addAll(
       {
         if (useRangeAccess) 'Range': 'bytes=$blockOffset-${end - 1}',
-        if (addCacheControlHeaders)
-          ...cache.cacheControlState.getHeadersForFetch(),
+        if (addCacheControlHeaders) ...cache.cacheControlState.getHeadersForFetch(),
         if (headers != null) ...headers,
       },
     );
@@ -495,8 +482,7 @@ Future<_DownloadResult> _downloadBlock(
   }
 
   if (response.statusCode != 200 && response.statusCode != 206) {
-    throw PdfException(
-        'Failed to download PDF file: ${response.statusCode} ${response.reasonPhrase}');
+    throw PdfException('Failed to download PDF file: ${response.statusCode} ${response.reasonPhrase}');
   }
 
   if (addCacheControlHeaders) {
@@ -514,11 +500,9 @@ Future<_DownloadResult> _downloadBlock(
     isFullDownload = true;
   }
   if (!cache.isInitialized) {
-    await cache.initializeWithFileSize(fileSize ?? 0,
-        truncateExistingContent: true);
+    await cache.initializeWithFileSize(fileSize ?? 0, truncateExistingContent: true);
   }
-  await cache.setCacheControlState(
-      HttpCacheControlState.fromHeaders(response.headers));
+  await cache.setCacheControlState(HttpCacheControlState.fromHeaders(response.headers));
 
   var offset = blockOffset;
   var cachedBytesSoFar = cache.cachedBytes;
