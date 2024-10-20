@@ -115,13 +115,8 @@ class _PdfPageTextOverlayState extends State<PdfPageTextOverlay> {
       hitTestBehavior: HitTestBehavior.translucent,
       cursor: selectionShouldBeEnabled ? widget.textCursor : MouseCursor.defer,
       onHover: _onHover,
-      child: SelectionArea(
-        contextMenuBuilder: (context, state) {
-          return AdaptiveTextSelectionToolbar.buttonItems(
-            anchors: state.contextMenuAnchors,
-            buttonItems: [ContextMenuButtonItem(type: ContextMenuButtonType.delete, label: "Delete", onPressed: () {  })],
-          );
-        },
+      child: IgnorePointer(
+        ignoring: !(selectionShouldBeEnabled || _anySelections),
         child: _PdfTextWidget(
           registrar,
           this,
@@ -368,7 +363,7 @@ class _PdfTextRenderBox extends RenderBox with PdfPageTextSelectable, Selectable
 
     int? lastLineEnd;
     Rect? lastLineStartRect;
-
+    
     for (int i = 0; i < _fragments.length;) {
       final bounds = _fragments[i].bounds.toRect(page: _page, scaledPageSize: size);
       final intersects = !selectionRect.intersect(bounds).isEmpty;
