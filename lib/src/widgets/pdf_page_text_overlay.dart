@@ -468,7 +468,6 @@ class _PdfTextRenderBox extends RenderBox with PdfPageTextSelectable, Selectable
     }
 
     var result = SelectionResult.none;
-    print('------> ${event.type}');
     switch (event.type) {
       case SelectionEventType.startEdgeUpdate:
       case SelectionEventType.endEdgeUpdate:
@@ -548,8 +547,7 @@ class _PdfTextRenderBox extends RenderBox with PdfPageTextSelectable, Selectable
               _start = _end = Offset.zero;
             }
             // Move the corresponding selection edge.
-            if (extendSelectionEvent.direction == SelectionExtendDirection.nextLine ||
-                horizontalBaseLine > size.width) {
+            if (extendSelectionEvent.direction == SelectionExtendDirection.nextLine || horizontalBaseLine > size.width) {
               newOffset = Offset.infinite;
             } else {
               newOffset = Offset.zero;

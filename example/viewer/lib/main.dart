@@ -103,8 +103,7 @@ class _MainPageState extends State<MainPage> {
           ),
           IconButton(
             icon: const Icon(Icons.last_page),
-            onPressed: () =>
-                controller.goToPage(pageNumber: controller.pageCount),
+            onPressed: () => controller.goToPage(pageNumber: controller.pageCount),
           ),
         ],
       ),
@@ -137,8 +136,7 @@ class _MainPageState extends State<MainPage> {
                             // the document is changed.
                             ValueListenableBuilder(
                               valueListenable: documentRef,
-                              builder: (context, documentRef, child) =>
-                                  TextSearchView(
+                              builder: (context, documentRef, child) => TextSearchView(
                                 textSearcher: textSearcher,
                               ),
                             ),
@@ -151,26 +149,22 @@ class _MainPageState extends State<MainPage> {
                             ),
                             ValueListenableBuilder(
                               valueListenable: documentRef,
-                              builder: (context, documentRef, child) =>
-                                  ThumbnailsView(
+                              builder: (context, documentRef, child) => ThumbnailsView(
                                 documentRef: documentRef,
                                 controller: controller,
                               ),
                             ),
                             MarkersView(
-                              markers:
-                                  _markers.values.expand((e) => e).toList(),
+                              markers: _markers.values.expand((e) => e).toList(),
                               onTap: (marker) {
-                                final rect =
-                                    controller.calcRectForRectInsidePage(
+                                final rect = controller.calcRectForRectInsidePage(
                                   pageNumber: marker.ranges.pageText.pageNumber,
                                   rect: marker.ranges.bounds,
                                 );
                                 controller.ensureVisible(rect);
                               },
                               onDeleteTap: (marker) {
-                                _markers[marker.ranges.pageNumber]!
-                                    .remove(marker);
+                                _markers[marker.ranges.pageNumber]!.remove(marker);
                                 setState(() {});
                               },
                             ),
@@ -257,10 +251,8 @@ class _MainPageState extends State<MainPage> {
                         //
                         // The most important thing here is that the transformation matrix
                         // is not changed on the view change.
-                        final centerPosition =
-                            controller.value.calcPosition(oldViewSize);
-                        final newMatrix =
-                            controller.calcMatrixFor(centerPosition);
+                        final centerPosition = controller.value.calcPosition(oldViewSize);
+                        final newMatrix = controller.calcMatrixFor(centerPosition);
                         // Don't change the matrix in sync; the callback might be called
                         // during widget-tree's build process.
                         Future.delayed(
@@ -286,8 +278,7 @@ class _MainPageState extends State<MainPage> {
                         // Make the GestureDetector covers all the viewer widget's area
                         // but also make the event go through to the viewer.
                         child: IgnorePointer(
-                          child:
-                              SizedBox(width: size.width, height: size.height),
+                          child: SizedBox(width: size.width, height: size.height),
                         ),
                       ),
                       //
@@ -298,9 +289,7 @@ class _MainPageState extends State<MainPage> {
                         controller: controller,
                         orientation: ScrollbarOrientation.right,
                         thumbSize: const Size(40, 25),
-                        thumbBuilder:
-                            (context, thumbSize, pageNumber, controller) =>
-                                Container(
+                        thumbBuilder: (context, thumbSize, pageNumber, controller) => Container(
                           color: Colors.black,
                           child: Center(
                             child: Text(
@@ -315,9 +304,7 @@ class _MainPageState extends State<MainPage> {
                         controller: controller,
                         orientation: ScrollbarOrientation.bottom,
                         thumbSize: const Size(80, 30),
-                        thumbBuilder:
-                            (context, thumbSize, pageNumber, controller) =>
-                                Container(
+                        thumbBuilder: (context, thumbSize, pageNumber, controller) => Container(
                           color: Colors.red,
                         ),
                       ),
@@ -325,12 +312,9 @@ class _MainPageState extends State<MainPage> {
                     //
                     // Loading progress indicator example
                     //
-                    loadingBannerBuilder:
-                        (context, bytesDownloaded, totalBytes) => Center(
+                    loadingBannerBuilder: (context, bytesDownloaded, totalBytes) => Center(
                       child: CircularProgressIndicator(
-                        value: totalBytes != null
-                            ? bytesDownloaded / totalBytes
-                            : null,
+                        value: totalBytes != null ? bytesDownloaded / totalBytes : null,
                         backgroundColor: Colors.grey,
                       ),
                     ),
@@ -404,9 +388,7 @@ class _MainPageState extends State<MainPage> {
   void _addCurrentSelectionToMarkers(Color color) {
     if (controller.isReady && _textSelections != null) {
       for (final selectedText in _textSelections!) {
-        _markers
-            .putIfAbsent(selectedText.pageNumber, () => [])
-            .add(Marker(color, selectedText));
+        _markers.putIfAbsent(selectedText.pageNumber, () => []).add(Marker(color, selectedText));
       }
       setState(() {});
     }
@@ -429,9 +411,7 @@ class _MainPageState extends State<MainPage> {
             child: Text.rich(
               TextSpan(
                 children: [
-                  const TextSpan(
-                      text:
-                          'Do you want to navigate to the following location?\n'),
+                  const TextSpan(text: 'Do you want to navigate to the following location?\n'),
                   TextSpan(
                     text: url.toString(),
                     style: const TextStyle(color: Colors.blue),

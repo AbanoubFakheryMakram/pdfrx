@@ -416,14 +416,15 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
         child: Focus(
           onKeyEvent: _onKeyEvent,
           child: StreamBuilder(
-              stream: _updateStream,
-              builder: (context, snapshot) {
-                _relayoutPages();
-                _determineCurrentPage();
-                _calcAlternativeFitScale();
-                _calcZoomStopTable();
-                return selectionAreaInjector(
-                  Builder(builder: (context) {
+            stream: _updateStream,
+            builder: (context, snapshot) {
+              _relayoutPages();
+              _determineCurrentPage();
+              _calcAlternativeFitScale();
+              _calcZoomStopTable();
+              return selectionAreaInjector(
+                Builder(
+                  builder: (context) {
                     return Stack(
                       children: [
                         iv.InteractiveViewer(
@@ -446,7 +447,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
                             size: _layout!.documentSize,
                           ),
                         ),
-                        ..._buildPageOverlayWidgets(context),
+                        // ..._buildPageOverlayWidgets(context),
                         if (_canvasLinkPainter.isEnabled) _canvasLinkPainter.linkHandlingOverlay(_viewSize!),
                         if (widget.params.viewerOverlayBuilder != null)
                           ...widget.params.viewerOverlayBuilder!(
@@ -456,9 +457,11 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
                           ),
                       ],
                     );
-                  }),
-                );
-              }),
+                  },
+                ),
+              );
+            },
+          ),
         ),
       );
     });
@@ -901,7 +904,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       final partial = _pageImagesPartial[page.pageNumber];
 
       final scaleLimit = widget.params.getPageRenderingScale
-          ?.call(context, page, _controller!, widget.params.onePassRenderingScaleThreshold) ??
+              ?.call(context, page, _controller!, widget.params.onePassRenderingScaleThreshold) ??
           widget.params.onePassRenderingScaleThreshold;
 
       if (dropShadowPaint != null) {
