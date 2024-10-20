@@ -111,23 +111,20 @@ class _PdfPageTextOverlayState extends State<PdfPageTextOverlay> {
       return const SizedBox();
     }
     final registrar = SelectionContainer.maybeOf(context);
-    return SelectionArea(
-      contextMenuBuilder: (context, state) {
-        return AdaptiveTextSelectionToolbar.buttonItems(
-          anchors: state.contextMenuAnchors,
-          buttonItems: [ContextMenuButtonItem(type: ContextMenuButtonType.delete, label: "Delete", onPressed: () {  })],
-        );
-      },
-      child: MouseRegion(
-        hitTestBehavior: HitTestBehavior.translucent,
-        cursor: selectionShouldBeEnabled ? widget.textCursor : MouseCursor.defer,
-        onHover: _onHover,
-        child: IgnorePointer(
-          ignoring: !(selectionShouldBeEnabled || _anySelections),
-          child: _PdfTextWidget(
-            registrar,
-            this,
-          ),
+    return MouseRegion(
+      hitTestBehavior: HitTestBehavior.translucent,
+      cursor: selectionShouldBeEnabled ? widget.textCursor : MouseCursor.defer,
+      onHover: _onHover,
+      child: SelectionArea(
+        contextMenuBuilder: (context, state) {
+          return AdaptiveTextSelectionToolbar.buttonItems(
+            anchors: state.contextMenuAnchors,
+            buttonItems: [ContextMenuButtonItem(type: ContextMenuButtonType.delete, label: "Delete", onPressed: () {  })],
+          );
+        },
+        child: _PdfTextWidget(
+          registrar,
+          this,
         ),
       ),
     );
