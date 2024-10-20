@@ -866,10 +866,10 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
       case 'highlight':
         _highlightSelectedText();
         break;
-        case 'delete':
+      case 'delete':
         _highlightSelectedText();
         break;
-    // Handle other actions
+      // Handle other actions
     }
   }
 
@@ -886,15 +886,19 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
 // Modify the _onSelectionChange method to show the menu
   void _onSelectionChange(PdfTextRanges selection) {
     _selectionChangedThrottleTimer?.cancel();
-    _selectionChangedThrottleTimer = Timer(const Duration(milliseconds: 300), () {
-      if (!mounted || !_selectionHandlers.containsKey(selection.pageNumber)) return;
-      widget.params.onTextSelectionChange
-          ?.call(_selectionHandlers.values.map((s) => s.selectedRanges).where((s) => s.isNotEmpty).toList());
+    _selectionChangedThrottleTimer = Timer(
+      const Duration(milliseconds: 300),
+      () {
+        if (!mounted || !_selectionHandlers.containsKey(selection.pageNumber)) return;
+        widget.params.onTextSelectionChange?.call(
+          _selectionHandlers.values.map((s) => s.selectedRanges).where((s) => s.isNotEmpty).toList(),
+        );
+      },
+    );
 
-      // Show the context menu at the selection's position
-      final position = _getSelectionPosition(selection); // Implement this method to get the position
-      _showSelectionMenu(context, position);
-    });
+    // Show the context menu at the selection's position
+    final position = _getSelectionPosition(selection); // Implement this method to get the position
+    _showSelectionMenu(context, position);
   }
 
 // Implement a method to get the selection position
@@ -903,7 +907,6 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
     // This may involve getting the bounds of the selected text
     return const Offset(100, 100); // Placeholder, replace with actual calculation
   }
-
 
   Rect _getCacheExtentRect() {
     final visibleRect = _visibleRect;
