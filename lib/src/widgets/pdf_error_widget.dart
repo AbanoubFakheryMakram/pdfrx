@@ -44,9 +44,7 @@ Widget pdfErrorWidget(
                         text: stackTrace.toString(),
                         style: const TextStyle(fontSize: 14),
                       ),
-                    if (error is PdfPasswordException &&
-                        !kIsWeb &&
-                        Platform.isWindows)
+                    if (error is PdfPasswordException && !kIsWeb && Platform.isWindows)
                       const TextSpan(
                         text:
                             '\n***On Windows, PDFium could not report errors correctly and every error is recognized as password error.',
@@ -65,8 +63,7 @@ Widget pdfErrorWidget(
                                   'https://pub.dev/documentation/pdfrx/latest/pdfrx/PdfViewerParams/errorBannerBuilder.html');
                             },
                         ),
-                        text:
-                            '\n\nTo replace the error banner, set PdfViewerParams.errorBannerBuilder.',
+                        text: '\n\nTo replace the error banner, set PdfViewerParams.errorBannerBuilder.',
                       ),
                   ],
                 ),
@@ -83,8 +80,7 @@ Widget pdfErrorWidget(
   );
 }
 
-typedef _GestureRecognizerDisposerFunction = GestureRecognizer Function(
-    GestureRecognizer recognizer);
+typedef _GestureRecognizerDisposerFunction = GestureRecognizer Function(GestureRecognizer recognizer);
 typedef _GestureRecognizerDisposerBuilderFunction = Widget Function(
   BuildContext context,
   _GestureRecognizerDisposerFunction markForDispose,
@@ -98,12 +94,10 @@ class _GestureRecognizerDisposer extends StatefulWidget {
   final _GestureRecognizerDisposerBuilderFunction builder;
 
   @override
-  State<_GestureRecognizerDisposer> createState() =>
-      _GestureRecognizerDisposerState();
+  State<_GestureRecognizerDisposer> createState() => _GestureRecognizerDisposerState();
 }
 
-class _GestureRecognizerDisposerState
-    extends State<_GestureRecognizerDisposer> {
+class _GestureRecognizerDisposerState extends State<_GestureRecognizerDisposer> {
   final _recognizers = <GestureRecognizer>[];
 
   @override

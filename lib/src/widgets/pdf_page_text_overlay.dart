@@ -111,15 +111,23 @@ class _PdfPageTextOverlayState extends State<PdfPageTextOverlay> {
       return const SizedBox();
     }
     final registrar = SelectionContainer.maybeOf(context);
-    return MouseRegion(
-      hitTestBehavior: HitTestBehavior.translucent,
-      cursor: selectionShouldBeEnabled ? widget.textCursor : MouseCursor.defer,
-      onHover: _onHover,
-      child: IgnorePointer(
-        ignoring: !(selectionShouldBeEnabled || _anySelections),
-        child: _PdfTextWidget(
-          registrar,
-          this,
+    return SelectionArea(
+      contextMenuBuilder: (context, state) {
+        return AdaptiveTextSelectionToolbar.buttonItems(
+          anchors: state.contextMenuAnchors,
+          buttonItems: [ContextMenuButtonItem(type: ContextMenuButtonType.delete, label: "Delete", onPressed: () {  })],
+        );
+      },
+      child: MouseRegion(
+        hitTestBehavior: HitTestBehavior.translucent,
+        cursor: selectionShouldBeEnabled ? widget.textCursor : MouseCursor.defer,
+        onHover: _onHover,
+        child: IgnorePointer(
+          ignoring: !(selectionShouldBeEnabled || _anySelections),
+          child: _PdfTextWidget(
+            registrar,
+            this,
+          ),
         ),
       ),
     );
@@ -200,10 +208,8 @@ mixin PdfPageTextSelectable implements Selectable {
 
 /// The code is based on the code on [Making a widget selectable](https://api.flutter.dev/flutter/widgets/SelectableRegion-class.html#widgets).SelectableRegion.2]
 class _PdfTextRenderBox extends RenderBox with PdfPageTextSelectable, Selectable, SelectionRegistrant {
-  _PdfTextRenderBox(
-    this._selectionColor,
-    this._textWidget,
-  ) : _geometry = ValueNotifier<SelectionGeometry>(_noSelection) {
+  _PdfTextRenderBox(this._selectionColor, this._textWidget)
+      : _geometry = ValueNotifier<SelectionGeometry>(_noSelection) {
     registrar = _textWidget._registrar;
     _geometry.addListener(markNeedsPaint);
   }
@@ -365,6 +371,7 @@ class _PdfTextRenderBox extends RenderBox with PdfPageTextSelectable, Selectable
 
     int? lastLineEnd;
     Rect? lastLineStartRect;
+
     for (int i = 0; i < _fragments.length;) {
       final bounds = _fragments[i].bounds.toRect(page: _page, scaledPageSize: size);
       final intersects = !selectionRect.intersect(bounds).isEmpty;
