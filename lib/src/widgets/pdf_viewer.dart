@@ -447,7 +447,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
                             size: _layout!.documentSize,
                           ),
                         ),
-                        // ..._buildPageOverlayWidgets(context),
+                        ..._buildPageOverlayWidgets(context),
                         if (_canvasLinkPainter.isEnabled) _canvasLinkPainter.linkHandlingOverlay(_viewSize!),
                         if (widget.params.viewerOverlayBuilder != null)
                           ...widget.params.viewerOverlayBuilder!(
@@ -831,14 +831,79 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
     }
   }
 
+// Add this method to your _PdfViewerState class
+  void _showSelectionMenu(BuildContext context, Offset position) {
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    final Offset localPosition = renderBox.globalToLocal(position);
+
+    showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(localPosition.dx, localPosition.dy, 0, 0),
+      items: [
+        const PopupMenuItem(
+          value: 'copy',
+          child: Text('Copy'),
+        ),
+        const PopupMenuItem(
+          value: 'highlight',
+          child: Text('Highlight'),
+        ),
+        // Add more options as needed
+      ],
+    ).then((value) {
+      if (value != null) {
+        _handleContextMenuAction(value);
+      }
+    });
+  }
+
+// Handle the selected menu action
+  void _handleContextMenuAction(String action) {
+    switch (action) {
+      case 'copy':
+        _copySelectedText();
+        break;
+      case 'highlight':
+        _highlightSelectedText();
+        break;
+        case 'delete':
+        _highlightSelectedText();
+        break;
+    // Handle other actions
+    }
+  }
+
+// Method to copy selected text
+  void _copySelectedText() {
+    // Implement copying logic here
+  }
+
+// Method to highlight selected text
+  void _highlightSelectedText() {
+    // Implement highlighting logic here
+  }
+
+// Modify the _onSelectionChange method to show the menu
   void _onSelectionChange(PdfTextRanges selection) {
     _selectionChangedThrottleTimer?.cancel();
     _selectionChangedThrottleTimer = Timer(const Duration(milliseconds: 300), () {
       if (!mounted || !_selectionHandlers.containsKey(selection.pageNumber)) return;
       widget.params.onTextSelectionChange
           ?.call(_selectionHandlers.values.map((s) => s.selectedRanges).where((s) => s.isNotEmpty).toList());
+
+      // Show the context menu at the selection's position
+      final position = _getSelectionPosition(selection); // Implement this method to get the position
+      _showSelectionMenu(context, position);
     });
   }
+
+// Implement a method to get the selection position
+  Offset _getSelectionPosition(PdfTextRanges selection) {
+    // Calculate the position based on selection
+    // This may involve getting the bounds of the selected text
+    return const Offset(100, 100); // Placeholder, replace with actual calculation
+  }
+
 
   Rect _getCacheExtentRect() {
     final visibleRect = _visibleRect;
