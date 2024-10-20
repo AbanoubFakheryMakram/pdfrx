@@ -115,64 +115,14 @@ class _PdfPageTextOverlayState extends State<PdfPageTextOverlay> {
       hitTestBehavior: HitTestBehavior.translucent,
       cursor: selectionShouldBeEnabled ? widget.textCursor : MouseCursor.defer,
       onHover: _onHover,
-      child: GestureDetector(
-        onLongPress: () {
-          if (_anySelections) {
-            showContextMenu(context);
-          }
-        },
-        child: IgnorePointer(
-          ignoring: !(selectionShouldBeEnabled || _anySelections),
-          child: _PdfTextWidget(
-            registrar,
-            this,
-          ),
+      child: IgnorePointer(
+        ignoring: !(selectionShouldBeEnabled || _anySelections),
+        child: _PdfTextWidget(
+          registrar,
+          this,
         ),
       ),
     );
-  }
-
-  void showContextMenu(BuildContext context) {
-    final RenderBox overlay = Overlay.of(context).context.findRenderObject() as RenderBox;
-
-    showMenu(
-      context: context,
-      position: RelativeRect.fromRect(
-        Rect.fromPoints(
-          Offset.zero,
-          Offset.zero,
-        ),
-        Offset.zero & overlay.size,
-      ),
-      items: [
-        PopupMenuItem<String>(
-          value: 'copy',
-          child: Text('Copy'),
-        ),
-        PopupMenuItem<String>(
-          value: 'paste',
-          child: Text('Paste'),
-        ),
-        PopupMenuItem<String>(
-          value: 'select_all',
-          child: Text('Select All'),
-        ),
-      ],
-    ).then((value) {
-      if (value == 'copy') {
-        // Copy selected text to clipboard
-        // Clipboard.setData(ClipboardData(text: _selectedText));
-      } else if (value == 'paste') {
-        // Handle paste action
-        // You might need to implement a way to insert pasted text
-      } else if (value == 'select_all') {
-        // Handle select all action
-        // You can select all text within the visible area
-        // _start = Offset.zero;
-        // _end = Offset.infinite;
-        // _updateGeometry();
-      }
-    });
   }
 
   bool get _anySelections {
