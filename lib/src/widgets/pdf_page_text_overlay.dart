@@ -363,7 +363,7 @@ class _PdfTextRenderBox extends RenderBox with PdfPageTextSelectable, Selectable
 
     int? lastLineEnd;
     Rect? lastLineStartRect;
-    
+
     for (int i = 0; i < _fragments.length;) {
       final bounds = _fragments[i].bounds.toRect(page: _page, scaledPageSize: size);
       final intersects = !selectionRect.intersect(bounds).isEmpty;
@@ -468,6 +468,7 @@ class _PdfTextRenderBox extends RenderBox with PdfPageTextSelectable, Selectable
     }
 
     var result = SelectionResult.none;
+    print('------> ${event.type}');
     switch (event.type) {
       case SelectionEventType.startEdgeUpdate:
       case SelectionEventType.endEdgeUpdate:
