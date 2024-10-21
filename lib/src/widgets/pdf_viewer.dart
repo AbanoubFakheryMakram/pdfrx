@@ -414,7 +414,13 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
                 contextMenuBuilder: (context, state) {
                   var contextMenuItems = state.contextMenuButtonItems;
                   contextMenuItems.add(
-                    ContextMenuButtonItem(onPressed: () {}, label: "Delete", type: ContextMenuButtonType.custom),
+                    ContextMenuButtonItem(
+                      onPressed: () {
+                        ContextMenuController.removeAny();
+                      },
+                      label: "Delete",
+                      type: ContextMenuButtonType.custom,
+                    ),
                   );
 
                   return AdaptiveTextSelectionToolbar.buttonItems(
