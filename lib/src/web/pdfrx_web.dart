@@ -23,8 +23,7 @@ class PdfDocumentFactoryImpl extends PdfDocumentFactory {
           // NOTE: Moving the asset load outside the loop may cause:
           // Uncaught TypeError: Cannot perform Construct on a detached ArrayBuffer
           final bytes = await rootBundle.load(name);
-          return await pdfjsGetDocumentFromData(bytes.buffer,
-              password: password);
+          return await pdfjsGetDocumentFromData(bytes.buffer, password: password);
         },
         sourceName: 'asset:$name',
         passwordProvider: passwordProvider,
@@ -33,8 +32,7 @@ class PdfDocumentFactoryImpl extends PdfDocumentFactory {
 
   @override
   Future<PdfDocument> openCustom({
-    required FutureOr<int> Function(Uint8List buffer, int position, int size)
-        read,
+    required FutureOr<int> Function(Uint8List buffer, int position, int size) read,
     required int fileSize,
     required String sourceName,
     PdfPasswordProvider? passwordProvider,
@@ -129,8 +127,7 @@ class PdfDocumentFactoryImpl extends PdfDocumentFactory {
       } else {
         password = await passwordProvider?.call();
         if (password == null) {
-          throw const PdfPasswordException(
-              'No password supplied by PasswordProvider.');
+          throw const PdfPasswordException('No password supplied by PasswordProvider.');
         }
       }
       try {
@@ -149,8 +146,7 @@ class PdfDocumentFactoryImpl extends PdfDocumentFactory {
     }
   }
 
-  static bool _isPasswordError(dynamic e) =>
-      e.toString().startsWith('PasswordException:');
+  static bool _isPasswordError(dynamic e) => e.toString().startsWith('PasswordException:');
 }
 
 class PdfDocumentWeb extends PdfDocument {
@@ -181,9 +177,7 @@ class PdfDocumentWeb extends PdfDocument {
       document,
       sourceName: sourceName,
       isEncrypted: perms != null,
-      permissions: perms != null
-          ? PdfPermissions(perms.fold<int>(0, (p, e) => p | e), 2)
-          : null,
+      permissions: perms != null ? PdfPermissions(perms.fold<int>(0, (p, e) => p | e), 2) : null,
       onDispose: onDispose,
     );
     final pageCount = document.numPages;
@@ -217,8 +211,7 @@ class PdfDocumentWeb extends PdfDocument {
   late final List<PdfPage> pages;
 
   @override
-  bool isIdenticalDocumentHandle(Object? other) =>
-      other is PdfDocumentWeb && _document == other._document;
+  bool isIdenticalDocumentHandle(Object? other) => other is PdfDocumentWeb && _document == other._document;
 
   Future<JSObject?> _getDestObject(JSAny? dest) async {
     if (dest == null) return null;
@@ -241,8 +234,7 @@ class PdfDocumentWeb extends PdfDocument {
     return nodes;
   }
 
-  Future<PdfOutlineNode> _pdfOutlineNodeFromOutline(
-      PdfjsOutlineNode outline) async {
+  Future<PdfOutlineNode> _pdfOutlineNodeFromOutline(PdfjsOutlineNode outline) async {
     final children = <PdfOutlineNode>[];
     for (final item in outline.items.toDart) {
       children.add(await _pdfOutlineNodeFromOutline(item));
@@ -261,9 +253,7 @@ class PdfDocumentWeb extends PdfDocument {
     final arr = destObj.toDart;
     final ref = arr[0] as PdfjsRef;
     final cmdStr = _getName(arr[1]);
-    final params = arr.length < 3
-        ? null
-        : List<double?>.unmodifiable(arr.sublist(2).cast<double?>());
+    final params = arr.length < 3 ? null : List<double?>.unmodifiable(arr.sublist(2).cast<double?>());
     return PdfDest(
       (await _document.getPageIndex(ref).toDart).toDartInt + 1,
       _parseCmdStr(cmdStr),
@@ -334,12 +324,10 @@ class PdfPageWeb extends PdfPage {
     double? fullWidth,
     double? fullHeight,
     Color? backgroundColor,
-    PdfAnnotationRenderingMode annotationRenderingMode =
-        PdfAnnotationRenderingMode.annotationAndForms,
+    PdfAnnotationRenderingMode annotationRenderingMode = PdfAnnotationRenderingMode.annotationAndForms,
     PdfPageRenderCancellationToken? cancellationToken,
   }) async {
-    if (cancellationToken != null &&
-        cancellationToken is! PdfPageRenderCancellationTokenWeb) {
+    if (cancellationToken != null && cancellationToken is! PdfPageRenderCancellationTokenWeb) {
       throw ArgumentError(
         'cancellationToken must be created by PdfPage.createCancellationToken().',
         'cancellationToken',
@@ -369,8 +357,7 @@ class PdfPageWeb extends PdfPage {
   }
 
   @override
-  PdfPageRenderCancellationTokenWeb createCancellationToken() =>
-      PdfPageRenderCancellationTokenWeb();
+  PdfPageRenderCancellationTokenWeb createCancellationToken() => PdfPageRenderCancellationTokenWeb();
 
   Future<Uint8List> _renderRaw(
     int x,
@@ -387,24 +374,18 @@ class PdfPageWeb extends PdfPage {
     final vp1 = page.getViewport(PdfjsViewportParams(scale: 1));
     final pageWidth = vp1.width;
     if (width <= 0 || height <= 0) {
-      throw PdfException(
-          'Invalid PDF page rendering rectangle ($width x $height)');
+      throw PdfException('Invalid PDF page rendering rectangle ($width x $height)');
     }
 
     final vp = page.getViewport(PdfjsViewportParams(
-        scale: fullWidth / pageWidth,
-        offsetX: -x.toDouble(),
-        offsetY: -y.toDouble(),
-        dontFlip: dontFlip));
+        scale: fullWidth / pageWidth, offsetX: -x.toDouble(), offsetY: -y.toDouble(), dontFlip: dontFlip));
 
-    final canvas =
-        web.document.createElement('canvas') as web.HTMLCanvasElement;
+    final canvas = web.document.createElement('canvas') as web.HTMLCanvasElement;
     canvas.width = width;
     canvas.height = height;
 
     if (backgroundColor != null) {
-      canvas.context2D.fillStyle =
-          '#${backgroundColor.value.toRadixString(16).padLeft(8, '0')}'.toJS;
+      canvas.context2D.fillStyle = '#${backgroundColor.value.toRadixString(16).padLeft(8, '0')}'.toJS;
       canvas.context2D.fillRect(0, 0, width, height);
     }
 
@@ -419,12 +400,7 @@ class PdfPageWeb extends PdfPage {
         .promise
         .toDart;
 
-    return canvas.context2D
-        .getImageData(0, 0, width, height)
-        .data
-        .toDart
-        .buffer
-        .asUint8List();
+    return canvas.context2D.getImageData(0, 0, width, height).data.toDart.buffer.asUint8List();
   }
 
   @override
@@ -432,17 +408,14 @@ class PdfPageWeb extends PdfPage {
 
   @override
   Future<List<PdfLink>> loadLinks({bool compact = false}) async {
-    final annots =
-        (await page.getAnnotations(PdfjsGetAnnotationsParameters()).toDart)
-            .toDart;
+    final annots = (await page.getAnnotations(PdfjsGetAnnotationsParameters()).toDart).toDart;
     final links = <PdfLink>[];
     for (final annot in annots) {
       if (annot.subtype != 'Link') {
         continue;
       }
       final rect = annot.rect.toDart.cast<double>();
-      final rects = List<PdfRect>.unmodifiable(
-          [PdfRect(rect[0], rect[3], rect[2], rect[1])]);
+      final rects = List<PdfRect>.unmodifiable([PdfRect(left: rect[0], top: rect[3], right: rect[2], bottom: rect[1])]);
       if (annot.url != null) {
         links.add(
           PdfLink(rects, url: Uri.parse(annot.url!)),
@@ -471,8 +444,7 @@ class PdfPageRenderCancellationTokenWeb extends PdfPageRenderCancellationToken {
 }
 
 class PdfImageWeb extends PdfImage {
-  PdfImageWeb(
-      {required this.width, required this.height, required this.pixels});
+  PdfImageWeb({required this.width, required this.height, required this.pixels});
 
   @override
   final int width;
@@ -501,6 +473,15 @@ class PdfPageTextFragmentWeb implements PdfPageTextFragment {
   List<PdfRect>? get charRects => null;
   @override
   final String text;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'index': index,
+      'bounds': bounds.toMap(),
+      'text': text,
+    };
+  }
 }
 
 class PdfPageTextWeb extends PdfPageText {
@@ -540,10 +521,10 @@ class PdfPageTextWeb extends PdfPageText {
           PdfPageTextFragmentWeb(
             sb.length,
             PdfRect(
-              prev.bounds.right,
-              prev.bounds.top,
-              prev.bounds.right + item.width.toDouble(),
-              prev.bounds.bottom,
+              left: prev.bounds.right,
+              top: prev.bounds.top,
+              right: prev.bounds.right + item.width.toDouble(),
+              bottom: prev.bounds.bottom,
             ),
             str,
           ),
@@ -553,10 +534,10 @@ class PdfPageTextWeb extends PdfPageText {
           PdfPageTextFragmentWeb(
             sb.length,
             PdfRect(
-              x,
-              y + item.height.toDouble(),
-              x + item.width.toDouble(),
-              y,
+              left: x,
+              top: y + item.height.toDouble(),
+              right: x + item.width.toDouble(),
+              bottom: y,
             ),
             str,
           ),
@@ -566,9 +547,23 @@ class PdfPageTextWeb extends PdfPageText {
       sb.write(str);
     }
 
-    return PdfPageTextWeb(
-        pageNumber: page.pageNumber,
-        fullText: sb.toString(),
-        fragments: fragments);
+    return PdfPageTextWeb(pageNumber: page.pageNumber, fullText: sb.toString(), fragments: fragments);
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'pageNumber': pageNumber,
+      'fullText': fullText,
+      'fragments': fragments.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  // factory PdfPageTextWeb.fromJson(Map<String, dynamic> json) {
+  //   return PdfPageTextWeb(
+  //     pageNumber: int.parse(json['pageNumber']),
+  //     fullText: json['fullText'],
+  //     fragments: List.of(json['fragments']).map((i) => PdfPageTextFragment.fromJson(i)).toList(),
+  //   );
+  // }
 }

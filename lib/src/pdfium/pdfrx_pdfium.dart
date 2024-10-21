@@ -725,10 +725,10 @@ class PdfPagePdfium extends PdfPage {
                   pdfium.FPDFAnnot_GetRect(annot, rectf);
                   final r = rectf.ref;
                   final rect = PdfRect(
-                    r.left,
-                    r.top > r.bottom ? r.top : r.bottom,
-                    r.right,
-                    r.top > r.bottom ? r.bottom : r.top,
+                    left: r.left,
+                    top: r.top > r.bottom ? r.top : r.bottom,
+                    right: r.right,
+                    bottom: r.top > r.bottom ? r.bottom : r.top,
                   );
                   final dest = _processAnnotDest(annot, document, arena);
                   if (dest != nullptr) {
@@ -864,6 +864,17 @@ class PdfPageTextFragmentPdfium implements PdfPageTextFragment {
   final List<PdfRect>? charRects;
   @override
   String get text => pageText.fullText.substring(index, index + length);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'pageText': pageText,
+      'index': index,
+      'length': length,
+      'bounds': bounds,
+      'charRects': charRects?.map((e) => e.toMap()).toList(),
+    };
+  }
 }
 
 class PdfPageTextPdfium extends PdfPageText {
@@ -878,8 +889,26 @@ class PdfPageTextPdfium extends PdfPageText {
 
   @override
   final String fullText;
+
   @override
   final List<PdfPageTextFragment> fragments;
+
+  // factory PdfPageTextPdfium.fromMap(Map<String, dynamic> json) {
+  //   return PdfPageTextPdfium(
+  //     pageNumber: int.parse(json['pageNumber']),
+  //     fullText: json['fullText'],
+  //     fragments: List.of(json['fragments']).map((i) => PdfPageTextFragment.fromJson(i)).toList(),
+  //   );
+  // }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'pageNumber': pageNumber,
+      'fullText': fullText,
+      'fragments': fragments.map((e) => e.toJson()).toList(),
+    };
+  }
 
   static Future<PdfPageTextPdfium> _loadText(PdfPagePdfium page) async {
     final result = await _load(page);
@@ -934,14 +963,7 @@ class PdfPageTextPdfium extends PdfPageText {
 
   static const _charLF = 10, _charCR = 13, _charSpace = 32;
 
-  static String _loadInternal(
-    pdfium_bindings.FPDF_TEXTPAGE textPage,
-    int from,
-    int length,
-    Arena arena,
-    List<PdfRect> charRects,
-    List<int> fragments,
-  ) {
+  static String _loadInternal(pdfium_bindings.FPDF_TEXTPAGE textPage, int from, int length, Arena arena, List<PdfRect> charRects, List<int> fragments) {
     final fullText = _getText(textPage, from, length, arena);
     final doubleSize = sizeOf<Double>();
     final buffer = arena.allocate<Double>(4 * doubleSize);
@@ -1030,12 +1052,7 @@ class PdfPageTextPdfium extends PdfPageText {
   }
 
   /// return true if any meaningful characters in the line (start -> end)
-  static bool _makeLineFlat(
-    List<PdfRect> rects,
-    int start,
-    int end,
-    StringBuffer sb,
-  ) {
+  static bool _makeLineFlat(List<PdfRect> rects, int start, int end, StringBuffer sb) {
     if (start >= end) return false;
     final str = sb.toString();
     final bounds = rects.skip(start).take(end - start).boundingRect();
@@ -1045,10 +1062,10 @@ class PdfPageTextPdfium extends PdfPageText {
       final char = str.codeUnitAt(i);
       if (char == _charSpace) {
         final next = i + 1 < end ? rects[i + 1].left : null;
-        rects[i] = PdfRect(prev ?? rect.left, bounds.top, next ?? rect.right, bounds.bottom);
+        rects[i] = PdfRect(left: prev ?? rect.left, top: bounds.top, right: next ?? rect.right, bottom: bounds.bottom);
         prev = null;
       } else {
-        rects[i] = PdfRect(prev ?? rect.left, bounds.top, rect.right, bounds.bottom);
+        rects[i] = PdfRect(left: prev ?? rect.left, top: bounds.top, right: rect.right, bottom: bounds.bottom);
         prev = rect.right;
       }
     }
@@ -1062,7 +1079,8 @@ class PdfPageTextPdfium extends PdfPageText {
   }
 }
 
-PdfRect _rectFromLTRBBuffer(Pointer<Double> buffer) => PdfRect(buffer[0], buffer[1], buffer[2], buffer[3]);
+PdfRect _rectFromLTRBBuffer(Pointer<Double> buffer) =>
+    PdfRect(left: buffer[0], top: buffer[1], right: buffer[2], bottom: buffer[3]);
 
 extension _PointerExt<T extends NativeType> on Pointer<T> {
   Pointer<T> offset(int offsetInBytes) => Pointer.fromAddress(address + offsetInBytes);
@@ -1073,7 +1091,7 @@ extension _PdfRectsExt on List<PdfRect> {
   void appendDummy({double width = 1}) {
     if (isEmpty) return;
     final prev = last;
-    add(PdfRect(prev.right, prev.top, prev.right + width, prev.bottom));
+    add(PdfRect(left: prev.right, top: prev.top, right: prev.right + width, bottom: prev.bottom));
   }
 }
 

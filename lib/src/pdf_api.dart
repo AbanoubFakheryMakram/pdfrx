@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:collection/collection.dart';
@@ -423,6 +424,10 @@ abstract class PdfPageText {
   /// Any character in [fullText] must be included in one of the fragments.
   List<PdfPageTextFragment> get fragments;
 
+  Map<String, dynamic> toJson();
+
+  // PdfPageText.fromMap(Map<String, dynamic> json);
+
   /// Find text fragment index for the specified text index.
   ///
   /// If the specified text index is out of range, it returns -1.
@@ -495,6 +500,8 @@ abstract class PdfPageTextFragment {
   /// Text for the fragment.
   String get text;
 
+  Map<String, dynamic> toJson();
+
   @override
   bool operator ==(covariant PdfPageTextFragment other) {
     if (identical(this, other)) return true;
@@ -538,6 +545,17 @@ class _PdfPageTextFragment extends PdfPageTextFragment {
   final List<PdfRect>? charRects;
   @override
   final String text;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'index': index,
+      'length': length,
+      'bounds': bounds.toMap(),
+      'charRects': charRects?.map((e) => e.toMap()).toList(),
+      'text': text,
+    };
+  }
 }
 
 /// Used only for searching fragments with [lowerBound].
@@ -553,6 +571,13 @@ class _PdfPageTextFragmentForSearch extends PdfPageTextFragment {
   String get text => throw UnimplementedError();
   @override
   List<PdfRect>? get charRects => null;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'index': index,
+    };
+  }
 }
 
 /// Simple text range in a PDF page.
@@ -570,6 +595,20 @@ class PdfTextRange {
 
   /// Text end index in [PdfPageText.fullText].
   final int end;
+
+  factory PdfTextRange.fromJson(Map<String, dynamic> json) {
+    return PdfTextRange(
+      start: int.parse(json['start']),
+      end: int.parse(json['end']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'start': start,
+      'end': end,
+    };
+  }
 
   PdfTextRange copyWith({
     int? start,
@@ -614,6 +653,22 @@ class PdfTextRanges {
 
   /// Text ranges.
   final List<PdfTextRange> ranges;
+
+  // Convert PdfTextRanges to a Map
+  Map<String, dynamic> toMap() {
+    return {
+      'pageText': pageText.toJson(),
+      'ranges': ranges.map((range) => range.toJson()).toList(),
+    };
+  }
+
+  // Create PdfTextRanges from a Map
+  // factory PdfTextRanges.fromMap(Map<String, dynamic> map) {
+  //   return PdfTextRanges(
+  //     pageText: PdfPageText.fromMap(map['pageText']),
+  //     ranges: (map['ranges'] as List).map((item) => PdfTextRange.fromJson(item)).toList(),
+  //   );
+  // }
 
   /// Determine whether the text ranges are empty.
   bool get isEmpty => ranges.isEmpty;
@@ -750,7 +805,7 @@ class PdfTextRangeWithFragments {
 /// The unit is normally in points (1/72 inch).
 @immutable
 class PdfRect {
-  const PdfRect(this.left, this.top, this.right, this.bottom);
+  const PdfRect({required this.left, required this.top, required this.right, required this.bottom});
 
   /// Left coordinate.
   final double left;
@@ -779,10 +834,10 @@ class PdfRect {
   /// Merge two rectangles.
   PdfRect merge(PdfRect other) {
     return PdfRect(
-      left < other.left ? left : other.left,
-      top > other.top ? top : other.top,
-      right > other.right ? right : other.right,
-      bottom < other.bottom ? bottom : other.bottom,
+      left: left < other.left ? left : other.left,
+      top: top > other.top ? top : other.top,
+      right: right > other.right ? right : other.right,
+      bottom: bottom < other.bottom ? bottom : other.bottom,
     );
   }
 
@@ -793,7 +848,7 @@ class PdfRect {
   bool containsOffset(Offset offset) => contains(offset.dx, offset.dy);
 
   /// Empty rectangle.
-  static const empty = PdfRect(0, 0, 0, 0);
+  static const empty = PdfRect(left: 0, top: 0, right: 0, bottom: 0);
 
   /// Convert to [Rect] in Flutter coordinate.
   /// [page] is the page to convert the rectangle.
@@ -830,31 +885,32 @@ class PdfRect {
         return this;
       case 1:
         return PdfRect(
-          bottom,
-          width - left,
-          top,
-          width - right,
+          left: bottom,
+          top: width - left,
+          right: top,
+          bottom: width - right,
         );
       case 2:
         return PdfRect(
-          width - right,
-          height - bottom,
-          width - left,
-          height - top,
+          left: width - right,
+          top: height - bottom,
+          right: width - left,
+          bottom: height - top,
         );
       case 3:
         return PdfRect(
-          height - top,
-          right,
-          height - bottom,
-          left,
+          left: height - top,
+          top: right,
+          right: height - bottom,
+          bottom: left,
         );
       default:
         throw ArgumentError.value(rotate, 'rotate');
     }
   }
 
-  PdfRect inflate(double dx, double dy) => PdfRect(left - dx, top + dy, right + dx, bottom - dy);
+  PdfRect inflate(double dx, double dy) =>
+      PdfRect(left: left - dx, top: top + dy, right: right + dx, bottom: bottom - dy);
 
   @override
   bool operator ==(Object other) {
@@ -869,6 +925,24 @@ class PdfRect {
   @override
   String toString() {
     return 'PdfRect(left: $left, top: $top, right: $right, bottom: $bottom)';
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'left': left,
+      'top': top,
+      'right': right,
+      'bottom': bottom,
+    };
+  }
+
+  factory PdfRect.fromMap(Map<String, dynamic> map) {
+    return PdfRect(
+      left: map['left'] as double,
+      top: map['top'] as double,
+      right: map['right'] as double,
+      bottom: map['bottom'] as double,
+    );
   }
 }
 
@@ -898,7 +972,7 @@ extension PdfRectsExt on Iterable<PdfRect> {
       // no rects
       throw StateError('No rects');
     }
-    return PdfRect(left, top, right, bottom);
+    return PdfRect(left: left, top: top, right: right, bottom: bottom);
   }
 }
 
