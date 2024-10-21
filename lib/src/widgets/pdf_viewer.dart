@@ -416,6 +416,8 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
                   contextMenuItems.add(
                     ContextMenuButtonItem(
                       onPressed: () {
+                        print(state.textEditingValue.text);
+                        _clearAllTextSelections();
                         ContextMenuController.removeAny();
                       },
                       label: "Delete",
@@ -615,10 +617,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
     _setCurrentPageNumberInternal(_guessCurrentPage());
   }
 
-  void _setCurrentPageNumberInternal(
-    int? pageNumber, {
-    bool doSetState = false,
-  }) {
+  void _setCurrentPageNumberInternal(int? pageNumber, {bool doSetState = false}) {
     if (pageNumber != null && _pageNumber != pageNumber) {
       _pageNumber = pageNumber;
       if (doSetState) {
@@ -1132,8 +1131,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
     );
   }
 
-  Future<_PdfImageWithScaleAndRect?> _createPartialImage(
-      PdfPage page, double scale, PdfPageRenderCancellationToken cancellationToken) async {
+  Future<_PdfImageWithScaleAndRect?> _createPartialImage(PdfPage page, double scale, PdfPageRenderCancellationToken cancellationToken) async {
     final pageRect = _layout!.pageLayouts[page.pageNumber - 1];
     final rect = pageRect.intersect(_visibleRect);
     final prev = _pageImagesPartial[page.pageNumber];
@@ -1164,11 +1162,7 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
     return result;
   }
 
-  void _removeImagesIfCacheBytesExceedsLimit(
-    List<int> pageNumbers,
-    int acceptableBytes,
-    PdfPage currentPage,
-  ) {
+  void _removeImagesIfCacheBytesExceedsLimit(List<int> pageNumbers, int acceptableBytes, PdfPage currentPage) {
     double dist(int pageNumber) {
       return (_layout!.pageLayouts[pageNumber - 1].center - _layout!.pageLayouts[currentPage.pageNumber - 1].center)
           .distanceSquared;
