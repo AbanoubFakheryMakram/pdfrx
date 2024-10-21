@@ -660,7 +660,6 @@ class PdfTextRanges {
   // Convert PdfTextRanges to a Map
   Map<String, dynamic> toMap() {
     return {
-      'pageText': pageText?.toJson(),
       'ranges': ranges.map((range) => range.toJson()).toList(),
     };
   }
