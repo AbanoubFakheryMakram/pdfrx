@@ -665,6 +665,20 @@ class PdfTextRanges {
     };
   }
 
+  // Convert PdfTextRanges to a Map
+  Map<String, dynamic> toMapCustom() {
+    return {
+      'ranges': ranges.map((range) => range.toJson()).toList(),
+    };
+  }
+
+
+  factory PdfTextRanges.fromJson(Map<String, dynamic> json) {
+    return PdfTextRanges.custom(
+      ranges: List.of(json['ranges']).map((i) => PdfTextRange.fromJson(i)).toList(),
+    );
+  }
+
   // Create PdfTextRanges from a Map
   // factory PdfTextRanges.fromMap(Map<String, dynamic> map) {
   //   return PdfTextRanges(
