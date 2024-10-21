@@ -408,15 +408,19 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
         });
       }
 
+      SelectedContent? _selection;
       final Widget Function(Widget) selectionAreaInjector = widget.params.enableTextSelection
           ? (child) => SelectionArea(
                 child: child,
+                onSelectionChanged: (selection) {
+                  _selection = selection;
+                },
                 contextMenuBuilder: (context, state) {
                   var contextMenuItems = state.contextMenuButtonItems;
                   contextMenuItems.add(
                     ContextMenuButtonItem(
                       onPressed: () {
-                        print(state.textEditingValue.text);
+                        print(_selection?.plainText);
                         _clearAllTextSelections();
                         ContextMenuController.removeAny();
                       },
@@ -1131,7 +1135,8 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
     );
   }
 
-  Future<_PdfImageWithScaleAndRect?> _createPartialImage(PdfPage page, double scale, PdfPageRenderCancellationToken cancellationToken) async {
+  Future<_PdfImageWithScaleAndRect?> _createPartialImage(
+      PdfPage page, double scale, PdfPageRenderCancellationToken cancellationToken) async {
     final pageRect = _layout!.pageLayouts[page.pageNumber - 1];
     final rect = pageRect.intersect(_visibleRect);
     final prev = _pageImagesPartial[page.pageNumber];
