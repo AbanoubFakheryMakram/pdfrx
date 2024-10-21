@@ -408,32 +408,35 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
         });
       }
 
-      SelectedContent? _selection;
       final Widget Function(Widget) selectionAreaInjector = widget.params.enableTextSelection
           ? (child) => SelectionArea(
-                child: child,
-                onSelectionChanged: (selection) {
-                  _selection = selection;
-                },
+                onSelectionChanged: widget.params.onSelectionChanged,
                 contextMenuBuilder: (context, state) {
                   var contextMenuItems = state.contextMenuButtonItems;
-                  contextMenuItems.add(
-                    ContextMenuButtonItem(
-                      onPressed: () {
-                        print(_selection?.plainText);
-                        _clearAllTextSelections();
-                        ContextMenuController.removeAny();
-                      },
-                      label: "Delete",
-                      type: ContextMenuButtonType.custom,
-                    ),
-                  );
+                  if (widget.params.contextMenuItems?.isNotEmpty == true) {
+                    for (ContextMenuButtonItem item in widget.params.contextMenuItems ?? []) {
+                      contextMenuItems.add(
+                        ContextMenuButtonItem(
+                          onPressed: () {
+                            if (item.onPressed != null) {
+                              item.onPressed!();
+                            }
+                            _clearAllTextSelections();
+                            ContextMenuController.removeAny();
+                          },
+                          label: item.label,
+                          type: item.type,
+                        ),
+                      );
+                    }
+                  }
 
                   return AdaptiveTextSelectionToolbar.buttonItems(
                     anchors: state.contextMenuAnchors,
                     buttonItems: contextMenuItems,
                   );
                 },
+                child: child,
               )
           : (child) => child;
 

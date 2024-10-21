@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../../pdfrx.dart';
 
@@ -61,7 +62,15 @@ class PdfViewerParams {
     this.pageBackgroundPaintCallbacks,
     this.onTextSelectionChange,
     this.forceReload = false,
+    this.contextMenuItems,
+    this.onSelectionChanged,
   });
+
+  /// For getting selected text from context menu
+  final ValueChanged<SelectedContent?>? onSelectionChanged;
+
+  /// Context menu items
+  final List<ContextMenuButtonItem>? contextMenuItems;
 
   /// Margin around the page.
   final double margin;
