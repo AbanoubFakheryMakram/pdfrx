@@ -871,7 +871,7 @@ class PdfPageTextFragmentPdfium implements PdfPageTextFragment {
       'pageText': pageText,
       'index': index,
       'length': length,
-      'bounds': bounds,
+      'bounds': bounds.toMap(),
       'charRects': charRects?.map((e) => e.toMap()).toList(),
     };
   }
