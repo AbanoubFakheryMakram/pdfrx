@@ -644,11 +644,15 @@ class PdfTextRanges {
     required this.ranges,
   });
 
+
+  /// Create custom constructor
+  PdfTextRanges.custom({required this.ranges, this.pageText});
+
   /// Create a [PdfTextRanges] with empty ranges.
   PdfTextRanges.createEmpty(this.pageText) : ranges = <PdfTextRange>[];
 
   /// The page text the text ranges are associated with.
-  final PdfPageText pageText;
+  final PdfPageText? pageText;
 
   /// Text ranges.
   final List<PdfTextRange> ranges;
@@ -656,7 +660,7 @@ class PdfTextRanges {
   // Convert PdfTextRanges to a Map
   Map<String, dynamic> toMap() {
     return {
-      'pageText': pageText.toJson(),
+      'pageText': pageText?.toJson(),
       'ranges': ranges.map((range) => range.toJson()).toList(),
     };
   }
@@ -676,13 +680,13 @@ class PdfTextRanges {
   bool get isNotEmpty => ranges.isNotEmpty;
 
   /// Page number of the text ranges.
-  int get pageNumber => pageText.pageNumber;
+  int get pageNumber => pageText!.pageNumber;
 
   /// Bounds of the text ranges.
-  PdfRect get bounds => ranges.map((r) => r.toTextRangeWithFragments(pageText)!.bounds).boundingRect();
+  PdfRect get bounds => ranges.map((r) => r.toTextRangeWithFragments(pageText!)!.bounds).boundingRect();
 
   /// The composed text of the text ranges.
-  String get text => ranges.map((r) => pageText.fullText.substring(r.start, r.end)).join();
+  String get text => ranges.map((r) => pageText!.fullText.substring(r.start, r.end)).join();
 }
 
 /// For backward compatibility; [PdfTextRangeWithFragments] is previously named [PdfTextMatch].
