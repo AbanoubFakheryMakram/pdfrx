@@ -408,8 +408,19 @@ class _PdfViewerState extends State<PdfViewer> with SingleTickerProviderStateMix
         });
       }
 
-      final Widget Function(Widget) selectionAreaInjector =
-          widget.params.enableTextSelection ? (child) => SelectionArea(child: child) : (child) => child;
+      final Widget Function(Widget) selectionAreaInjector = widget.params.enableTextSelection
+          ? (child) => SelectionArea(
+                child: child,
+                contextMenuBuilder: (context, state) {
+                  return AdaptiveTextSelectionToolbar.buttonItems(
+                    anchors: state.contextMenuAnchors,
+                    buttonItems: [
+                      ContextMenuButtonItem(type: ContextMenuButtonType.delete, label: "Delete", onPressed: () {})
+                    ],
+                  );
+                },
+              )
+          : (child) => child;
 
       return Container(
         color: widget.params.backgroundColor,
