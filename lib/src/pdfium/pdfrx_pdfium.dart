@@ -878,11 +878,7 @@ class PdfPageTextFragmentPdfium implements PdfPageTextFragment {
 }
 
 class PdfPageTextPdfium extends PdfPageText {
-  PdfPageTextPdfium({
-    required this.pageNumber,
-    required this.fullText,
-    required this.fragments,
-  });
+  PdfPageTextPdfium({required this.pageNumber, required this.fullText, required this.fragments});
 
   @override
   final int pageNumber;
@@ -901,8 +897,6 @@ class PdfPageTextPdfium extends PdfPageText {
   //   );
   // }
 
-
-  
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -965,7 +959,8 @@ class PdfPageTextPdfium extends PdfPageText {
 
   static const _charLF = 10, _charCR = 13, _charSpace = 32;
 
-  static String _loadInternal(pdfium_bindings.FPDF_TEXTPAGE textPage, int from, int length, Arena arena, List<PdfRect> charRects, List<int> fragments) {
+  static String _loadInternal(pdfium_bindings.FPDF_TEXTPAGE textPage, int from, int length, Arena arena,
+      List<PdfRect> charRects, List<int> fragments) {
     final fullText = _getText(textPage, from, length, arena);
     final doubleSize = sizeOf<Double>();
     final buffer = arena.allocate<Double>(4 * doubleSize);
