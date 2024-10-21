@@ -597,8 +597,8 @@ class PdfTextRange {
 
   factory PdfTextRange.fromJson(Map<String, dynamic> json) {
     return PdfTextRange(
-      start: int.parse(json['start']),
-      end: int.parse(json['end']),
+      start: (json['start']),
+      end: (json['end']),
     );
   }
 
