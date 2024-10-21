@@ -158,7 +158,7 @@ class _MainPageState extends State<MainPage> {
                               markers: _markers.values.expand((e) => e).toList(),
                               onTap: (marker) {
                                 final rect = controller.calcRectForRectInsidePage(
-                                  pageNumber: marker.ranges.pageText.pageNumber,
+                                  pageNumber: marker.ranges.pageText!.pageNumber,
                                   rect: marker.ranges.bounds,
                                 );
                                 controller.ensureVisible(rect);
@@ -371,7 +371,7 @@ class _MainPageState extends State<MainPage> {
 
       for (final range in marker.ranges.ranges) {
         final f = PdfTextRangeWithFragments.fromTextRange(
-          marker.ranges.pageText,
+          marker.ranges.pageText!,
           range.start,
           range.end,
         );
